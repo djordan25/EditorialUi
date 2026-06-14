@@ -47,7 +47,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join, resolve, extname } from 'node:path';
 import { mkdirSync, writeFileSync, existsSync, readFileSync } from 'node:fs';
 import {
-    CASES, SCAFFOLD, DEFAULT_ANCHOR, STYLE_CONTRACT,
+    CASES, SCAFFOLD, DEFAULT_ANCHOR, STYLE_CONTRACT, CONTENT_DRIVEN,
     PIXEL_ADVISORY_THRESHOLD, ALIGN_TOLERANCE_PX, DIM_TOLERANCE_PX,
 } from './component-map.mjs';
 
@@ -127,11 +127,8 @@ const MIME = {
     '.json': 'application/json', '.css': 'text/css', '.png': 'image/png',
     '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.gif': 'image/gif',
     '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.woff': 'font/woff',
-    '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.map': 'application/json',
-    '.txt': 'text/plain',
+    '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.map': 'application/json', '.txt': 'text/plain',
 };
-
-/** Minimal static file server for the Storybook build (no extra deps). */
 function startStaticServer(rootDir) {
     const root = resolve(rootDir);
     return new Promise((resolveServer) => {
@@ -144,7 +141,6 @@ function startStaticServer(rootDir) {
                 const data = readFileSync(filePath);
                 res.writeHead(200, {
                     'content-type': MIME[extname(filePath).toLowerCase()] || 'application/octet-stream',
-                    // Allow the about:blank page in storyExports() to fetch index.json.
                     'access-control-allow-origin': '*',
                 });
                 res.end(data);
@@ -204,21 +200,33 @@ async function readAnchorStyle(page, rootSel, anchorSel) {
     }, { rootSel, anchorSel, props: STYLE_CONTRACT });
 }
 
-function diffStyles(storyStyle, specStyle) {
+function diffStyles(storyStyle, specStyle, opts = {}) {
     if (storyStyle.__err) return [{ prop: 'anchor(story)', story: storyStyle.__err, spec: '—' }];
     if (specStyle.__err) return [{ prop: 'anchor(spec)', story: '—', spec: specStyle.__err }];
     const diffs = [];
-    // Geometry: HEIGHT is the control-height design contract (hard gate). WIDTH is
-    // content-driven — the spec cell and the story frequently render different
-    // example text, and horizontal padding is already checked directly via the
-    // padding-left/right props — so a width delta is NOT a hard failure (the pixel
-    // advisory still surfaces it).
-    if (Math.abs(storyStyle.__h - specStyle.__h) > DIM_TOLERANCE_PX)
-        diffs.push({ prop: 'height', story: storyStyle.__h + 'px', spec: specStyle.__h + 'px' });
+    // Geometry. For content-driven containers (cards, lists, empty states,
+    // tables, drawers) the anchor's OUTER box is sized by its children, so the
+    // story's example content vs the spec cell's example content makes height/
+    // width differ even when the design is faithful. Skip the box geometry for
+    // those and rely on the fixed design tokens below (padding, border, radius,
+    // colors, font, shadow) — which are what the spec actually pins. For fixed-
+    // size controls (buttons, inputs, switches) geometry stays a hard check.
+    // WIDTH is content/layout-driven almost everywhere (a button sized by its label,
+    // a field by its container) — never a hard check. HEIGHT is the control-height
+    // contract for fixed-size controls; CONTENT_DRIVEN containers skip it too.
+    if (!opts.contentDriven) {
+        if (Math.abs(storyStyle.__h - specStyle.__h) > DIM_TOLERANCE_PX)
+            diffs.push({ prop: 'height', story: storyStyle.__h + 'px', spec: specStyle.__h + 'px' });
+    }
+    // height/min-height are content-determined for content-driven anchors — drop
+    // them from the property comparison too (still checked via the rect above for
+    // fixed-size controls).
+    const skip = opts.contentDriven ? new Set(['height', 'min-height']) : new Set();
     for (const prop of STYLE_CONTRACT) {
+        if (skip.has(prop) || geometryDup(prop)) continue;
         const a = normalize(storyStyle[prop]);
         const b = normalize(specStyle[prop]);
-        if (a !== b && !geometryDup(prop)) diffs.push({ prop, story: storyStyle[prop], spec: specStyle[prop] });
+        if (a !== b) diffs.push({ prop, story: storyStyle[prop], spec: specStyle[prop] });
     }
     return diffs;
 }
@@ -364,10 +372,12 @@ async function main() {
                 if (spec.err) throw new Error('spec load: ' + spec.err.message);
                 if (!spec.demoSel) throw new Error(`spec state not found (${c.spec.label ? 'label: ' + c.spec.label : c.spec.selector})`);
 
-                // Tier 1 — computed-style (hard)
+                // Tier 1 — computed-style (hard). Content-driven containers skip
+                // outer-box geometry (sized by example content, not the design).
+                const contentDriven = c.contentDriven ?? CONTENT_DRIVEN.has(comp);
                 const storyStyle = await readAnchorStyle(story.p, story.rootSel, anchor.story);
                 const specStyle = await readAnchorStyle(spec.p, spec.demoSel, anchor.spec);
-                const styleDiffs = diffStyles(storyStyle, specStyle);
+                const styleDiffs = diffStyles(storyStyle, specStyle, { contentDriven });
 
                 // Tier 2 — pixel (advisory)
                 const storyShot = readPng(await story.p.locator(story.rootSel).first().screenshot());
@@ -403,7 +413,7 @@ function report(rows) {
     for (const r of rows) {
         const mark = r.failed ? '✗' : '✓';
         const px = `${(r.pixel * 100).toFixed(1)}%${r.pixelFlag ? '⚠' : ' '}`;
-        const flags = [r.scaffold ? 'scaffold' : '', r.todo ? `TODO:pair ${r.todo}` : ''].filter(Boolean).join(' ');
+        const flags = [r.contentDriven ? 'content-driven(geo skipped)' : '', r.scaffold ? 'scaffold' : '', r.todo ? `TODO:pair ${r.todo}` : ''].filter(Boolean).join(' ');
         console.log(`${mark}  ${r.tag.padEnd(pad)}  px ${px}  ${flags}`);
         for (const d of r.styleDiffs) console.log(`     · ${d.prop}: story=${d.story}  spec=${d.spec}`);
     }

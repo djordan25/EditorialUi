@@ -108,6 +108,16 @@ entries: pin the spec `label`s and the `anchor` selectors.
   component's styling lives on a child (e.g. a track inside a switch), point the
   `anchor` at it. The default (first styled child) covers most single-element
   controls.
+- **Content-driven containers** (cards, lists, empty states, tables, drawers,
+  modals, notifications, accordions, dialogs) are sized by their *children*, so a
+  story that renders different example content than the spec cell will differ in
+  total height — that's content, not a design defect. Those components are listed
+  in `CONTENT_DRIVEN` in `component-map.mjs`: the harness **skips outer-box
+  geometry** for them and gates only on the fixed design tokens (padding, border,
+  radius, colors, font, shadow). For best results point their `anchor` at the
+  *repeating styled unit* (a list row, a table cell, the padded card container)
+  rather than the whole block. Add a component to the set, or set
+  `contentDriven: true` on a single case.
 - Portal components (popovers, dialogs, menus, drawers) render their open state
   outside `#storybook-root`. Add an inline-open story, or map the panel with a
   spec `selector` + matching `anchor`; otherwise only the closed trigger is checked.
