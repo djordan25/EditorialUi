@@ -1,0 +1,19 @@
+{
+  "name": "editorialui-verify-feedback",
+  "private": true,
+  "type": "module",
+  "description": "Visual verification harness for EditorialUI Bundle 5 (Feedback). Diffs Storybook stories against the design spec HTML.",
+  "scripts": {
+    "verify": "node visual-verify.mjs",
+    "verify:list": "node visual-verify.mjs --list-spec",
+    "verify:tooltip": "node visual-verify.mjs EdTooltip",
+    "verify:notification": "node visual-verify.mjs EdNotification",
+    "verify:dialog": "node visual-verify.mjs EdDialog",
+    "verify:emptystate": "node visual-verify.mjs EdEmptyState"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0",
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0"
+  }
+}

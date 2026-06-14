@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdProgressMeter · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .meter-row { display: flex; flex-direction: column; gap: 6px; }
+        .meter-row__head { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; }
+        .meter-row__label { color: var(--ed-color-text-secondary); }
+        .meter-row__value { font-family: var(--ed-font-mono); color: var(--ed-color-text-primary); }
+        .stages { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+        .stage { padding: 12px 14px; border-right: 1px solid var(--ed-color-hairline); font-size: 12px; position: relative; }
+        .stage:last-child { border-right: 0; }
+        .stage__num { font-family: var(--ed-font-mono); font-size: 10px; color: var(--ed-color-text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+        .stage__name { font-weight: 500; color: var(--ed-color-text-primary); margin: 4px 0 0; }
+        .stage__time { color: var(--ed-color-text-muted); margin-top: 4px; font-family: var(--ed-font-mono); }
+        .stage--done { background: var(--ed-color-status-success-bg); }
+        .stage--done .stage__num { color: var(--ed-color-status-success); }
+        .stage--current { background: var(--ed-color-brand-bg); }
+        .stage--current .stage__num { color: var(--ed-color-brand); }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "C6",
+    "group": "Feedback",
+    "name": "EdProgressMeter",
+    "lede": "Linear progress bar for determinate jobs (uploads, batches) and a segmented variant for stage-based work (closure progress, password strength). Always paired with a label and value."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div style="max-width: 540px; margin: 0 auto;" class="meter-row">
+                <div class="meter-row__head">
+                    <span class="meter-row__label">Importing findings — registry sync</span>
+                    <span class="meter-row__value">68% · 2,142 of 3,150</span>
+                </div>
+                <div class="ed-meter ed-meter--lg"><div class="ed-meter__fill" style="width: 68%;"></div></div>
+            </div>
+            <div style="margin-top:24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Track</strong> — surface-2, full radius pill. Height 6px (default) or 10px (lg).</div>
+                <div class="ed-anatomy__callout"><strong>Fill</strong> — brand by default. Animated transition 400ms standard.</div>
+                <div class="ed-anatomy__callout"><strong>Label + value</strong> — required pairing. Value is mono.</div>
+                <div class="ed-anatomy__callout"><strong>Semantic fill</strong> — success / warning / danger when value crosses a threshold.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">States</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">determinate</span><div class="ed-cell__demo ed-cell__demo--block"><div class="meter-row"><div class="meter-row__head"><span class="meter-row__label">Uploading evidence</span><span class="meter-row__value">42%</span></div><div class="ed-meter"><div class="ed-meter__fill" style="width: 42%;"></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">indeterminate</span><div class="ed-cell__demo ed-cell__demo--block"><div class="meter-row"><div class="meter-row__head"><span class="meter-row__label">Searching audit log…</span><span class="meter-row__value" style="opacity: 0;">—</span></div><div class="ed-meter ed-meter--indeterminate"><div class="ed-meter__fill"></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">complete</span><div class="ed-cell__demo ed-cell__demo--block"><div class="meter-row"><div class="meter-row__head"><span class="meter-row__label">Sync complete</span><span class="meter-row__value" style="color: var(--ed-color-status-success);">100%</span></div><div class="ed-meter"><div class="ed-meter__fill ed-meter__fill--success" style="width: 100%;"></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">over threshold (warning)</span><div class="ed-cell__demo ed-cell__demo--block"><div class="meter-row"><div class="meter-row__head"><span class="meter-row__label">SLA budget remaining</span><span class="meter-row__value" style="color: var(--ed-color-status-warning);">14%</span></div><div class="ed-meter"><div class="ed-meter__fill ed-meter__fill--warning" style="width: 14%;"></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">over threshold (danger)</span><div class="ed-cell__demo ed-cell__demo--block"><div class="meter-row"><div class="meter-row__head"><span class="meter-row__label">SLA budget remaining</span><span class="meter-row__value" style="color: var(--ed-color-status-danger);">3%</span></div><div class="ed-meter"><div class="ed-meter__fill ed-meter__fill--danger" style="width: 3%;"></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">paused</span><div class="ed-cell__demo ed-cell__demo--block"><div class="meter-row"><div class="meter-row__head"><span class="meter-row__label">Sync paused</span><span class="meter-row__value" style="color: var(--ed-color-text-muted);">52%</span></div><div class="ed-meter"><div class="ed-meter__fill" style="width: 52%; background: var(--ed-color-text-muted);"></div></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Segmented — stage-based progress</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">closure pipeline — 4 stages</span><div class="ed-cell__demo ed-cell__demo--block">
+                <div class="ed-meter-seg" style="margin-bottom: 0;">
+                    <div class="ed-meter-seg__bar ed-meter-seg__bar--success" style="height: 6px;"></div>
+                    <div class="ed-meter-seg__bar ed-meter-seg__bar--success" style="height: 6px;"></div>
+                    <div class="ed-meter-seg__bar ed-meter-seg__bar--filled" style="height: 6px;"></div>
+                    <div class="ed-meter-seg__bar" style="height: 6px;"></div>
+                </div>
+                <div class="stages" style="margin-top: 8px; border: 1px solid var(--ed-color-hairline); border-radius: var(--ed-radius-sm);">
+                    <div class="stage stage--done"><span class="stage__num">01 · Done</span><p class="stage__name">Drafted</p><p class="stage__time">Mar 02</p></div>
+                    <div class="stage stage--done"><span class="stage__num">02 · Done</span><p class="stage__name">Owner attests</p><p class="stage__time">Mar 14</p></div>
+                    <div class="stage stage--current"><span class="stage__num">03 · In progress</span><p class="stage__name">Validator review</p><p class="stage__time">since Mar 22</p></div>
+                    <div class="stage"><span class="stage__num">04 · Pending</span><p class="stage__name">Closure logged</p><p class="stage__time">—</p></div>
+                </div>
+            </div></div>
+            <div class="ed-cell"><span class="ed-cell__label">password strength — 4 bands</span><div class="ed-cell__demo ed-cell__demo--block">
+                <div style="max-width: 280px;">
+                    <div class="ed-meter-seg">
+                        <div class="ed-meter-seg__bar ed-meter-seg__bar--danger"></div>
+                        <div class="ed-meter-seg__bar ed-meter-seg__bar--danger"></div>
+                        <div class="ed-meter-seg__bar"></div>
+                        <div class="ed-meter-seg__bar"></div>
+                    </div>
+                    <div style="display:flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: var(--ed-color-text-muted); font-family: var(--ed-font-mono);">
+                        <span>Weak</span><span style="color: var(--ed-color-status-danger);">2/4</span>
+                    </div>
+                </div>
+            </div></div>
+            <div class="ed-cell"><span class="ed-cell__label">file upload — multi-file batch</span><div class="ed-cell__demo ed-cell__demo--block">
+                <div style="display:flex; flex-direction: column; gap: 10px;">
+                    <div class="meter-row"><div class="meter-row__head"><span class="meter-row__label">evidence-A.pdf</span><span class="meter-row__value" style="color: var(--ed-color-status-success);">Done</span></div><div class="ed-meter"><div class="ed-meter__fill ed-meter__fill--success" style="width: 100%;"></div></div></div>
+                    <div class="meter-row"><div class="meter-row__head"><span class="meter-row__label">memo-final.docx</span><span class="meter-row__value">73%</span></div><div class="ed-meter"><div class="ed-meter__fill" style="width: 73%;"></div></div></div>
+                    <div class="meter-row"><div class="meter-row__head"><span class="meter-row__label">attestation.pdf</span><span class="meter-row__value" style="color: var(--ed-color-text-muted);">Queued</span></div><div class="ed-meter"><div class="ed-meter__fill" style="width: 0%;"></div></div></div>
+                </div>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Predictable, measurable jobs — uploads, imports, sync, batch processing.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Segmented variant when work has discrete stages with names. Pair with a stage strip.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdCircularProgress</code> for spinners and cell-level loads.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdSkeleton</code> when you can show the shape of arriving content.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Showing % when you have to invent it. Indeterminate is honest; fake progress is hostile.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span><code>role="progressbar"</code> + <code>aria-valuenow / aria-valuemin / aria-valuemax / aria-valuetext</code>. <code>aria-valuetext</code> reads the visible string ("68%, 2,142 of 3,150").</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Indeterminate: omit <code>aria-valuenow</code>. Use <code>aria-busy="true"</code> on the host region.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Live updates wrap in <code>aria-live="polite"</code> region announcing milestones (25/50/75/100), not every tick.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Honor <code>prefers-reduced-motion</code>: disable the indeterminate sweep, fall back to "Working…" label.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Feedback/EdProgressMeter
+├─ Determinate (0/25/50/75/100)
+├─ Indeterminate
+├─ Threshold (warning, danger)
+├─ Paused, Complete
+├─ SegmentedStages (closure, password)
+└─ MultiFile (upload list)</code></pre>
+    </section>
+</main>
+</body>
+</html>

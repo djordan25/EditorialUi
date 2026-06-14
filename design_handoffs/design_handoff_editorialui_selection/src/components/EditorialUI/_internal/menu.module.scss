@@ -1,0 +1,292 @@
+@use '../../../theme/tokens-v2';
+
+/* ----------------------------------------------------------
+ * Shared menu styles — used by EdComboBox and EdAutocomplete.
+ * Imported via @use from each component's .module.scss using
+ * :global() selectors. Class names are intentionally generic
+ * (".edmenu-…") so they survive CSS-modules scoping consistently
+ * when imported into multiple components.
+ * ---------------------------------------------------------- */
+
+:global(.edmenu) {
+    z-index: var(--ed-z-dropdown);
+    min-width: var(--radix-popover-trigger-width, 240px);
+    max-height: 320px;
+    background: var(--ed-color-surface-1);
+    border: 1px solid var(--ed-color-hairline);
+    border-radius: var(--ed-radius-md);
+    box-shadow: var(--ed-elevation-3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: edmenuOpen var(--ed-transition-base) ease-out;
+}
+
+@keyframes edmenuOpen {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+:global(.edmenu__search) {
+    padding: var(--ed-space-2);
+    border-bottom: 1px solid var(--ed-color-hairline);
+}
+
+:global(.edmenu__input) {
+    width: 100%;
+    height: 32px;
+    padding: 0 var(--ed-space-2);
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--ed-color-text-primary);
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-sm);
+    line-height: 1;
+
+    &::placeholder {
+        color: var(--ed-color-text-faint);
+    }
+}
+
+:global(.edmenu__listbox) {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--ed-space-1);
+}
+
+:global(.edmenu__group-label) {
+    padding: var(--ed-space-2) var(--ed-space-3) var(--ed-space-1);
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-muted);
+}
+
+:global(.edmenu__separator) {
+    height: 1px;
+    margin: var(--ed-space-1) var(--ed-space-2);
+    background: var(--ed-color-hairline);
+}
+
+:global(.edmenu__option) {
+    display: flex;
+    align-items: center;
+    gap: var(--ed-space-2);
+    padding: var(--ed-space-2) var(--ed-space-3);
+    border-radius: var(--ed-radius-sm);
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-md);
+    color: var(--ed-color-text-primary);
+    line-height: 1.3;
+    cursor: pointer;
+    user-select: none;
+
+    &[aria-disabled='true'] {
+        color: var(--ed-color-text-disabled);
+        cursor: not-allowed;
+    }
+}
+
+:global(.edmenu__option--highlighted) {
+    background: var(--ed-color-row-hover);
+}
+
+:global(.edmenu__option--selected) {
+    background: var(--ed-color-brand-bg);
+    color: var(--ed-color-brand);
+    font-weight: var(--ed-font-weight-medium);
+}
+
+:global(.edmenu__option--action) {
+    color: var(--ed-color-brand);
+
+    &:hover,
+    &.edmenu__option--highlighted {
+        background: var(--ed-color-brand-bg);
+    }
+}
+
+:global(.edmenu__check) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    color: var(--ed-color-brand);
+}
+
+/* Reserve check column even on unchecked items so labels align. */
+:global(.edmenu__check--placeholder) {
+    visibility: hidden;
+}
+
+:global(.edmenu__label) {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+:global(.edmenu__meta) {
+    font-size: var(--ed-font-size-xs);
+    color: var(--ed-color-text-muted);
+    font-family: var(--ed-font-mono);
+    flex-shrink: 0;
+}
+
+:global(.edmenu__empty) {
+    padding: var(--ed-space-4) var(--ed-space-3);
+    text-align: center;
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-sm);
+    color: var(--ed-color-text-muted);
+}
+
+:global(.edmenu__loading) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ed-space-2);
+}
+
+:global(.edmenu__hi) {
+    background: var(--ed-color-brand-bg);
+    color: var(--ed-color-brand);
+    font-weight: var(--ed-font-weight-semibold);
+    padding: 0 1px;
+    border-radius: 2px;
+}
+
+:global(.edmenu__action-row) {
+    display: flex;
+    align-items: center;
+    gap: var(--ed-space-2);
+    padding: var(--ed-space-2) var(--ed-space-3);
+    border-top: 1px solid var(--ed-color-hairline);
+    color: var(--ed-color-brand);
+    cursor: pointer;
+    font-size: var(--ed-font-size-md);
+
+    &:hover,
+    &.edmenu__option--highlighted {
+        background: var(--ed-color-brand-bg);
+    }
+}
+
+/* ---- Trigger that looks like the EdSelect trigger ---- */
+
+:global(.edcombo__trigger) {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ed-space-3);
+    width: 100%;
+    min-height: var(--ed-control-h-md);
+    padding: 0 var(--ed-space-3);
+    background: var(--ed-color-surface-input);
+    border: 1px solid var(--ed-color-hairline-strong);
+    border-radius: var(--ed-radius-sm);
+    color: var(--ed-color-text-primary);
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-md);
+    line-height: 1;
+    cursor: pointer;
+    text-align: left;
+    transition:
+        border-color var(--ed-transition-base),
+        box-shadow var(--ed-transition-base),
+        background var(--ed-transition-base);
+
+    &:hover:not([data-disabled]) {
+        border-color: var(--ed-color-hairline-bold);
+    }
+
+    &:focus-visible,
+    &[data-state='open'] {
+        border-color: var(--ed-color-border-focus);
+        box-shadow: 0 0 0 3px var(--ed-color-brand-bg);
+        outline: none;
+    }
+
+    &[data-disabled] {
+        background: var(--ed-color-surface-2);
+        color: var(--ed-color-text-disabled);
+        cursor: not-allowed;
+    }
+}
+
+:global(.edcombo__trigger--error) {
+    border-color: var(--ed-color-status-danger);
+
+    &:focus-visible,
+    &[data-state='open'] {
+        border-color: var(--ed-color-status-danger);
+        box-shadow: 0 0 0 3px var(--ed-color-status-danger-bg);
+    }
+}
+
+:global(.edcombo__placeholder) {
+    color: var(--ed-color-text-faint);
+}
+
+:global(.edcombo__chev) {
+    display: inline-flex;
+    align-items: center;
+    color: var(--ed-color-text-muted);
+    flex-shrink: 0;
+    transition: transform var(--ed-transition-base);
+
+    [data-state='open'] & {
+        transform: rotate(180deg);
+        color: var(--ed-color-text-primary);
+    }
+}
+
+/* ---- Multi-mode trigger (tags) ---- */
+
+:global(.edcombo__trigger--multi) {
+    min-height: var(--ed-control-h-md);
+    height: auto;
+    flex-wrap: wrap;
+    gap: var(--ed-space-1);
+    padding: 6px var(--ed-space-3);
+}
+
+:global(.edcombo__tag) {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 22px;
+    padding: 0 6px 0 8px;
+    background: var(--ed-color-brand-bg);
+    color: var(--ed-color-brand);
+    border-radius: var(--ed-radius-sm);
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-xs);
+    font-weight: var(--ed-font-weight-medium);
+    line-height: 1;
+}
+
+:global(.edcombo__tag-remove) {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: var(--ed-radius-pill);
+    cursor: pointer;
+    color: var(--ed-color-brand);
+
+    &:hover,
+    &:focus-visible {
+        background: var(--ed-color-brand);
+        color: var(--ed-color-brand-contrast);
+        outline: none;
+    }
+}

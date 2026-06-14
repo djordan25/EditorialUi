@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdDrawer · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .stage { position: relative; height: 480px; background: var(--ed-color-surface-2); border: 1px solid var(--ed-color-hairline); border-radius: var(--ed-radius-md); overflow: hidden; display: flex; }
+        .stage__page { flex: 1; padding: 16px; background-image: repeating-linear-gradient(0deg, var(--ed-color-hairline), var(--ed-color-hairline) 1px, transparent 1px, transparent 24px); }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "D4",
+    "group": "Containers",
+    "name": "EdDrawer",
+    "lede": "Right-edge sliding panel for row-contextual detail. Inspecting a finding while keeping the list visible; editing without leaving the page. Optional modal mode for dedicated workflows."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 0;">
+            <div class="stage">
+                <div class="stage__page" style="opacity: 0.4;"></div>
+                <div class="ed-drawer" style="width: 380px;">
+                    <div class="ed-drawer__header">
+                        <div class="ed-drawer__header-body">
+                            <span class="ed-drawer__crumb">FINDING · F-2438</span>
+                            <h3 class="ed-drawer__title">Stale model documentation</h3>
+                        </div>
+                        <button class="ed-icon-btn" aria-label="Close drawer"><svg class="icn" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                    </div>
+                    <div class="ed-drawer__body">
+                        <div class="ed-drawer__section">
+                            <p class="ed-drawer__section-label">Status</p>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <span class="ed-badge ed-badge--soft ed-badge--warning"><span class="ed-badge__dot" style="background: var(--ed-color-status-warning);"></span>OPEN</span>
+                                <span class="ed-badge ed-badge--soft ed-badge--warning">MEDIUM</span>
+                            </div>
+                        </div>
+                        <div class="ed-drawer__section">
+                            <p class="ed-drawer__section-label">Owner</p>
+                            <p style="margin: 0; font-size: 13px;">Marcus Chen · Validation</p>
+                        </div>
+                        <div class="ed-drawer__section">
+                            <p class="ed-drawer__section-label">Description</p>
+                            <p style="margin: 0; font-size: 13px; color: var(--ed-color-text-secondary);">Model documentation references v2.1 outputs; current production version is v2.3. Two control evidence packs are dated before the v2.3 cutover.</p>
+                        </div>
+                        <div class="ed-drawer__section">
+                            <p class="ed-drawer__section-label">Audit trail</p>
+                            <p style="margin: 0; font-family: var(--ed-font-mono); font-size: 11px; color: var(--ed-color-text-muted);">2026-03-22 11:42 · created by Hanna Lindqvist<br>2026-03-23 09:14 · assigned to Marcus Chen</p>
+                        </div>
+                    </div>
+                    <div class="ed-drawer__footer">
+                        <button class="ed-btn ed-btn--ghost ed-btn--sm">Close</button>
+                        <button class="ed-btn ed-btn--primary ed-btn--sm">Open finding</button>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Header</strong> — crumb (eyebrow) + title + close. Crumb is the entity type + ID.</div>
+                <div class="ed-anatomy__callout"><strong>Body</strong> — sections divided by hairlines. Each has a mono uppercase label.</div>
+                <div class="ed-anatomy__callout"><strong>Footer</strong> — actions on right. Optional for read-only drawers.</div>
+                <div class="ed-anatomy__callout"><strong>Edge</strong> — left border + soft shadow visually separates from page.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Modes</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">non-modal (default) — page stays interactive</span><div class="ed-cell__demo ed-cell__demo--block stage"><div class="stage__page" style="opacity: 0.4;"></div><div class="ed-drawer" style="width: 320px;"><div class="ed-drawer__header"><div class="ed-drawer__header-body"><span class="ed-drawer__crumb">FINDING · F-2438</span><h3 class="ed-drawer__title">Stale documentation</h3></div></div><div class="ed-drawer__body"><div class="ed-drawer__section" style="color: var(--ed-color-text-muted); font-size: 13px;">Row selection in the underlying list updates the drawer in place.</div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">modal — focused edit, blocks page</span><div class="ed-cell__demo ed-cell__demo--block stage"><div class="ed-overlay"></div><div class="stage__page"></div><div class="ed-drawer" style="width: 380px; z-index: 2;"><div class="ed-drawer__header"><div class="ed-drawer__header-body"><span class="ed-drawer__crumb">EDIT</span><h3 class="ed-drawer__title">Reassign finding owner</h3></div></div><div class="ed-drawer__body"><div class="ed-drawer__section"><div class="ed-field"><label class="ed-field__label">New owner</label><button class="ed-select__trigger"><span class="ed-select__value ed-select__value--placeholder">Search users…</span><svg class="icn" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div></div><div class="ed-drawer__footer"><button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button><button class="ed-btn ed-btn--primary ed-btn--sm">Reassign</button></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Sizes</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">sm — 320 — read-only inspect</span><div class="ed-cell__demo"><svg width="120" height="80" viewBox="0 0 120 80"><rect x="0" y="0" width="120" height="80" fill="var(--ed-color-surface-2)" stroke="var(--ed-color-hairline-strong)"/><rect x="80" y="0" width="40" height="80" fill="var(--ed-color-surface-1)" stroke="var(--ed-color-hairline-strong)"/></svg></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">md — 380 — default</span><div class="ed-cell__demo"><svg width="120" height="80" viewBox="0 0 120 80"><rect x="0" y="0" width="120" height="80" fill="var(--ed-color-surface-2)" stroke="var(--ed-color-hairline-strong)"/><rect x="72" y="0" width="48" height="80" fill="var(--ed-color-surface-1)" stroke="var(--ed-color-hairline-strong)"/></svg></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">lg — 480 — form drawer</span><div class="ed-cell__demo"><svg width="120" height="80" viewBox="0 0 120 80"><rect x="0" y="0" width="120" height="80" fill="var(--ed-color-surface-2)" stroke="var(--ed-color-hairline-strong)"/><rect x="60" y="0" width="60" height="80" fill="var(--ed-color-surface-1)" stroke="var(--ed-color-hairline-strong)"/></svg></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">xl — 640 — multi-pane content</span><div class="ed-cell__demo"><svg width="120" height="80" viewBox="0 0 120 80"><rect x="0" y="0" width="120" height="80" fill="var(--ed-color-surface-2)" stroke="var(--ed-color-hairline-strong)"/><rect x="40" y="0" width="80" height="80" fill="var(--ed-color-surface-1)" stroke="var(--ed-color-hairline-strong)"/></svg></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Behavior</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Slide in from right edge in 200ms. Slide out matches.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Non-modal: page outside drawer remains keyboard- and click-reachable. Modal: focus trap + overlay.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Esc closes (modal) or dismisses (non-modal, no unsaved changes). Unsaved-changes guard prompts inline.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>URL state: drawer open state encoded in <code>?drawer=&lt;id&gt;</code> so deep linking + back/forward works.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Resizable handles. Pick a size that fits the content type and stick with it.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Inspecting a row while keeping the list visible. Detail panel for selected entity. Quick reassignment / labelling that doesn't deserve a modal.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdModal</code> for self-contained, full-attention workflows (new finding, bulk action).</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>Full page when content needs the full canvas (graph builder, monaco editor).</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Build on Radix Dialog with <code>modal={false}</code> for non-modal; <code>modal={true}</code> for modal mode.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Title is in DOM as <code>aria-labelledby</code> target. First focusable receives focus on open; on close, focus returns to trigger.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Live region announces "Inspecting finding F-2438" on open.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Containers/EdDrawer
+├─ NonModalInspect, ModalEdit
+├─ Sizes (sm/md/lg/xl)
+├─ ScrollingBody
+├─ UnsavedChangesGuard
+└─ URLDeepLink</code></pre>
+    </section>
+</main>
+</body>
+</html>

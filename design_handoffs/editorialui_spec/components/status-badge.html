@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdStatusBadge · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "C4",
+    "group": "Feedback",
+    "name": "EdStatusBadge",
+    "lede": "Compact label for status, severity, or lifecycle. Three styles — soft (default), solid (high emphasis), outline (read-only context). Mono uppercase for institutional feel."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div style="display:flex; gap:32px; align-items:center; flex-wrap:wrap;">
+                <span class="ed-badge ed-badge--soft ed-badge--warning"><span class="ed-badge__dot" style="background: var(--ed-color-status-warning);"></span>OPEN</span>
+                <span class="ed-badge ed-badge--soft ed-badge--success">CLOSED</span>
+                <span class="ed-badge ed-badge--solid ed-badge--danger">MRIA</span>
+                <span class="ed-badge ed-badge--outline ed-badge--info">DRAFT · v1.4</span>
+            </div>
+            <div style="margin-top:24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Type</strong> — mono, 11px, uppercase, 0.04em tracking.</div>
+                <div class="ed-anatomy__callout"><strong>Height</strong> — fixed 22px. Padding 0/8px. Radius 2px.</div>
+                <div class="ed-anatomy__callout"><strong>Dot</strong> — optional 6px circle for status with motion (Open / In review / Active).</div>
+                <div class="ed-anatomy__callout"><strong>Label</strong> — single token, no spaces preferred. <code>IN_REVIEW</code> not <code>IN REVIEW</code>; or use a separator <code>·</code>.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Style × tone matrix</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">soft (default — table cells, descriptions)</span><div class="ed-cell__demo"><div style="display:flex; gap:8px; flex-wrap:wrap;"><span class="ed-badge ed-badge--soft ed-badge--neutral">DRAFT</span><span class="ed-badge ed-badge--soft ed-badge--info">PREVIEW</span><span class="ed-badge ed-badge--soft ed-badge--success">CLOSED</span><span class="ed-badge ed-badge--soft ed-badge--warning">OPEN</span><span class="ed-badge ed-badge--soft ed-badge--danger">OVERDUE</span><span class="ed-badge ed-badge--soft ed-badge--brand">VALIDATED</span></div></div></div>
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">solid (high emphasis — escalations, headers)</span><div class="ed-cell__demo"><div style="display:flex; gap:8px; flex-wrap:wrap;"><span class="ed-badge ed-badge--solid ed-badge--neutral">DRAFT</span><span class="ed-badge ed-badge--solid ed-badge--info">PREVIEW</span><span class="ed-badge ed-badge--solid ed-badge--success">CLOSED</span><span class="ed-badge ed-badge--solid ed-badge--warning">OPEN</span><span class="ed-badge ed-badge--solid ed-badge--danger">MRIA</span><span class="ed-badge ed-badge--solid ed-badge--brand">VALIDATED</span></div></div></div>
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">outline (read-only, archival, secondary metadata)</span><div class="ed-cell__demo"><div style="display:flex; gap:8px; flex-wrap:wrap;"><span class="ed-badge ed-badge--outline ed-badge--neutral">DRAFT</span><span class="ed-badge ed-badge--outline ed-badge--info">PREVIEW</span><span class="ed-badge ed-badge--outline ed-badge--success">CLOSED</span><span class="ed-badge ed-badge--outline ed-badge--warning">OPEN</span><span class="ed-badge ed-badge--outline ed-badge--danger">OVERDUE</span><span class="ed-badge ed-badge--outline ed-badge--brand">VALIDATED</span></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Status taxonomy — recommended canonical map</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">finding lifecycle</span><div class="ed-cell__demo ed-cell__demo--block">
+                <table style="width:100%; font-size: 13px; font-family: var(--ed-font-sans); border-collapse: collapse;">
+                    <tbody>
+                        <tr><td style="padding: 6px 0;"><span class="ed-badge ed-badge--soft ed-badge--neutral">DRAFT</span></td><td style="color: var(--ed-color-text-secondary);">created, not yet opened</td></tr>
+                        <tr><td style="padding: 6px 0;"><span class="ed-badge ed-badge--soft ed-badge--warning"><span class="ed-badge__dot" style="background: var(--ed-color-status-warning);"></span>OPEN</span></td><td style="color: var(--ed-color-text-secondary);">action required</td></tr>
+                        <tr><td style="padding: 6px 0;"><span class="ed-badge ed-badge--soft ed-badge--info">IN_REVIEW</span></td><td style="color: var(--ed-color-text-secondary);">awaiting validator</td></tr>
+                        <tr><td style="padding: 6px 0;"><span class="ed-badge ed-badge--soft ed-badge--success">CLOSED</span></td><td style="color: var(--ed-color-text-secondary);">resolved with evidence</td></tr>
+                        <tr><td style="padding: 6px 0;"><span class="ed-badge ed-badge--soft ed-badge--danger">OVERDUE</span></td><td style="color: var(--ed-color-text-secondary);">past SLA</td></tr>
+                    </tbody>
+                </table>
+            </div></div>
+            <div class="ed-cell"><span class="ed-cell__label">severity — escalating</span><div class="ed-cell__demo ed-cell__demo--block">
+                <table style="width:100%; font-size: 13px; font-family: var(--ed-font-sans); border-collapse: collapse;">
+                    <tbody>
+                        <tr><td style="padding: 6px 0;"><span class="ed-badge ed-badge--soft ed-badge--neutral">LOW</span></td><td style="color: var(--ed-color-text-secondary);">advisory</td></tr>
+                        <tr><td style="padding: 6px 0;"><span class="ed-badge ed-badge--soft ed-badge--warning">MEDIUM</span></td><td style="color: var(--ed-color-text-secondary);">action this period</td></tr>
+                        <tr><td style="padding: 6px 0;"><span class="ed-badge ed-badge--soft ed-badge--danger">HIGH</span></td><td style="color: var(--ed-color-text-secondary);">action this exam</td></tr>
+                        <tr><td style="padding: 6px 0;"><span class="ed-badge ed-badge--solid ed-badge--danger">MRA</span></td><td style="color: var(--ed-color-text-secondary);">matter requiring attention</td></tr>
+                        <tr><td style="padding: 6px 0;"><span class="ed-badge ed-badge--solid ed-badge--danger">MRIA</span></td><td style="color: var(--ed-color-text-secondary);">+ immediate action</td></tr>
+                    </tbody>
+                </table>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">In context</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">table cell — paired with text</span><div class="ed-cell__demo ed-cell__demo--block">
+                <table style="width:100%; font-size: 13px; font-family: var(--ed-font-sans); border-collapse: collapse;">
+                    <thead><tr style="border-bottom: 1px solid var(--ed-color-hairline);"><th style="text-align:left; padding: 8px 0; font-family: var(--ed-font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--ed-color-text-muted); text-transform:uppercase;">ID</th><th style="text-align:left; padding: 8px 0; font-family: var(--ed-font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--ed-color-text-muted); text-transform:uppercase;">Status</th><th style="text-align:left; padding: 8px 0; font-family: var(--ed-font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--ed-color-text-muted); text-transform:uppercase;">Severity</th><th style="text-align:left; padding: 8px 0; font-family: var(--ed-font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--ed-color-text-muted); text-transform:uppercase;">Owner</th></tr></thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--ed-color-hairline);"><td style="padding: 10px 0; font-family: var(--ed-font-mono);">F-2438</td><td><span class="ed-badge ed-badge--soft ed-badge--warning"><span class="ed-badge__dot" style="background: var(--ed-color-status-warning);"></span>OPEN</span></td><td><span class="ed-badge ed-badge--soft ed-badge--warning">MEDIUM</span></td><td>Marcus Chen</td></tr>
+                        <tr style="border-bottom: 1px solid var(--ed-color-hairline);"><td style="padding: 10px 0; font-family: var(--ed-font-mono);">F-2401</td><td><span class="ed-badge ed-badge--soft ed-badge--danger"><span class="ed-badge__dot" style="background: var(--ed-color-status-danger);"></span>OVERDUE</span></td><td><span class="ed-badge ed-badge--solid ed-badge--danger">MRA</span></td><td>Priya Rao</td></tr>
+                        <tr><td style="padding: 10px 0; font-family: var(--ed-font-mono);">F-2287</td><td><span class="ed-badge ed-badge--soft ed-badge--success">CLOSED</span></td><td><span class="ed-badge ed-badge--soft ed-badge--neutral">LOW</span></td><td>Hanna Lindqvist</td></tr>
+                    </tbody>
+                </table>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Soft for the workhorse 95% of cells. Solid for MRA/MRIA and other escalation-level signals. Outline for archived or read-only context.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>The status dot only when the state implies motion or recent change (Open, In Review). Skip on terminal states (Closed, Resolved).</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdTag</code> for non-status metadata (categories, regulations, business unit). Sentence case, lower visual weight.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Inventing new tones per page. Pick from {neutral, info, success, warning, danger, brand} and use the canonical map.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Color is paired with a label — never a bare colored dot. Soft variants meet 4.5:1 against their backgrounds.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>If badge replaces text in a row, add <code>aria-label</code> with the full state name (<code>"Status: Overdue"</code>).</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Badge is non-interactive. If users can change status, wrap the row or render a separate menu — don't attach onClick to the badge.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Feedback/EdStatusBadge
+├─ AllSoft, AllSolid, AllOutline (matrix)
+├─ FindingLifecycle (canonical map)
+├─ Severity (canonical map)
+├─ WithDot
+└─ InTable, InHeader</code></pre>
+    </section>
+</main>
+</body>
+</html>

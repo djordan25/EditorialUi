@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditorialUI · Data bundle</title>
+    <link rel="stylesheet" href="../design_system_v2/shared/fonts.css">
+    <link rel="stylesheet" href="../design_system_v2/shared/tokens.css">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            background: var(--ed-color-surface-0);
+            color: var(--ed-color-text-primary);
+            font-family: var(--ed-font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 40px 96px; }
+        .eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 8px;
+        }
+        h1 {
+            font-family: var(--ed-font-sans);
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin: 0 0 8px;
+        }
+        .lede {
+            font-size: 16px;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 32px;
+            max-width: 64ch;
+        }
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 56px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        h2 .h2-eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--ed-color-text-muted);
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+        }
+        .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 8px;
+            border-radius: var(--ed-radius-sm);
+            background: var(--ed-color-brand-bg);
+            color: var(--ed-color-brand);
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .pill--neutral { background: var(--ed-color-status-neutral-bg); color: var(--ed-color-status-neutral); }
+
+        .cc-callout {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 26px;
+            margin: 32px 0;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-left: 3px solid var(--ed-color-brand);
+            border-radius: var(--ed-radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: border-color var(--ed-transition-base);
+        }
+        .cc-callout:hover { border-color: var(--ed-color-brand); }
+        .cc-callout__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--ed-radius-md);
+            background: var(--ed-color-brand);
+            color: var(--ed-color-brand-contrast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--ed-font-mono);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .cc-callout__body { display: flex; flex-direction: column; gap: 2px; }
+        .cc-callout__eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+        }
+        .cc-callout__title { font-size: 16px; font-weight: 600; color: var(--ed-color-text-primary); }
+        .cc-callout__sub { font-size: 13px; color: var(--ed-color-text-secondary); margin-top: 2px; }
+        .cc-callout__arrow { font-family: var(--ed-font-mono); font-size: 13px; color: var(--ed-color-brand); letter-spacing: 0.04em; }
+
+        .component {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            align-items: flex-start;
+        }
+        .component:last-child { border-bottom: none; }
+        .component__head { position: sticky; top: 0; padding-top: 4px; }
+        .component__meta {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            margin: 0 0 6px;
+        }
+        .component__title {
+            font-family: var(--ed-font-mono);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ed-color-text-primary);
+            margin: 0 0 12px;
+        }
+        .component__lede { font-size: 13px; color: var(--ed-color-text-secondary); margin: 0 0 12px; line-height: 1.55; }
+        .component__files {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            color: var(--ed-color-text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--ed-color-hairline);
+        }
+        .component__files b { color: var(--ed-color-text-secondary); font-weight: 400; }
+        .component__shots { display: flex; flex-direction: column; gap: 12px; }
+        .shot {
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            overflow: hidden;
+            background: var(--ed-color-surface-1);
+        }
+        .shot img { display: block; width: 100%; height: auto; }
+
+        .tree {
+            font-family: var(--ed-font-mono);
+            font-size: 12.5px;
+            line-height: 1.75;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            padding: 18px 22px;
+            color: var(--ed-color-text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .tree b { color: var(--ed-color-text-primary); font-weight: 500; }
+        .tree em { color: var(--ed-color-text-muted); font-style: normal; }
+
+        .matrix { width: 100%; border-collapse: collapse; margin-top: 8px; }
+        .matrix th, .matrix td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            font-size: 13px;
+        }
+        .matrix th {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            font-weight: 500;
+            background: var(--ed-color-surface-2);
+        }
+        .matrix code { font-family: var(--ed-font-mono); font-size: 12px; color: var(--ed-color-brand); }
+
+        .ship-list { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 0; }
+        .ship-list li {
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+        }
+        .ship-list code {
+            font-family: var(--ed-font-mono);
+            font-size: 12px;
+            color: var(--ed-color-text-primary);
+            min-width: 24ch;
+        }
+        .ship-list span { font-size: 13px; color: var(--ed-color-text-secondary); }
+
+        .footnote {
+            margin-top: 48px;
+            padding: 20px 24px;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .footnote strong { color: var(--ed-color-text-primary); font-weight: 500; }
+        .note {
+            margin: 0 0 24px;
+            padding: 14px 18px;
+            background: var(--ed-color-brand-bg);
+            border-radius: var(--ed-radius-sm);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .note strong { color: var(--ed-color-brand); font-weight: 600; }
+        code { font-family: var(--ed-font-mono); font-size: 12.5px; }
+
+        @media (max-width: 760px) {
+            .component { grid-template-columns: 1fr; gap: 16px; }
+            .component__head { position: static; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <p class="eyebrow">EditorialUI · Implementation</p>
+    <h1>Bundle 8 — Data</h1>
+    <p class="lede">
+        The components that render rows of records: the inventory data table
+        (sort / select / paginate), the static metadata table, and the scannable
+        list. Where the whole system comes together — cells host badges, tags,
+        menus, and drawers from earlier bundles.
+    </p>
+
+    <div class="pills">
+        <span class="pill">Bundle 8 · Data</span>
+        <span class="pill pill--neutral">3 components · 5 exports · 12 files</span>
+        <span class="pill pill--neutral">No new deps</span>
+    </div>
+
+    <a class="cc-callout" href="CLAUDE_CODE_PROMPT.md">
+        <span class="cc-callout__icon">cc</span>
+        <span class="cc-callout__body">
+            <span class="cc-callout__eyebrow">Hand-off prompt</span>
+            <span class="cc-callout__title">CLAUDE_CODE_PROMPT.md</span>
+            <span class="cc-callout__sub">Paste into Claude Code (with this bundle attached) to land it in <code>apostlerisk</code>. Assumes Bundles 1–7 merged; covers client-vs-server sort/pagination, the TanStack Virtual integration point, and how cells compose earlier-bundle components.</span>
+        </span>
+        <span class="cc-callout__arrow">open ↗</span>
+    </a>
+
+    <p class="note">
+        <strong>Composition bundle:</strong> <code>EdDataTable</code> cells host
+        <code>EdStatusBadge</code> / <code>EdTag</code> (B4), row actions are an
+        <code>EdMenu</code> (B7), row-click opens an <code>EdDrawer</code> (B6),
+        and empty/error slots take an <code>EdEmptyState</code> (B5) — all
+        caller-supplied, so the table still compiles standalone.
+    </p>
+
+    <h2><span class="h2-eyebrow">01</span> Components</h2>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">G1 · Data</p>
+            <h3 class="component__title">EdDataTable</h3>
+            <p class="component__lede">Generic, column-config driven inventory table. Per-column sort (client or server), row selection with toolbar + bulk actions, superseded rows, row actions, pagination, density, and empty / loading / error states. Semantic table throughout; virtualize at the call site for &gt;100 rows.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdDataTable.tsx</span>
+                <span><b>scss</b> EdDataTable.module.scss</span>
+                <span><b>stories</b> EdDataTable.stories.tsx</span>
+                <span><b>tests</b> EdDataTable.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdDataTable.png" alt="EdDataTable — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdDataTable.png" alt="EdDataTable — density and states"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">G2 · Data</p>
+            <h3 class="component__title">EdNativeTable + EdKeyValueTable</h3>
+            <p class="component__lede">Static plain tables for small known-row sets — no sort/select/virtualization. <code>EdKeyValueTable</code> is the label→value grid (<code>th scope=row</code>) for side panels; <code>EdNativeTable</code> is the columned variant with zebra + custom renderers. Reach for these instead of hand-rolling a table.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdNativeTable.tsx <em>(+ EdKeyValueTable)</em></span>
+                <span><b>scss</b> EdNativeTable.module.scss</span>
+                <span><b>stories</b> EdNativeTable.stories.tsx</span>
+                <span><b>tests</b> EdNativeTable.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdNativeTable.png" alt="EdNativeTable — anatomy (key-value)"></div>
+            <div class="shot"><img src="screenshots/02-EdNativeTable.png" alt="EdNativeTable — layouts"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">F3 · Data</p>
+            <h3 class="component__title">EdList</h3>
+            <p class="component__lede">Vertical list of selectable / scannable rows — picker results, recent items, entity selectors. Static <code>ul</code> or single-select <code>listbox</code> with arrow-key nav. Leading avatar/icon, title + description, trailing meta (folded into the accessible name), groups, empty + skeleton states.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdList.tsx</span>
+                <span><b>scss</b> EdList.module.scss</span>
+                <span><b>stories</b> EdList.stories.tsx</span>
+                <span><b>tests</b> EdList.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdList.png" alt="EdList — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdList.png" alt="EdList — variants"></div>
+        </div>
+    </div>
+
+    <h2><span class="h2-eyebrow">02</span> When to use which</h2>
+    <table class="matrix">
+        <thead><tr><th>Situation</th><th>Reach for</th></tr></thead>
+        <tbody>
+            <tr><td>Inventory page — ≥3 columns or ≥50 rows, sort / select / paginate</td><td><code>EdDataTable</code></td></tr>
+            <tr><td>3–10 rows of static metadata (side panel, modal summary)</td><td><code>EdKeyValueTable</code> / <code>EdNativeTable</code></td></tr>
+            <tr><td>Picker results, recent items, 1–2 fields, selection is the point</td><td><code>EdList</code></td></tr>
+            <tr><td>Button-triggered action list</td><td><code>EdMenu</code> (B7)</td></tr>
+            <tr><td>Items expand to reveal content</td><td><code>EdAccordion</code> (B6)</td></tr>
+        </tbody>
+    </table>
+
+    <h2><span class="h2-eyebrow">03</span> Drop locations</h2>
+    <div class="tree">design_handoff_editorialui_data/
+└── src/
+    └── components/
+        └── EditorialUI/
+            ├── <b>index.ts</b>                  <em>UPDATED · barrel adds 5 exports</em>
+            ├── EdNativeTable/            <em>EdNativeTable + EdKeyValueTable</em>
+            ├── EdDataTable/
+            └── EdList/</div>
+
+    <h2><span class="h2-eyebrow">04</span> Dependencies &amp; integration</h2>
+    <ul class="ship-list">
+        <li><em style="color: var(--ed-color-text-muted); font-style: normal;">— none new —</em><span>Plain React + CSS + lucide. Virtualization (TanStack Virtual) is an opt-in call-site wrap for &gt;100 rows.</span></li>
+        <li>Client vs server<span>Omit <code>sort</code>/<code>page</code> props for client-side; pass them (+ <code>onSortChange</code>/<code>onPageChange</code>) for server-paginated tables.</span></li>
+        <li>Native checkbox<span>Selection uses a styled native checkbox to stay dep-free; swap in EdCheckbox (B2) if you want that exact visual.</span></li>
+    </ul>
+
+    <h2><span class="h2-eyebrow">05</span> What this codifies</h2>
+    <ul class="ship-list">
+        <li>Tables read as tables<span>Semantic <code>table</code>/<code>thead</code>/<code>th scope</code> throughout. Never a card grid in place of a table.</span></li>
+        <li>Presentation, not data<span>The table owns sort/select/paginate UI + ARIA; fetching, server-state, and virtualization stay at the call site (TanStack).</span></li>
+        <li>Column-config, not children<span><code>EdColumn&lt;Row&gt;[]</code> drives the table — map your data, don't nest <code>&lt;Column&gt;</code> elements.</span></li>
+        <li>Checkbox ≠ row-click<span>Selecting a row never triggers <code>onRowClick</code>; the checkbox cell stops propagation.</span></li>
+        <li>Static gets a primitive too<span>Even 3-row metadata blocks use <code>EdKeyValueTable</code> so they inherit type / spacing / dark-mode.</span></li>
+    </ul>
+
+    <div class="footnote">
+        <strong>Next up — Bundle 9 (Late composites), the final bundle:</strong>
+        <code>EdDateRangePicker</code>, <code>EdFilterChipRow</code>,
+        <code>EdTagContainer</code>, <code>EdTagSelect</code>. These stitch together
+        primitives from Bundles 2–8 — the filter chip row sits above this bundle's
+        data table; tag select builds on the combobox + tag.
+    </div>
+</div>
+</body>
+</html>

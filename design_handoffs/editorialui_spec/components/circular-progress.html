@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdCircularProgress · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .ring {
+            display: inline-block;
+            position: relative;
+        }
+        .ring__svg { display: block; transform: rotate(-90deg); }
+        .ring__track { stroke: var(--ed-color-hairline); fill: none; }
+        .ring__fill  { stroke: var(--ed-color-brand); fill: none; stroke-linecap: round; transition: stroke-dashoffset 0.4s var(--ed-easing-standard); }
+        .ring__label { position: absolute; inset: 0; display:flex; align-items:center; justify-content:center; font-family: var(--ed-font-mono); font-size: 11px; color: var(--ed-color-text-secondary); }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "C3",
+    "group": "Feedback",
+    "name": "EdCircularProgress",
+    "lede": "Spinner for indeterminate waits and a thin circular ring for determinate progress with optional value label."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div style="display:flex; gap:48px; align-items:center; justify-content:center;">
+                <div style="text-align:center;">
+                    <div class="ed-spinner ed-spinner--lg"></div>
+                    <p style="font-family: var(--ed-font-mono); font-size: 11px; color: var(--ed-color-text-muted); margin: 12px 0 0;">indeterminate</p>
+                </div>
+                <div style="text-align:center;">
+                    <div class="ring" style="width: 36px; height: 36px;">
+                        <svg class="ring__svg" width="36" height="36" viewBox="0 0 36 36">
+                            <circle class="ring__track" cx="18" cy="18" r="15" stroke-width="3"/>
+                            <circle class="ring__fill" cx="18" cy="18" r="15" stroke-width="3" stroke-dasharray="94.25" stroke-dashoffset="28.27"/>
+                        </svg>
+                        <span class="ring__label">70%</span>
+                    </div>
+                    <p style="font-family: var(--ed-font-mono); font-size: 11px; color: var(--ed-color-text-muted); margin: 12px 0 0;">determinate</p>
+                </div>
+            </div>
+            <div style="margin-top:24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Indeterminate</strong> — open ring rotating at 0.7s/turn. Linear easing.</div>
+                <div class="ed-anatomy__callout"><strong>Determinate</strong> — track + fill arcs. Optional centered value (mono).</div>
+                <div class="ed-anatomy__callout"><strong>Stroke</strong> — 1.5–3px depending on size. Always rounded caps on fill.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Sizes</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">sm — 14px (inline)</span><div class="ed-cell__demo"><div class="ed-spinner ed-spinner--sm"></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">md — 20px (default)</span><div class="ed-cell__demo"><div class="ed-spinner"></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">lg — 32px (page-level)</span><div class="ed-cell__demo"><div class="ed-spinner ed-spinner--lg"></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">In context</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">in button (loading)</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary"><span class="ed-spinner ed-spinner--sm" style="border-color: rgba(255,255,255,0.3); border-top-color: white;"></span>Saving…</button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">in row (cell load)</span><div class="ed-cell__demo"><div style="display:flex; align-items:center; gap:8px; font-size: 13px; color: var(--ed-color-text-secondary);"><span class="ed-spinner ed-spinner--sm"></span>Loading evidence…</div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">page-level — center of empty area</span><div class="ed-cell__demo ed-cell__demo--block" style="height: 160px; display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center;"><div class="ed-spinner ed-spinner--lg"></div><p style="margin:0; font-size: 13px; color: var(--ed-color-text-muted);">Fetching findings…</p></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">determinate — closure progress</span><div class="ed-cell__demo"><div style="display:flex; align-items:center; gap:12px;"><div class="ring" style="width:32px; height:32px;"><svg class="ring__svg" width="32" height="32" viewBox="0 0 36 36"><circle class="ring__track" cx="18" cy="18" r="15" stroke-width="3"/><circle class="ring__fill ring__fill--success" cx="18" cy="18" r="15" stroke-width="3" stroke-dasharray="94.25" stroke-dashoffset="14.14" style="stroke: var(--ed-color-status-success);"/></svg><span class="ring__label">85%</span></div><span style="font-size:13px; color: var(--ed-color-text-secondary);">Closure tasks: 17 of 20</span></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">When NOT to use a spinner</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--prefer">Prefer skeletons</span><span>For content that loads with predictable structure — table rows, card grids, drawer details. Use <code>EdSkeleton</code>.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer progress meter</span><span>For long, predictable jobs (file upload, batch import). Use <code>EdProgressMeter</code> with stages.</span></li>
+            <li><span class="verdict verdict--use">Spinner is correct</span><span>Operations &gt; 200ms but with no progress signal: form submit, search query, sync trigger, cell-level loads.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span><code>role="status"</code> + <code>aria-live="polite"</code> + visually-hidden label e.g. <code>"Loading findings"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Determinate ring uses <code>role="progressbar"</code> + <code>aria-valuenow / aria-valuemin / aria-valuemax</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Honor <code>prefers-reduced-motion</code>: replace rotation with a pulse/stripe animation at 1.5s.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Feedback/EdCircularProgress
+├─ Indeterminate (sm/md/lg)
+├─ Determinate (0/25/50/75/100)
+├─ DeterminateSemantic (warning/danger overlays)
+├─ InButton, InRow, PageLevel
+└─ ReducedMotion</code></pre>
+    </section>
+</main>
+</body>
+</html>

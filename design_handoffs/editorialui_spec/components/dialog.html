@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdDialog · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .x { width:16px; height:16px; }
+        .stage { position: relative; height: 360px; background: var(--ed-color-surface-2); border-radius: var(--ed-radius-md); overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 24px; border: 1px solid var(--ed-color-hairline); }
+        .stage--page::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(var(--ed-color-hairline) 1px, transparent 1px); background-size: 100% 24px; background-position: 0 0; opacity: 0.5; pointer-events: none; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "D1",
+    "group": "Containers",
+    "name": "EdDialog",
+    "lede": "The low-level Radix-based modal surface — overlay, focus trap, header/body/footer slots. EdModal extends this with conventional title/actions; EdConfirmation is a preset. Use EdDialog directly only when nothing else fits."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 0;">
+            <div class="stage stage--page">
+                <div class="ed-overlay"></div>
+                <div class="ed-dialog ed-dialog--md">
+                    <div class="ed-dialog__header">
+                        <div class="ed-dialog__header-body">
+                            <h3 class="ed-dialog__title">Reopen finding</h3>
+                            <p class="ed-dialog__subtitle">F-2438 · CLOSED 2026-03-22</p>
+                        </div>
+                        <button class="ed-dialog__close" aria-label="Close"><svg class="icn x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+                    </div>
+                    <div class="ed-dialog__body">
+                        <p style="margin: 0 0 12px;">This will reopen the finding and re-attach it to the active validation queue. Reviewer notes will be preserved; closure timestamp will be cleared.</p>
+                        <p style="margin: 0; color: var(--ed-color-text-muted); font-size: 13px;">Audit log entry will be written.</p>
+                    </div>
+                    <div class="ed-dialog__footer ed-dialog__footer--with-meta">
+                        <span class="ed-dialog__footer-meta">⌘↩ to confirm</span>
+                        <div style="display:flex; gap:8px;">
+                            <button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button>
+                            <button class="ed-btn ed-btn--primary ed-btn--sm">Reopen finding</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Overlay</strong> — 42% black with 2px blur. Click dismisses (configurable).</div>
+                <div class="ed-anatomy__callout"><strong>Header</strong> — title + subtitle (mono, optional ID/timestamp) + close button.</div>
+                <div class="ed-anatomy__callout"><strong>Body</strong> — flexed scroll region. Padding 16/20.</div>
+                <div class="ed-anatomy__callout"><strong>Footer</strong> — actions on right. Optional meta on left (shortcut, doc link).</div>
+                <div class="ed-anatomy__callout"><strong>Container</strong> — radius md, surface-1, hairline border, elevation-3 shadow.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Sizes</h2></div>
+        <div class="ed-grid" style="grid-template-columns: 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">sm — 400 — confirmations</span><div class="ed-cell__demo ed-cell__demo--block" style="padding: 24px; display:flex; justify-content:center; background: var(--ed-color-surface-2); border-radius: var(--ed-radius-sm);"><div class="ed-dialog ed-dialog--sm"><div class="ed-dialog__header"><div class="ed-dialog__header-body"><h3 class="ed-dialog__title">Discard changes?</h3></div></div><div class="ed-dialog__body" style="font-size:13px;">Unsaved changes to this finding will be lost.</div><div class="ed-dialog__footer"><button class="ed-btn ed-btn--ghost ed-btn--sm">Keep editing</button><button class="ed-btn ed-btn--primary ed-btn--sm" style="background: var(--ed-color-status-danger);">Discard</button></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">md — 520 — default</span><div class="ed-cell__demo ed-cell__demo--block" style="padding: 24px; display:flex; justify-content:center; background: var(--ed-color-surface-2); border-radius: var(--ed-radius-sm);"><div class="ed-dialog ed-dialog--md"><div class="ed-dialog__header"><div class="ed-dialog__header-body"><h3 class="ed-dialog__title">Reopen finding</h3><p class="ed-dialog__subtitle">F-2438</p></div></div><div class="ed-dialog__body">Re-attach to active validation queue. Reviewer notes preserved.</div><div class="ed-dialog__footer"><button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button><button class="ed-btn ed-btn--primary ed-btn--sm">Reopen</button></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">lg — 720 — forms, multi-section</span><div class="ed-cell__demo ed-cell__demo--block" style="padding: 24px; display:flex; justify-content:center; background: var(--ed-color-surface-2); border-radius: var(--ed-radius-sm);"><div class="ed-dialog ed-dialog--lg"><div class="ed-dialog__header"><div class="ed-dialog__header-body"><h3 class="ed-dialog__title">New finding</h3><p class="ed-dialog__subtitle">Audit period: 2026-Q1 · Marcus Chen</p></div></div><div class="ed-dialog__body" style="height: 200px;"><p style="margin:0;">Form fields would render here — title, severity, category, owner, description, evidence attachments.</p></div><div class="ed-dialog__footer ed-dialog__footer--with-meta"><span class="ed-dialog__footer-meta">Auto-saved 11:42 UTC</span><div style="display:flex; gap:8px;"><button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button><button class="ed-btn ed-btn--secondary ed-btn--sm">Save draft</button><button class="ed-btn ed-btn--primary ed-btn--sm">Open finding</button></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">xl — 960 — multi-pane (rare)</span><div class="ed-cell__demo ed-cell__demo--block" style="padding: 24px; display:flex; justify-content:center; background: var(--ed-color-surface-2); border-radius: var(--ed-radius-sm); overflow-x: auto;"><div class="ed-dialog ed-dialog--xl"><div class="ed-dialog__header"><div class="ed-dialog__header-body"><h3 class="ed-dialog__title">Bulk edit · 14 findings selected</h3></div></div><div class="ed-dialog__body" style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px; height: 200px;"><div style="border-right: 1px solid var(--ed-color-hairline); padding-right: 16px;">Selection summary…</div><div>Edit form…</div></div><div class="ed-dialog__footer"><button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button><button class="ed-btn ed-btn--primary ed-btn--sm">Apply to 14</button></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Variants</h2></div>
+        <div class="ed-grid" style="grid-template-columns: 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">danger — destructive header rail</span><div class="ed-cell__demo ed-cell__demo--block" style="padding: 16px; display:flex; justify-content:center; background: var(--ed-color-surface-2); border-radius: var(--ed-radius-sm);"><div class="ed-dialog ed-dialog--md ed-dialog--danger"><div class="ed-dialog__header"><div class="ed-dialog__header-body"><h3 class="ed-dialog__title" style="color: var(--ed-color-status-danger);">Delete audit period</h3><p class="ed-dialog__subtitle">2025-Q4 · 312 findings</p></div></div><div class="ed-dialog__body">All findings, evidence, and audit log entries in this period will be permanently removed.</div><div class="ed-dialog__footer"><button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button><button class="ed-btn ed-btn--primary ed-btn--sm" style="background: var(--ed-color-status-danger);">Delete period</button></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">no header — content-led</span><div class="ed-cell__demo ed-cell__demo--block" style="padding: 16px; display:flex; justify-content:center; background: var(--ed-color-surface-2); border-radius: var(--ed-radius-sm);"><div class="ed-dialog ed-dialog--md"><div class="ed-dialog__body" style="padding: 24px;"><h3 style="margin: 0 0 8px; font-size: 16px;">First-time tour</h3><p style="margin: 0; color: var(--ed-color-text-secondary);">Walk through the finding lifecycle in 4 steps. Takes 90 seconds.</p></div><div class="ed-dialog__footer"><button class="ed-btn ed-btn--ghost ed-btn--sm">Skip</button><button class="ed-btn ed-btn--primary ed-btn--sm">Start tour</button></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Behavior</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Build on Radix Dialog. Focus traps within content; focus returns to trigger on close.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Esc dismisses. Overlay click dismisses by default; <code>preventOutsideClose</code> prop disables for unsaved-form guards.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Auto-focuses first focusable in body, OR an element with <code>autoFocus</code>. Title gets initial focus only if no input is present.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Body scrolls when content exceeds height. Header + footer remain pinned.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Stacking dialogs. Don't open a second dialog from inside one — use a confirmation step inline, or replace the content.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Building blocks for <code>EdModal</code>, <code>EdConfirmation</code>, multi-step forms.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdModal</code> for the 95% case — it preconfigures sensible defaults.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdDrawer</code> when content is contextually about a row/entity. Drawer keeps the page navigable.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Dialogs for transient confirmations like "Saved". Use a toast.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span><code>role="dialog"</code> + <code>aria-modal="true"</code> + <code>aria-labelledby</code> pointing at the title.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Body content gets <code>aria-describedby</code> when there's a clear description paragraph.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Outside-of-dialog content is <code>aria-hidden="true"</code> while open. Radix handles automatically.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Containers/EdDialog
+├─ Sizes (sm/md/lg/xl)
+├─ Danger
+├─ NoHeader
+├─ ScrollingBody
+├─ AutoFocusInput
+└─ PreventOutsideClose</code></pre>
+    </section>
+</main>
+</body>
+</html>

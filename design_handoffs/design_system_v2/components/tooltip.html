@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdTooltip · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .anchor {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--ed-color-text-secondary);
+            border-bottom: 1px dotted var(--ed-color-hairline-strong);
+            padding-bottom: 1px;
+            font-family: var(--ed-font-mono);
+            font-size: 12px;
+        }
+        .demo-stack { display: flex; flex-direction: column; gap: 36px; align-items: center; padding: 32px 24px; }
+        .demo-stack > * { position: relative; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "C5",
+    "group": "Feedback",
+    "name": "EdTooltip",
+    "lede": "Anchored, transient label that appears on hover or keyboard focus. Dark on light is the default. Rich variant supports a title + body for definitions and tooltips with metadata."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div style="display:flex; gap: 64px; align-items:flex-start; justify-content:center;">
+                <div style="display:flex; flex-direction:column; gap: 8px; align-items:center;">
+                    <div class="ed-tooltip">
+                        Reopen finding
+                        <span class="ed-tooltip__kbd">⌘R</span>
+                        <span class="ed-tooltip__arrow ed-tooltip__arrow--bottom"></span>
+                    </div>
+                    <button class="ed-btn ed-btn--secondary ed-btn--sm" style="margin-top: 8px;">Reopen</button>
+                </div>
+                <div style="display:flex; flex-direction:column; gap: 8px; align-items:center;">
+                    <div class="ed-tooltip ed-tooltip--rich">
+                        <p class="ed-tooltip__title">MRIA</p>
+                        <p class="ed-tooltip__body">Matter Requiring Immediate Attention. Highest severity. Closure must occur within 90 days; failure triggers regulator escalation.</p>
+                        <span class="ed-tooltip__arrow ed-tooltip__arrow--bottom"></span>
+                    </div>
+                    <span class="anchor" style="margin-top: 8px;">MRIA<svg class="icn" viewBox="0 0 24 24" style="width: 11px; height: 11px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+                </div>
+            </div>
+            <div style="margin-top: 36px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Bubble</strong> — text-primary bg, surface-1 text. 6/10 padding, 2px radius.</div>
+                <div class="ed-anatomy__callout"><strong>Arrow</strong> — 8px square rotated 45°. Color-matches bubble.</div>
+                <div class="ed-anatomy__callout"><strong>Kbd</strong> — inline code chip; opacity-low bg + mono. Optional.</div>
+                <div class="ed-anatomy__callout"><strong>Rich</strong> — title + body. Max width 320px, left-aligned.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Use cases</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">label icon-only button</span><div class="ed-cell__demo ed-cell__demo--block" style="display:flex; flex-direction: column; gap: 32px; align-items:center;">
+                <div class="ed-tooltip">Filters<span class="ed-tooltip__arrow ed-tooltip__arrow--bottom"></span></div>
+                <button class="ed-btn ed-btn--ghost ed-btn--icon" aria-label="Filters"><svg class="icn" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></button>
+            </div></div>
+            <div class="ed-cell"><span class="ed-cell__label">show keyboard shortcut</span><div class="ed-cell__demo ed-cell__demo--block" style="display:flex; flex-direction: column; gap: 32px; align-items:center;">
+                <div class="ed-tooltip">Save draft<span class="ed-tooltip__kbd">⌘S</span><span class="ed-tooltip__arrow ed-tooltip__arrow--bottom"></span></div>
+                <button class="ed-btn ed-btn--secondary ed-btn--sm">Save draft</button>
+            </div></div>
+            <div class="ed-cell"><span class="ed-cell__label">explain truncated text</span><div class="ed-cell__demo ed-cell__demo--block" style="display:flex; flex-direction: column; gap: 32px; align-items:center;">
+                <div class="ed-tooltip">F-2438 — Stale model documentation in PD model v2.3<span class="ed-tooltip__arrow ed-tooltip__arrow--bottom"></span></div>
+                <span style="font-family: var(--ed-font-mono); font-size: 13px; max-width: 140px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis;">F-2438 — Stale model documentation in PD…</span>
+            </div></div>
+            <div class="ed-cell"><span class="ed-cell__label">define a term (rich)</span><div class="ed-cell__demo ed-cell__demo--block" style="display:flex; flex-direction: column; gap: 32px; align-items:center;">
+                <div class="ed-tooltip ed-tooltip--rich" style="max-width: 280px;">
+                    <p class="ed-tooltip__title">SLA breach window</p>
+                    <p class="ed-tooltip__body">Findings missed their SLA when no closure or extension is recorded by the due date.</p>
+                    <span class="ed-tooltip__arrow ed-tooltip__arrow--bottom"></span>
+                </div>
+                <span class="anchor">SLA breach window</span>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Placement</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">top (default)</span><div class="ed-cell__demo" style="height: 96px; align-items: flex-end; justify-content: center;"><div class="ed-tooltip" style="margin-bottom: 12px;">Top<span class="ed-tooltip__arrow ed-tooltip__arrow--bottom"></span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">bottom</span><div class="ed-cell__demo" style="height: 96px; align-items: flex-start; justify-content: center;"><div class="ed-tooltip" style="margin-top: 12px;"><span class="ed-tooltip__arrow ed-tooltip__arrow--top"></span>Bottom</div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">left</span><div class="ed-cell__demo" style="height: 96px;"><div class="ed-tooltip" style="margin-right: 12px;">Left<span class="ed-tooltip__arrow ed-tooltip__arrow--right"></span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">right</span><div class="ed-cell__demo" style="height: 96px;"><div class="ed-tooltip" style="margin-left: 12px;"><span class="ed-tooltip__arrow ed-tooltip__arrow--left"></span>Right</div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Behavior</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Open delay 500ms on first hover; instant on subsequent hovers within 500ms (group hover).</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Close immediately on mouseleave; close on Esc when keyboard-shown.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Open instantly on focus (no delay) for keyboard users.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Auto-flip placement when bubble would clip viewport. Use Floating UI / Radix flip middleware.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Tooltips on touch — they don't trigger reliably. Replace with a popover or render the label inline at touch breakpoints.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Disambiguate icon-only controls. Show keyboard shortcuts. Reveal full text behind ellipsis. Define jargon in lists/tables.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdPopover</code> for content that needs interaction (links, copy buttons, multi-line forms). Tooltip is for read-only hints.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Critical info in tooltips — keyboard, touch, and screen-reader users may miss them. If it's required, put it in the page.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Build on Radix Tooltip — provides correct <code>aria-describedby</code> wiring and focus visibility.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>The trigger is focusable. Tooltip has <code>role="tooltip"</code>, never receives focus itself.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>For icon-only buttons, the tooltip text duplicates <code>aria-label</code> — both must match.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Honor <code>prefers-reduced-motion</code>: disable the open/close fade.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Feedback/EdTooltip
+├─ Default (top)
+├─ Placements (top/bottom/left/right + auto-flip)
+├─ WithKbd
+├─ Rich (title + body)
+├─ TruncatedText
+└─ DelayBehavior</code></pre>
+    </section>
+</main>
+</body>
+</html>

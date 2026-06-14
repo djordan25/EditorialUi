@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdPopover · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .stage { background: var(--ed-color-surface-2); border-radius: var(--ed-radius-sm); padding: 32px 24px; display: flex; justify-content: center; align-items: flex-start; min-height: 200px; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "D3",
+    "group": "Containers",
+    "name": "EdPopover",
+    "lede": "Anchored, non-modal panel for arbitrary interactive content. Use it where a tooltip is too small and a dialog is too heavy — quick edits, filter panels, attribute pickers."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 0;">
+            <div class="stage" style="flex-direction: column; gap: 16px;">
+                <button class="ed-btn ed-btn--secondary ed-btn--sm" aria-expanded="true">Severity filters <svg class="icn" viewBox="0 0 24 24" style="margin-left: 6px;"><polyline points="6,9 12,15 18,9"/></svg></button>
+                <div class="ed-popover" style="margin-top: 4px;">
+                    <span class="ed-popover__arrow ed-popover__arrow--top"></span>
+                    <p class="ed-cell__label" style="margin: 0 0 8px;">Filter by severity</p>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg width="10" height="10" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9 10,3"/></svg></span><span>Medium</span></label>
+                        <label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg width="10" height="10" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9 10,3"/></svg></span><span>High</span></label>
+                        <label class="ed-checkbox"><span class="ed-checkbox__box"></span><span>MRA</span></label>
+                        <label class="ed-checkbox"><span class="ed-checkbox__box"></span><span>MRIA</span></label>
+                    </div>
+                    <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--ed-color-hairline); display: flex; justify-content: space-between; align-items:center;">
+                        <button class="ed-btn ed-btn--link ed-btn--sm">Clear</button>
+                        <button class="ed-btn ed-btn--primary ed-btn--sm">Apply</button>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Anchor</strong> — focusable trigger. <code>aria-expanded</code> toggles.</div>
+                <div class="ed-anatomy__callout"><strong>Arrow</strong> — optional. Auto-points at anchor.</div>
+                <div class="ed-anatomy__callout"><strong>Body</strong> — surface-1, padding 12/14 (default) or 16 (padded). Min 220, max 360.</div>
+                <div class="ed-anatomy__callout"><strong>Action row</strong> — optional. Pattern: Clear link on left, primary on right.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Use cases</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">quick edit — single field</span><div class="ed-cell__demo ed-cell__demo--block stage" style="min-height: 220px;"><div class="ed-popover" style="width: 260px;"><p class="ed-cell__label" style="margin: 0 0 6px;">Edit owner</p><div class="ed-field"><div class="ed-field__control"><input class="ed-field__input" value="Marcus Chen"></div></div><div style="margin-top: 10px; display: flex; justify-content: flex-end; gap: 6px;"><button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button><button class="ed-btn ed-btn--primary ed-btn--sm">Save</button></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">attribute picker — date</span><div class="ed-cell__demo ed-cell__demo--block stage" style="min-height: 220px;"><div class="ed-popover ed-popover--flush" style="width: 240px; padding: 0;"><div style="padding: 8px 12px; border-bottom: 1px solid var(--ed-color-hairline); font-family: var(--ed-font-mono); font-size: 11px; color: var(--ed-color-text-muted); letter-spacing: 0.06em; text-transform: uppercase;">Due date</div><div style="padding: 12px; font-size: 13px;">[date grid would render here]</div><div style="padding: 8px 12px; border-top: 1px solid var(--ed-color-hairline); display: flex; justify-content: space-between; font-size: 12px;"><button class="ed-btn ed-btn--link ed-btn--sm">No due date</button><button class="ed-btn ed-btn--primary ed-btn--sm">Set</button></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">help / definition</span><div class="ed-cell__demo ed-cell__demo--block stage" style="min-height: 220px;"><div class="ed-popover ed-popover--padded" style="width: 320px;"><p style="margin: 0 0 6px; font-size: 13px; font-weight: 600;">Closure attestation</p><p style="margin: 0 0 8px; color: var(--ed-color-text-secondary); font-size: 13px;">Owner-signed statement that remediation steps are complete. Required for findings with severity ≥ Medium.</p><a class="ed-btn ed-btn--link ed-btn--sm">Open policy →</a></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">overflow menu — actions</span><div class="ed-cell__demo ed-cell__demo--block stage" style="min-height: 220px;"><div class="ed-popover ed-popover--flush" style="width: 220px;"><div class="ed-menu" style="border: 0; box-shadow: none; padding: 4px;"><div class="ed-menu__item">Duplicate finding</div><div class="ed-menu__item">Reassign owner</div><div class="ed-menu__item">Copy ID</div><div class="ed-menu__separator"></div><div class="ed-menu__item ed-menu__item--danger">Delete finding</div></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Behavior</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Build on Radix Popover. Non-modal — page scroll continues, surrounding content stays interactive.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Outside click dismisses. Esc dismisses and returns focus to trigger.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Auto-flip placement when bubble would clip viewport. Default placement is below (bottom-start).</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Open animation: 120ms fade + 4px slide from anchor.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Popovers that require scrolling. If content needs height, move to a drawer or modal.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Quick edit of a single value, filter panels, definitions, overflow action menus, simple attribute pickers.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdTooltip</code> for read-only hints (no interactive content).</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdMenu</code> for command lists — same look, but role-specific a11y wiring.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdModal</code> for forms with more than a single field, or where confirmation matters.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Trigger has <code>aria-expanded</code> + <code>aria-controls</code> pointing at popover ID.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Popover has <code>role="dialog"</code> when it contains form controls; omit when it's a passive disclosure.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Focus moves into popover on open; first focusable receives focus.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Containers/EdPopover
+├─ QuickEdit, AttributePicker, Help, OverflowMenu
+├─ Placements (top/bottom/left/right + flip)
+├─ Padded, Flush
+└─ WithFooterActions</code></pre>
+    </section>
+</main>
+</body>
+</html>

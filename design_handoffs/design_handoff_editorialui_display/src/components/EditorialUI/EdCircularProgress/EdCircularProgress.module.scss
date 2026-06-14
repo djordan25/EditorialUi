@@ -1,0 +1,88 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    line-height: 0;
+}
+
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* ---- Indeterminate: rotating bordered arc ---- */
+.spinner {
+    display: inline-block;
+    border-style: solid;
+    border-color: var(--ed-color-hairline);
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: edSpin 700ms linear infinite;
+    box-sizing: border-box;
+}
+
+.toneBrand   { color: var(--ed-color-brand); }
+.toneSuccess { color: var(--ed-color-status-success); }
+.toneWarning { color: var(--ed-color-status-warning); }
+.toneDanger  { color: var(--ed-color-status-danger); }
+.toneInverse { color: var(--ed-color-brand-contrast); }
+
+/* The track ring inside indeterminate spinner uses a tinted hairline for tone */
+.spinner.toneBrand    { border-color: var(--ed-color-brand-bg); border-top-color: var(--ed-color-brand); }
+.spinner.toneSuccess  { border-color: var(--ed-color-status-success-bg); border-top-color: var(--ed-color-status-success); }
+.spinner.toneWarning  { border-color: var(--ed-color-status-warning-bg); border-top-color: var(--ed-color-status-warning); }
+.spinner.toneDanger   { border-color: var(--ed-color-status-danger-bg); border-top-color: var(--ed-color-status-danger); }
+.spinner.toneInverse  { border-color: rgba(255,255,255,0.3); border-top-color: var(--ed-color-brand-contrast); }
+
+@keyframes edSpin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spinner {
+        animation: edPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes edPulse {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+    }
+}
+
+/* ---- Determinate ring ---- */
+.ring { position: relative; }
+
+.svg {
+    transform: rotate(-90deg);
+    display: block;
+}
+
+.track {
+    stroke: var(--ed-color-hairline);
+}
+
+.fill {
+    stroke: currentColor;
+    transition: stroke-dashoffset 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--ed-font-mono);
+    color: var(--ed-color-text-secondary);
+    line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fill { transition: none; }
+}

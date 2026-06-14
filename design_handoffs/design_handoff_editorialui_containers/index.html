@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditorialUI · Containers bundle</title>
+    <link rel="stylesheet" href="../design_system_v2/shared/fonts.css">
+    <link rel="stylesheet" href="../design_system_v2/shared/tokens.css">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            background: var(--ed-color-surface-0);
+            color: var(--ed-color-text-primary);
+            font-family: var(--ed-font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 40px 96px; }
+        .eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 8px;
+        }
+        h1 {
+            font-family: var(--ed-font-sans);
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin: 0 0 8px;
+        }
+        .lede {
+            font-size: 16px;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 32px;
+            max-width: 64ch;
+        }
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 56px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        h2 .h2-eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--ed-color-text-muted);
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+        }
+        .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 8px;
+            border-radius: var(--ed-radius-sm);
+            background: var(--ed-color-brand-bg);
+            color: var(--ed-color-brand);
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .pill--neutral { background: var(--ed-color-status-neutral-bg); color: var(--ed-color-status-neutral); }
+
+        .cc-callout {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 26px;
+            margin: 32px 0;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-left: 3px solid var(--ed-color-brand);
+            border-radius: var(--ed-radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: border-color var(--ed-transition-base);
+        }
+        .cc-callout:hover { border-color: var(--ed-color-brand); }
+        .cc-callout__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--ed-radius-md);
+            background: var(--ed-color-brand);
+            color: var(--ed-color-brand-contrast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--ed-font-mono);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .cc-callout__body { display: flex; flex-direction: column; gap: 2px; }
+        .cc-callout__eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+        }
+        .cc-callout__title { font-size: 16px; font-weight: 600; color: var(--ed-color-text-primary); }
+        .cc-callout__sub { font-size: 13px; color: var(--ed-color-text-secondary); margin-top: 2px; }
+        .cc-callout__arrow { font-family: var(--ed-font-mono); font-size: 13px; color: var(--ed-color-brand); letter-spacing: 0.04em; }
+
+        .component {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            align-items: flex-start;
+        }
+        .component:last-child { border-bottom: none; }
+        .component__head { position: sticky; top: 0; padding-top: 4px; }
+        .component__meta {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            margin: 0 0 6px;
+        }
+        .component__title {
+            font-family: var(--ed-font-mono);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ed-color-text-primary);
+            margin: 0 0 12px;
+        }
+        .component__lede { font-size: 13px; color: var(--ed-color-text-secondary); margin: 0 0 12px; line-height: 1.55; }
+        .component__files {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            color: var(--ed-color-text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--ed-color-hairline);
+        }
+        .component__files b { color: var(--ed-color-text-secondary); font-weight: 400; }
+        .component__shots { display: flex; flex-direction: column; gap: 12px; }
+        .shot {
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            overflow: hidden;
+            background: var(--ed-color-surface-1);
+        }
+        .shot img { display: block; width: 100%; height: auto; }
+
+        .tree {
+            font-family: var(--ed-font-mono);
+            font-size: 12.5px;
+            line-height: 1.75;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            padding: 18px 22px;
+            color: var(--ed-color-text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .tree b { color: var(--ed-color-text-primary); font-weight: 500; }
+        .tree em { color: var(--ed-color-text-muted); font-style: normal; }
+
+        .ship-list { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 0; }
+        .ship-list li {
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+        }
+        .ship-list code {
+            font-family: var(--ed-font-mono);
+            font-size: 12px;
+            color: var(--ed-color-text-primary);
+            min-width: 26ch;
+        }
+        .ship-list span { font-size: 13px; color: var(--ed-color-text-secondary); }
+
+        .footnote {
+            margin-top: 48px;
+            padding: 20px 24px;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .footnote strong { color: var(--ed-color-text-primary); font-weight: 500; }
+        .note {
+            margin: 0 0 24px;
+            padding: 14px 18px;
+            background: var(--ed-color-brand-bg);
+            border-radius: var(--ed-radius-sm);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .note strong { color: var(--ed-color-brand); font-weight: 600; }
+        code { font-family: var(--ed-font-mono); font-size: 12.5px; }
+
+        @media (max-width: 760px) {
+            .component { grid-template-columns: 1fr; gap: 16px; }
+            .component__head { position: static; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <p class="eyebrow">EditorialUI · Implementation</p>
+    <h1>Bundle 6 — Containers</h1>
+    <p class="lede">
+        The surfaces that hold other content: cards, the modal convention layer,
+        the contextual drawer, and the two collapsible primitives. Builds directly
+        on Bundle 5's <code>EdDialog</code>.
+    </p>
+
+    <div class="pills">
+        <span class="pill">Bundle 6 · Containers</span>
+        <span class="pill pill--neutral">5 components · 11 exports · 20 files</span>
+        <span class="pill pill--neutral">Radix Accordion · Radix Dialog</span>
+    </div>
+
+    <a class="cc-callout" href="CLAUDE_CODE_PROMPT.md">
+        <span class="cc-callout__icon">cc</span>
+        <span class="cc-callout__body">
+            <span class="cc-callout__eyebrow">Hand-off prompt</span>
+            <span class="cc-callout__title">CLAUDE_CODE_PROMPT.md</span>
+            <span class="cc-callout__sub">Paste into Claude Code (with this bundle attached) to land it in <code>apostlerisk</code>. Assumes Bundles 1–5 merged; covers the EdModal→EdDialog prerequisite, the EdDrawer/EdSidePanel naming, and the non-modal drawer default.</span>
+        </span>
+        <span class="cc-callout__arrow">open ↗</span>
+    </a>
+
+    <p class="note">
+        <strong>Naming:</strong> the roadmap called the side panel <code>EdSidePanel</code>;
+        the design spec (D4) names it <code>EdDrawer</code>. The implementation follows the
+        spec — <code>EdDrawer</code> is canonical, <code>EdSidePanel</code> is exported as an
+        alias so either import works.
+    </p>
+
+    <h2><span class="h2-eyebrow">01</span> Components</h2>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">D5 · Containers</p>
+            <h3 class="component__title">EdCard</h3>
+            <p class="component__lede">Bordered surface for grouping — dashboard tiles, metadata panels, entity previews. Flat by default (border is the affordance; shadow only on interactive hover). Variants default / flat / ghost; <code>asChild</code> + <code>interactive</code> make it a real button/link. Not a table substitute.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdCard.tsx <em>(+ Header/Body/Footer)</em></span>
+                <span><b>scss</b> EdCard.module.scss</span>
+                <span><b>stories</b> EdCard.stories.tsx</span>
+                <span><b>tests</b> EdCard.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdCard.png" alt="EdCard — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdCard.png" alt="EdCard — variants"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">D2 · Containers · on EdDialog</p>
+            <h3 class="component__title">EdModal</h3>
+            <p class="component__lede">Convention layer over <code>EdDialog</code>. Title/subtitle/body/footer + footerMeta + a busy state (aria-busy, frozen body, live-region status, auto-guarded). Use for almost every modal. Copy: verb-led title, primary action echoes the verb — never "OK".</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdModal.tsx</span>
+                <span><b>scss</b> EdModal.module.scss</span>
+                <span><b>stories</b> EdModal.stories.tsx</span>
+                <span><b>tests</b> EdModal.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdModal.png" alt="EdModal — patterns"></div>
+            <div class="shot"><img src="screenshots/02-EdModal.png" alt="EdModal — footer compositions and copy guidance"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">D4 · Containers · Radix Dialog</p>
+            <h3 class="component__title">EdDrawer <em style="color:var(--ed-color-text-muted)">(alias EdSidePanel)</em></h3>
+            <p class="component__lede">Right- or left-edge sliding panel for row-contextual detail. Non-modal by default (page stays interactive, updates in place); <code>modal</code> adds overlay + focus trap. Four sizes, <code>preventClose</code> guard, <code>EdDrawerSection</code> for labelled groups. Encode open state in the URL at the call site.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdDrawer.tsx <em>(+ Section, alias)</em></span>
+                <span><b>scss</b> EdDrawer.module.scss</span>
+                <span><b>stories</b> EdDrawer.stories.tsx</span>
+                <span><b>tests</b> EdDrawer.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdDrawer.png" alt="EdDrawer — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdDrawer.png" alt="EdDrawer — modes and sizes"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">D7 · Containers</p>
+            <h3 class="component__title">EdDisclosure</h3>
+            <p class="component__lede">Inline show/hide for a single secondary block. Lighter than an accordion — no border, no panel chrome, just a mono trigger + rotating chevron. For advanced options, raw data, debug dumps. For 2+ blocks use EdAccordion.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdDisclosure.tsx</span>
+                <span><b>scss</b> EdDisclosure.module.scss</span>
+                <span><b>stories</b> EdDisclosure.stories.tsx</span>
+                <span><b>tests</b> EdDisclosure.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdDisclosure.png" alt="EdDisclosure — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdDisclosure.png" alt="EdDisclosure — patterns"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">D6 · Containers · Radix Accordion</p>
+            <h3 class="component__title">EdAccordion</h3>
+            <p class="component__lede">Vertically-stacked collapsible sections. Single-open (default, collapsible) or multi-open. Items as a data array with optional mono meta (counts, status). Arrow-key nav + roving focus from Radix. For sibling views prefer EdTabs (Bundle 7).</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdAccordion.tsx</span>
+                <span><b>scss</b> EdAccordion.module.scss</span>
+                <span><b>stories</b> EdAccordion.stories.tsx</span>
+                <span><b>tests</b> EdAccordion.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdAccordion.png" alt="EdAccordion — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdAccordion.png" alt="EdAccordion — single and multi-open modes"></div>
+        </div>
+    </div>
+
+    <h2><span class="h2-eyebrow">02</span> Drop locations</h2>
+    <div class="tree">design_handoff_editorialui_containers/
+└── src/
+    └── components/
+        └── EditorialUI/
+            ├── <b>index.ts</b>                  <em>UPDATED · barrel adds 11 exports</em>
+            ├── EdCard/                   <em>EdCard + Header/Body/Footer</em>
+            ├── EdModal/                  <em>imports ../EdDialog (Bundle 5)</em>
+            ├── EdDrawer/                 <em>EdDrawer + Section + EdSidePanel alias</em>
+            ├── EdDisclosure/
+            └── EdAccordion/</div>
+
+    <h2><span class="h2-eyebrow">03</span> Dependencies</h2>
+    <ul class="ship-list">
+        <li><code>@radix-ui/react-accordion</code><span>EdAccordion — the one new install.</span></li>
+        <li><code>@radix-ui/react-dialog</code><span>EdDrawer — already present from Bundle 5.</span></li>
+        <li><code>@radix-ui/react-slot</code><span>EdCard asChild — already present from Bundle 1.</span></li>
+        <li><code>EdDialog</code> (Bundle 5)<span>Prerequisite — EdModal imports it. Bundle 5 must be merged first.</span></li>
+    </ul>
+
+    <h2><span class="h2-eyebrow">04</span> What this codifies</h2>
+    <ul class="ship-list">
+        <li>Flat by default<span>Cards have no resting shadow — the hairline border is the affordance; elevation only on interactive hover.</span></li>
+        <li>Interactive surfaces are real elements<span>An interactive card is a <code>&lt;button&gt;</code>/<code>&lt;a&gt;</code> via <code>asChild</code>, never a <code>&lt;div onClick&gt;</code>.</span></li>
+        <li>One modal convention<span><code>EdModal</code> bakes in title/body/footer + busy so auth, finding, and exam flows stay consistent. Busy keeps cancel live.</span></li>
+        <li>Drawers default non-modal<span>The page stays operable; the drawer updates in place as list selection changes. Opt into <code>modal</code> for focused edits.</span></li>
+        <li>Disclosure vs accordion<span>One block → disclosure (no chrome). Two or more → accordion. Sibling views → EdTabs.</span></li>
+    </ul>
+
+    <div class="footnote">
+        <strong>Next up — Bundle 7 (Navigation):</strong>
+        <code>EdTabs</code>, <code>EdBreadcrumb</code>, <code>EdMenu</code>,
+        <code>EdContextMenu</code>. <code>EdAccordion</code> points users to
+        <code>EdTabs</code> for sibling views; <code>EdMenu</code> will reuse the
+        listbox + popover patterns from Bundle 3's combobox work.
+    </div>
+</div>
+</body>
+</html>

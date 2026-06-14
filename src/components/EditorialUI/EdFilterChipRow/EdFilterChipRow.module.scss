@@ -1,0 +1,99 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ed-space-2);
+}
+
+.group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ed-space-2);
+}
+
+.divider {
+    width: 1px;
+    height: 20px;
+    background: var(--ed-color-hairline);
+    margin: 0 var(--ed-space-1);
+}
+
+/* ---- Chip ---- */
+.chip {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+    padding: 0 10px;
+    background: var(--ed-color-surface-1);
+    border: 1px solid var(--ed-color-hairline);
+    border-radius: var(--ed-radius-pill);
+    color: var(--ed-color-text-primary);
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-sm);
+    font-weight: var(--ed-font-weight-medium);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--ed-transition-base), border-color var(--ed-transition-base), color var(--ed-transition-base);
+
+    &:hover:not(:disabled) {
+        border-color: var(--ed-color-hairline-bold);
+        background: var(--ed-color-surface-2);
+    }
+    &:focus-visible {
+        outline: 2px solid var(--ed-color-focus-ring);
+        outline-offset: 2px;
+    }
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+/* Selected: bg AND border AND text change (never color alone). */
+.chipSelected {
+    background: var(--ed-color-surface-1);
+    border-color: var(--ed-color-brand);
+    color: var(--ed-color-brand);
+
+    &:hover:not(:disabled) {
+        background: var(--ed-color-brand-bg-strong);
+        border-color: var(--ed-color-brand);
+    }
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--ed-radius-pill);
+    flex-shrink: 0;
+}
+
+.count {
+    display: inline-flex;
+    align-items: center;
+    height: 16px;
+    padding: 0 5px;
+    border-radius: var(--ed-radius-pill);
+    background: var(--ed-color-surface-3);
+    color: var(--ed-color-text-secondary);
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    line-height: 1;
+    margin-right: -4px;
+}
+
+.chipSelected .count {
+    background: var(--ed-color-brand);
+    color: var(--ed-color-brand-contrast);
+}
+
+.overflow {
+    display: inline-flex;
+    align-items: center;
+}

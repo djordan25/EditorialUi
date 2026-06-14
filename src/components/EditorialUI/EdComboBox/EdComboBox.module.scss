@@ -1,0 +1,83 @@
+@use '../../../theme/tokens-v2';
+@use '../_internal/menu.module.scss';
+
+/* Spec-contract overrides for the shared trigger chrome.
+ * The spec's `.ed-select__trigger` declares no `line-height`, so it computes
+ * to `normal`; the shared rule sets `line-height: 1`. Match the spec. */
+:global(.edcombo__trigger) {
+    line-height: normal;
+}
+
+/* Spec applies the danger focus-ring on the error state unconditionally
+ * (`.ed-select__trigger--error { box-shadow: 0 0 0 3px ...danger-bg }`),
+ * not only while focused/open. Match the spec. */
+:global(.edcombo__trigger--error) {
+    box-shadow: 0 0 0 3px var(--ed-color-status-danger-bg);
+}
+
+.root {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.fullWidth {
+    display: flex;
+    width: 100%;
+}
+
+.label {
+    font-family: var(--ed-font-mono);
+    font-size: var(--ed-font-size-2xs);
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-secondary);
+    line-height: 1;
+    user-select: none;
+}
+
+.labelRequired::after {
+    content: ' *';
+    color: var(--ed-color-status-danger);
+}
+
+.triggerInner {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--ed-space-1);
+    flex: 1;
+    min-width: 0;
+}
+
+.value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.hint {
+    margin: 0;
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-xs);
+    line-height: var(--ed-line-height-snug);
+    color: var(--ed-color-text-muted);
+}
+
+.hintError {
+    color: var(--ed-color-status-danger);
+}
+
+.spinner {
+    animation: edcomboSpin 700ms linear infinite;
+    color: var(--ed-color-text-muted);
+}
+
+@keyframes edcomboSpin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spinner { animation: none; }
+}

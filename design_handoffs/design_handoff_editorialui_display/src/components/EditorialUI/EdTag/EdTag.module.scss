@@ -1,0 +1,92 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: var(--ed-radius-sm);
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-xs);
+    font-weight: var(--ed-font-weight-medium);
+    line-height: 1;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: -2px;
+}
+
+.label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.close {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: var(--ed-radius-pill);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-right: -3px;
+    color: currentColor;
+    opacity: 0.7;
+    transition:
+        background var(--ed-transition-base),
+        opacity var(--ed-transition-base);
+
+    &:hover {
+        opacity: 1;
+        background: currentColor;
+        color: var(--ed-color-surface-1);
+    }
+    &:focus-visible {
+        outline: 2px solid var(--ed-color-focus-ring);
+        outline-offset: 1px;
+    }
+}
+
+/* ---- Tones ---- */
+.toneNeutral {
+    background: var(--ed-color-surface-2);
+    color: var(--ed-color-text-secondary);
+    border: 1px solid var(--ed-color-hairline);
+}
+
+.toneBrand {
+    background: var(--ed-color-brand-bg);
+    color: var(--ed-color-brand);
+}
+
+.toneSuccess {
+    background: var(--ed-color-status-success-bg);
+    color: var(--ed-color-status-success);
+}
+
+.toneWarning {
+    background: var(--ed-color-status-warning-bg);
+    color: var(--ed-color-status-warning);
+}
+
+.toneDanger {
+    background: var(--ed-color-status-danger-bg);
+    color: var(--ed-color-status-danger);
+}
+
+/* Reverse close-button hover for dark-ish tones */
+.toneBrand .close:hover,
+.toneSuccess .close:hover,
+.toneWarning .close:hover,
+.toneDanger .close:hover {
+    background: currentColor;
+    color: var(--ed-color-surface-1);
+}

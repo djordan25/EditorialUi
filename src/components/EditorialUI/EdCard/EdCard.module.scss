@@ -1,0 +1,136 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: flex;
+    flex-direction: column;
+    background: var(--ed-color-surface-1);
+    border: 1px solid var(--ed-color-hairline);
+    border-radius: var(--ed-radius-md);
+    overflow: hidden;
+    text-align: left;
+    color: inherit;
+    /* reset for asChild button/a */
+    font: inherit;
+    text-decoration: none;
+    padding: 0;
+}
+
+/* ---- Variants ---- */
+.flat {
+    border: 0;
+    background: var(--ed-color-surface-2);
+}
+
+.ghost {
+    background: transparent;
+    border-style: dashed;
+    border-color: var(--ed-color-hairline-strong);
+}
+
+/* ---- Interactive ---- */
+.interactive {
+    cursor: pointer;
+    transition:
+        border-color var(--ed-transition-base),
+        box-shadow var(--ed-transition-base),
+        background var(--ed-transition-base);
+
+    &:hover {
+        border-color: var(--ed-color-hairline-bold);
+        box-shadow: var(--ed-elevation-2);
+    }
+    &:focus-visible {
+        outline: 2px solid var(--ed-color-focus-ring);
+        outline-offset: 2px;
+    }
+    &:active {
+        background: var(--ed-color-surface-2);
+    }
+}
+
+.ghost.interactive:hover {
+    border-color: var(--ed-color-brand);
+    box-shadow: none;
+    background: var(--ed-color-brand-bg);
+}
+
+/* ---- Selected ---- */
+.selected {
+    border-color: var(--ed-color-brand);
+    box-shadow: 0 0 0 1px var(--ed-color-brand);
+
+    &:hover {
+        border-color: var(--ed-color-brand);
+    }
+}
+
+/* ---- Header ---- */
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--ed-space-3);
+    padding: var(--ed-space-4) var(--ed-space-4) var(--ed-space-2);
+}
+
+.headerBody {
+    min-width: 0;
+}
+
+.eyebrow {
+    margin: 0;
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-muted);
+    line-height: 1.3;
+}
+
+.title {
+    margin: 4px 0 0;
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-lg);
+    font-weight: var(--ed-font-weight-semibold);
+    color: var(--ed-color-text-primary);
+    line-height: var(--ed-line-height-snug);
+}
+
+.adornment {
+    flex-shrink: 0;
+}
+
+/* ---- Body ---- */
+.body {
+    padding: var(--ed-space-3) var(--ed-space-4) var(--ed-space-4);
+    font-size: var(--ed-font-size-md);
+    color: var(--ed-color-text-secondary);
+    line-height: var(--ed-line-height-base);
+    flex: 1;
+}
+
+/* When body is the first child (no header), restore top padding */
+.header + .body {
+    padding-top: 0;
+}
+
+/* ---- Footer ---- */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ed-space-3);
+    padding: var(--ed-space-2) var(--ed-space-4);
+    background: var(--ed-color-surface-2);
+    border-top: 1px solid var(--ed-color-hairline);
+    font-family: var(--ed-font-mono);
+    font-size: 11px;
+    color: var(--ed-color-text-muted);
+}
+
+.flat .footer,
+.ghost .footer {
+    background: transparent;
+    border-top: none;
+    padding-top: 0;
+}

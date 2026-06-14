@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdDisclosure · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:12px; height:12px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "D7",
+    "group": "Containers",
+    "name": "EdDisclosure",
+    "lede": "Inline show/hide for a single, secondary block of content. Lighter than an accordion — no border, no panel chrome. Use for advanced options, raw data, debug info."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div style="max-width: 480px; width: 100%;">
+                <p style="margin: 0 0 12px; color: var(--ed-color-text-secondary); font-size: 13px;">Finding details rendered above.</p>
+                <div class="ed-disclosure">
+                    <button class="ed-disclosure__trigger" aria-expanded="true">
+                        <svg class="icn" viewBox="0 0 24 24" style="transform: rotate(90deg);"><polyline points="9,18 15,12 9,6"/></svg>
+                        Advanced metadata
+                    </button>
+                    <div class="ed-disclosure__panel">
+                        <table style="width:100%; font-family: var(--ed-font-mono); font-size: 11px; color: var(--ed-color-text-secondary); border-collapse: collapse;">
+                            <tr><td style="padding: 2px 0; width: 140px;">internal-id</td><td>fnd-9F4D-2026-2438</td></tr>
+                            <tr><td style="padding: 2px 0;">created-by</td><td>hanna.lindqvist@modelriskiq.com</td></tr>
+                            <tr><td style="padding: 2px 0;">workflow-version</td><td>v3.2.0</td></tr>
+                            <tr><td style="padding: 2px 0;">checksum</td><td>sha256:c47b8a…</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="ed-disclosure" style="border-top: 0;">
+                    <button class="ed-disclosure__trigger" aria-expanded="false">
+                        <svg class="icn" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+                        Raw JSON
+                    </button>
+                </div>
+            </div>
+            <div style="margin-top: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Trigger</strong> — mono eyebrow style. Chevron rotates on open.</div>
+                <div class="ed-anatomy__callout"><strong>No panel chrome</strong> — content sits inline, no card, no fill.</div>
+                <div class="ed-anatomy__callout"><strong>Hairline rules</strong> — top + bottom, deliberately faint.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Patterns</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">advanced options — secondary form fields</span><div class="ed-cell__demo ed-cell__demo--block"><div style="max-width: 480px;"><div class="ed-field"><label class="ed-field__label">Title</label><div class="ed-field__control"><input class="ed-field__input" value="Stale model documentation"></div></div><div class="ed-disclosure" style="margin-top: 14px;"><button class="ed-disclosure__trigger" aria-expanded="true"><svg class="icn" viewBox="0 0 24 24" style="transform: rotate(90deg);"><polyline points="9,18 15,12 9,6"/></svg>Advanced options</button><div class="ed-disclosure__panel" style="display: flex; flex-direction: column; gap: 12px;"><div class="ed-field"><label class="ed-field__label">Workflow version</label><button class="ed-select__trigger"><span class="ed-select__value">v3.2.0 (default)</span></button></div><div class="ed-field"><label class="ed-field__label">Notify validators on save</label><label class="ed-switch"><span class="ed-switch__track ed-switch__track--on"><span class="ed-switch__thumb"></span></span><span style="font-size: 13px;">On</span></label></div></div></div></div></div></div>
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">debug info — collapsed by default, mono dump</span><div class="ed-cell__demo ed-cell__demo--block"><div style="max-width: 480px;"><div class="ed-disclosure"><button class="ed-disclosure__trigger" aria-expanded="true"><svg class="icn" viewBox="0 0 24 24" style="transform: rotate(90deg);"><polyline points="9,18 15,12 9,6"/></svg>Debug · request trace</button><div class="ed-disclosure__panel"><pre style="margin: 0; font-family: var(--ed-font-mono); font-size: 11px; color: var(--ed-color-text-secondary); white-space: pre-wrap; background: var(--ed-color-surface-2); padding: 10px 12px; border-radius: 4px;">trace-id  c47b8a3f-91d2-4f...
+duration  142ms
+status    200
+cache     hit</pre></div></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Single block of optional / secondary content inline within a form, card, or detail panel.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdAccordion</code> for 2+ related blocks. Multiple disclosures stacked feels noisy.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Hiding default / common content. Disclosure is for the user who explicitly wants more.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Native <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> is fine. If overriding, mirror <code>aria-expanded</code> + <code>aria-controls</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Trigger is the only focus target. Tab past it lands in the panel content (when expanded).</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Containers/EdDisclosure
+├─ Default, Expanded, Collapsed
+├─ AdvancedOptions (form context)
+└─ DebugDump (mono panel)</code></pre>
+    </section>
+</main>
+</body>
+</html>

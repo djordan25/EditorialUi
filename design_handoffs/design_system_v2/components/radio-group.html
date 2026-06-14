@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdRadioGroup · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "A7",
+    "group": "Inputs",
+    "name": "EdRadioGroup",
+    "lede": "Mutually-exclusive choice from 2–5 options. The group is the unit; a single radio button never appears alone. For 6+ options, use EdSelect or EdComboBox."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">States — single radio</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">unchecked</span><div class="ed-cell__demo"><label class="ed-radio"><span class="ed-radio__dot"></span><span>Daily</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">hover</span><div class="ed-cell__demo"><label class="ed-radio"><span class="ed-radio__dot" style="border-color: var(--ed-color-brand);"></span><span>Daily</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">focus</span><div class="ed-cell__demo"><label class="ed-radio"><span class="ed-radio__dot ed-radio__dot--focus"></span><span>Daily</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">checked</span><div class="ed-cell__demo"><label class="ed-radio"><span class="ed-radio__dot ed-radio__dot--checked"></span><span>Daily</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">checked + focus</span><div class="ed-cell__demo"><label class="ed-radio"><span class="ed-radio__dot ed-radio__dot--checked ed-radio__dot--focus"></span><span>Daily</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">disabled</span><div class="ed-cell__demo"><label class="ed-radio"><span class="ed-radio__dot ed-radio__dot--disabled"></span><span style="color: var(--ed-color-text-disabled);">Daily</span></label></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Layouts</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">vertical (default)</span><div class="ed-cell__demo ed-cell__demo--block"><p class="ed-field__label" style="margin-bottom:10px;">Validation cadence</p><div style="display:flex; flex-direction:column; gap:10px;">
+                <label class="ed-radio"><span class="ed-radio__dot ed-radio__dot--checked"></span><span>Daily</span></label>
+                <label class="ed-radio"><span class="ed-radio__dot"></span><span>Weekly</span></label>
+                <label class="ed-radio"><span class="ed-radio__dot"></span><span>Monthly</span></label>
+                <label class="ed-radio"><span class="ed-radio__dot"></span><span>On-demand only</span></label>
+            </div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">horizontal</span><div class="ed-cell__demo ed-cell__demo--block"><p class="ed-field__label" style="margin-bottom:10px;">View</p><div style="display:flex; gap:24px;">
+                <label class="ed-radio"><span class="ed-radio__dot ed-radio__dot--checked"></span><span>Table</span></label>
+                <label class="ed-radio"><span class="ed-radio__dot"></span><span>Inspector</span></label>
+                <label class="ed-radio"><span class="ed-radio__dot"></span><span>Graph</span></label>
+            </div></div><span class="ed-cell__note">2–4 short labels.</span></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">With descriptions</h2></div>
+        <p class="ed-section__sub">Two-line layout for choices that need explanation. Description aligns to the label, secondary color.</p>
+        <div class="ed-anatomy" style="padding:32px;">
+            <div style="display:flex; flex-direction:column; gap:16px; width:100%; max-width:520px;">
+                <p class="ed-field__label">Approval mode</p>
+                <label class="ed-radio"><span class="ed-radio__dot ed-radio__dot--checked"></span><span class="ed-checkbox__label-block"><strong style="font-weight:500;">Single-approver</strong><span class="ed-checkbox__desc">Any member of the Risk Ops team can approve a graph version for production.</span></span></label>
+                <label class="ed-radio"><span class="ed-radio__dot"></span><span class="ed-checkbox__label-block"><strong style="font-weight:500;">Two-person rule (recommended)</strong><span class="ed-checkbox__desc">Approval requires sign-off from one Risk Ops and one Validation user.</span></span></label>
+                <label class="ed-radio"><span class="ed-radio__dot"></span><span class="ed-checkbox__label-block"><strong style="font-weight:500;">Committee</strong><span class="ed-checkbox__desc">Approval requires a vote from the Model Risk Committee. Slower; for tier-1 models only.</span></span></label>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>2–5 mutually-exclusive choices, all visible at once.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Vertical when descriptions are present or labels are long. Horizontal for 2–4 short labels.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdSelect</code> for 6+ options or when space is tight.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Boolean (yes/no) — use <code>EdCheckbox</code> or <code>EdSwitch</code>. Two-radio yes/no is wasted space.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Pre-selected destructive option. Default should be the safest, most-common choice.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Use Radix RadioGroup — handles arrow-key navigation and roving tabindex.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Group label via <code>&lt;legend&gt;</code> or <code>aria-labelledby</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Tab into the group → first option focused; arrows move within; Tab leaves.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Inputs/EdRadioGroup
+├─ Vertical, Horizontal
+├─ WithDescriptions
+├─ Disabled (single, all)
+└─ ControlledExample</code></pre>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "editorialui-verify-selection",
+  "private": true,
+  "type": "module",
+  "description": "Visual verification harness for EditorialUI Bundle 3 (Selection). Diffs Storybook stories against the design spec HTML.",
+  "scripts": {
+    "verify": "node visual-verify.mjs",
+    "verify:list": "node visual-verify.mjs --list-spec",
+    "verify:select": "node visual-verify.mjs EdSelect",
+    "verify:combobox": "node visual-verify.mjs EdComboBox",
+    "verify:autocomplete": "node visual-verify.mjs EdAutocomplete"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0",
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0"
+  }
+}

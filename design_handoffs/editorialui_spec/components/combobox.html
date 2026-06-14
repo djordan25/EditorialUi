@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdComboBox · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .check-icn { width: 14px; height: 14px; stroke:currentColor; stroke-width: 2; fill:none; stroke-linecap:round; stroke-linejoin:round;}
+        .hi { background: var(--ed-color-brand-bg); color: var(--ed-color-brand); padding: 0 1px; font-weight: 600; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "B2",
+    "group": "Selection",
+    "name": "EdComboBox",
+    "lede": "Searchable single-select for moderate-to-large known lists. Open menu, type to filter, pick one. For free-text-with-suggestions, use EdAutocomplete; for picking many, use multi-mode."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding:32px;">
+            <div style="display:flex; gap:48px; align-items:flex-start;">
+                <div style="width:280px;">
+                    <p class="ed-field__label" style="margin-bottom:6px;">Owner</p>
+                    <button class="ed-select__trigger ed-select__trigger--open">
+                        <span class="ed-select__value">Marcus Chen</span>
+                        <svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+                    </button>
+                </div>
+                <div class="ed-menu" style="position:static; width:300px; max-height:none;">
+                    <div class="ed-menu__search">
+                        <input class="ed-input" placeholder="Search owners…" value="ma" style="height:32px; font-size:13px;">
+                    </div>
+                    <div class="ed-menu__group-label">3 results</div>
+                    <div class="ed-menu__item ed-menu__item--selected ed-menu__item--active"><svg class="check-icn ed-menu__item-check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,5"/></svg><span><span class="hi">Ma</span>rcus Chen</span><span class="ed-menu__item-meta">Validation</span></div>
+                    <div class="ed-menu__item"><span><span class="hi">Ma</span>rgaret Yu</span><span class="ed-menu__item-meta">Risk Ops</span></div>
+                    <div class="ed-menu__item"><span>Han<span class="hi">ma</span>n Patel</span><span class="ed-menu__item-meta">Validation</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">States</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">empty</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Owner</label><button class="ed-select__trigger"><span class="ed-select__value ed-select__value--placeholder">Select owner…</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">selected</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Owner</label><button class="ed-select__trigger"><span class="ed-select__value">Marcus Chen</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">filtering</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="position:static; max-height:none; width:100%;"><div class="ed-menu__search"><input class="ed-input" value="ma" style="height:32px;"></div><div class="ed-menu__item ed-menu__item--active"><span><span class="hi">Ma</span>rcus Chen</span></div><div class="ed-menu__item"><span><span class="hi">Ma</span>rgaret Yu</span></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">empty results</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="position:static; max-height:none; width:100%;"><div class="ed-menu__search"><input class="ed-input" value="zzz" style="height:32px;"></div><div class="ed-menu__empty">No owners match "zzz"</div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">loading</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="position:static; max-height:none; width:100%;"><div class="ed-menu__search"><input class="ed-input" value="ma" style="height:32px;"></div><div class="ed-menu__empty"><span style="display:inline-flex; align-items:center; gap:8px;"><svg class="icn" viewBox="0 0 24 24" style="animation: spin 1s linear infinite;"><path d="M12 2 v4 M12 18 v4 M2 12 h4 M18 12 h4" stroke-opacity="0.6"/></svg> Loading…</span></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">error</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label ed-field__label--required">Owner</label><button class="ed-select__trigger ed-select__trigger--error"><span class="ed-select__value ed-select__value--placeholder">Select owner…</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button><p class="ed-field__hint ed-field__hint--error">Required.</p></div></div></div>
+        </div>
+        <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Multi-select mode</h2></div>
+        <div class="ed-anatomy" style="padding:32px;">
+            <div style="display:flex; gap:48px; align-items:flex-start;">
+                <div style="width:320px;">
+                    <p class="ed-field__label" style="margin-bottom:6px;">Tags</p>
+                    <div class="ed-select__trigger" style="height:auto; min-height:36px; padding:6px 12px; flex-wrap:wrap; gap:4px;">
+                        <span class="ed-tag">PRA SS3/21<svg class="icn ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span>
+                        <span class="ed-tag">CCAR 2025<svg class="icn ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span>
+                        <span class="ed-tag">IFRS 9<svg class="icn ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span>
+                        <span style="color: var(--ed-color-text-faint); font-size: 13px; padding: 2px 0;">Add more…</span>
+                    </div>
+                </div>
+                <div class="ed-menu" style="position:static; width:280px; max-height:none;">
+                    <div class="ed-menu__item ed-menu__item--selected"><svg class="check-icn ed-menu__item-check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,5"/></svg>PRA SS3/21</div>
+                    <div class="ed-menu__item ed-menu__item--selected"><svg class="check-icn ed-menu__item-check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,5"/></svg>CCAR 2025</div>
+                    <div class="ed-menu__item ed-menu__item--selected"><svg class="check-icn ed-menu__item-check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,5"/></svg>IFRS 9</div>
+                    <div class="ed-menu__item">SR 11-7</div>
+                    <div class="ed-menu__item">Basel IV</div>
+                    <div class="ed-menu__separator"></div>
+                    <div class="ed-menu__item" style="font-size: 13px; color: var(--ed-color-text-muted);">Clear all</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Async loading</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">staged loading — owners (35), regulations (200+)</span><div class="ed-cell__demo ed-cell__demo--block">
+                <div style="display:flex; gap:24px;">
+                    <div class="ed-menu" style="position:static; max-height:none; width:240px;">
+                        <div class="ed-menu__search"><input class="ed-input" placeholder="Search…" style="height:32px;"></div>
+                        <div class="ed-menu__group-label">Recent</div>
+                        <div class="ed-menu__item">Marcus Chen</div>
+                        <div class="ed-menu__item">Priya Rao</div>
+                        <div class="ed-menu__item">Hanna Lindqvist</div>
+                        <div class="ed-menu__separator"></div>
+                        <div class="ed-menu__group-label">All owners (35)</div>
+                        <div class="ed-menu__item">Ada Voss</div>
+                        <div class="ed-menu__item">Boris Petrov</div>
+                        <div class="ed-menu__item">Cara Liu</div>
+                    </div>
+                    <div class="ed-rules" style="margin:0; flex:1;">
+                        <ul style="list-style:none; padding:0; margin:0;">
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--ed-color-hairline); font-size: 13px;">Show recents first when query is empty</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--ed-color-hairline); font-size: 13px;">Debounce keystrokes 200ms before fetching</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--ed-color-hairline); font-size: 13px;">Cache by query — never re-fetch same string in session</li>
+                            <li style="padding: 8px 0; font-size: 13px;">Cancel in-flight requests when query changes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Picking from known lists where users would benefit from typing — owners, regulations, models, model owners, business units.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Multi mode for tag-style selection. Show selected as <code>EdTag</code> chips inside the trigger.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdAutocomplete</code> when free text is also valid (entering a value not in the list).</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdSelect</code> for ≤7 fixed options where a search bar adds friction.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Forcing users to scroll long lists with no filter — always show the search input when items &gt; 10.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Build on Radix Combobox or HeadlessUI Combobox; uses <code>role="combobox"</code> + <code>aria-autocomplete="list"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Selected item updates <code>aria-activedescendant</code>. Live region announces "{n} results".</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Esc closes menu without changing selection. Enter on highlighted item selects.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Multi mode: each selected tag is a focusable chip with its own remove button (keyboard reachable).</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Selection/EdComboBox
+├─ Default, Filtering, EmptyResults
+├─ Loading, Error
+├─ Multi (selected, with overflow)
+├─ AsyncOwners (mock 35 owners w/ recents)
+└─ AsyncRegulations (mock 200+ items)</code></pre>
+    </section>
+</main>
+</body>
+</html>

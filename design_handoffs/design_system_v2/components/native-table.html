@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdNativeTable · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "G2",
+    "group": "Data",
+    "name": "EdNativeTable",
+    "lede": "Static, plain table for small known-row metadata grids. No virtualization, no sort, no selection. Reach for this in side panels and modal summary blocks; use EdDataTable for everything else."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <table class="ed-table" style="max-width: 480px;">
+                <tbody>
+                    <tr><td class="ed-table__cell--mono" style="width: 140px; color: var(--ed-color-text-muted);">ID</td><td class="ed-table__cell--mono">F-2438</td></tr>
+                    <tr><td class="ed-table__cell--mono" style="color: var(--ed-color-text-muted);">CREATED</td><td>2026-03-22 · Hanna Lindqvist</td></tr>
+                    <tr><td class="ed-table__cell--mono" style="color: var(--ed-color-text-muted);">OWNER</td><td>Marcus Chen</td></tr>
+                    <tr><td class="ed-table__cell--mono" style="color: var(--ed-color-text-muted);">SEVERITY</td><td><span class="ed-badge ed-badge--soft ed-badge--warning">MEDIUM</span></td></tr>
+                    <tr><td class="ed-table__cell--mono" style="color: var(--ed-color-text-muted);">REGULATIONS</td><td>PRA SS3/21, CCAR 2025</td></tr>
+                    <tr><td class="ed-table__cell--mono" style="color: var(--ed-color-text-muted);">SHA-256</td><td class="ed-table__cell--mono">c47b8a3f91d2…</td></tr>
+                </tbody>
+            </table>
+            <div style="margin-top: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>No header row</strong> — labels live in left column instead.</div>
+                <div class="ed-anatomy__callout"><strong>Left column</strong> — mono uppercase labels, muted. Fixed width.</div>
+                <div class="ed-anatomy__callout"><strong>Right column</strong> — value. Plain text, mono, or composed (badge, link).</div>
+                <div class="ed-anatomy__callout"><strong>Compact</strong> — typically 32px rows. Border-bottom on each row.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Layouts</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">key-value (most common)</span><div class="ed-cell__demo ed-cell__demo--block"><table class="ed-table ed-table--compact"><tbody><tr><td class="ed-table__cell--mono" style="width: 100px; color: var(--ed-color-text-muted);">SEVERITY</td><td><span class="ed-badge ed-badge--soft ed-badge--warning">MEDIUM</span></td></tr><tr><td class="ed-table__cell--mono" style="color: var(--ed-color-text-muted);">STATUS</td><td><span class="ed-badge ed-badge--soft ed-badge--warning">OPEN</span></td></tr><tr><td class="ed-table__cell--mono" style="color: var(--ed-color-text-muted);">DUE</td><td class="ed-table__cell--mono">2026-04-22</td></tr></tbody></table></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">columned (small data set with headers)</span><div class="ed-cell__demo ed-cell__demo--block"><table class="ed-table ed-table--compact"><thead><tr><th>Validator</th><th>Findings</th><th>Overdue</th></tr></thead><tbody><tr><td>Marcus Chen</td><td class="ed-table__cell--mono">14</td><td class="ed-table__cell--mono" style="color: var(--ed-color-status-danger);">2</td></tr><tr><td>Priya Rao</td><td class="ed-table__cell--mono">8</td><td class="ed-table__cell--mono">0</td></tr><tr><td>Hanna Lindqvist</td><td class="ed-table__cell--mono">11</td><td class="ed-table__cell--mono">1</td></tr></tbody></table></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">zebra-striped (for scannability when rows visually blend)</span><div class="ed-cell__demo ed-cell__demo--block"><table class="ed-table ed-table--compact ed-table--zebra"><thead><tr><th>Quarter</th><th>Open</th><th>Closed</th><th>MRA</th></tr></thead><tbody><tr><td class="ed-table__cell--mono">2026-Q1</td><td class="ed-table__cell--mono">87</td><td class="ed-table__cell--mono">211</td><td class="ed-table__cell--mono">3</td></tr><tr><td class="ed-table__cell--mono">2025-Q4</td><td class="ed-table__cell--mono">42</td><td class="ed-table__cell--mono">298</td><td class="ed-table__cell--mono">5</td></tr><tr><td class="ed-table__cell--mono">2025-Q3</td><td class="ed-table__cell--mono">12</td><td class="ed-table__cell--mono">312</td><td class="ed-table__cell--mono">2</td></tr></tbody></table></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">in side panel</span><div class="ed-cell__demo ed-cell__demo--block"><div style="border: 1px solid var(--ed-color-hairline); border-radius: var(--ed-radius-md); padding: 16px; background: var(--ed-color-surface-1);"><p class="ed-cell__label" style="margin: 0 0 8px;">Metadata</p><table class="ed-table ed-table--compact"><tbody><tr><td class="ed-table__cell--mono" style="width: 80px; color: var(--ed-color-text-muted);">VERSION</td><td>v3.2.0</td></tr><tr><td class="ed-table__cell--mono" style="color: var(--ed-color-text-muted);">UPDATED</td><td>2 days ago</td></tr><tr><td class="ed-table__cell--mono" style="color: var(--ed-color-text-muted);">AUTHOR</td><td>marcus.chen</td></tr></tbody></table></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>3–10 rows of static metadata. Side-panel detail blocks. Modal summaries before / after sections.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdDataTable</code> when there's any sort, selection, filter, or pagination.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>A <code>&lt;dl&gt;</code>-based "key-value list" component if you'd never want columns — but EdNativeTable handles both with one primitive.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Hand-rolling tables. Even static blocks inherit type, spacing, and dark-mode tokens through this primitive.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>For key-value: <code>&lt;th scope="row"&gt;</code> on label cells. Screen readers announce "ID: F-2438".</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>For columned: <code>&lt;th scope="col"&gt;</code>. Add <code>&lt;caption&gt;</code> when the table title isn't visible above.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Same dark-mode contrast rules as EdDataTable — uppercase mono labels stay at AA.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Data/EdNativeTable
+├─ KeyValue
+├─ Columned
+├─ Zebra
+└─ InSidePanel</code></pre>
+    </section>
+</main>
+</body>
+</html>

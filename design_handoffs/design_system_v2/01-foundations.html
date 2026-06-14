@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EditorialUI · Foundations</title>
+    <link rel="stylesheet" href="shared/spec.css">
+    <script src="shared/spec.js" defer></script>
+    <style>
+        /* page-local helpers */
+        .swatch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1px;
+            background: var(--ed-color-hairline);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            overflow: hidden;
+        }
+        .swatch-card {
+            background: var(--ed-color-surface-1);
+            display: flex;
+            flex-direction: column;
+        }
+        .swatch-card__chip {
+            height: 100px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+        }
+        .swatch-card__body {
+            padding: 12px 16px 16px;
+        }
+        .swatch-card__name {
+            font-family: var(--ed-font-mono);
+            font-size: var(--ed-font-size-xs);
+            color: var(--ed-color-text-primary);
+            margin: 0 0 4px;
+        }
+        .swatch-card__role {
+            font-size: var(--ed-font-size-sm);
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 8px;
+            line-height: var(--ed-line-height-snug);
+        }
+        .swatch-card__hex {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            color: var(--ed-color-text-faint);
+        }
+
+        /* type scale row */
+        .type-row {
+            display: grid;
+            grid-template-columns: 180px 1fr 180px;
+            gap: 24px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            align-items: baseline;
+        }
+        .type-row:last-child { border-bottom: none; }
+        .type-row__meta {
+            font-family: var(--ed-font-mono);
+            font-size: var(--ed-font-size-xs);
+            color: var(--ed-color-text-muted);
+            line-height: var(--ed-line-height-snug);
+        }
+        .type-row__sample {
+            color: var(--ed-color-text-primary);
+            line-height: var(--ed-line-height-tight);
+        }
+        .type-row__role {
+            font-family: var(--ed-font-mono);
+            font-size: var(--ed-font-size-xs);
+            color: var(--ed-color-text-secondary);
+            text-align: right;
+            line-height: var(--ed-line-height-snug);
+        }
+
+        /* spacing scale */
+        .space-rows { display: flex; flex-direction: column; gap: 6px; }
+        .space-row {
+            display: grid;
+            grid-template-columns: 80px 80px 1fr;
+            gap: 16px;
+            align-items: center;
+            padding: 6px 16px;
+            font-family: var(--ed-font-mono);
+            font-size: var(--ed-font-size-xs);
+            color: var(--ed-color-text-secondary);
+        }
+        .space-row__bar {
+            height: 16px;
+            background: var(--ed-color-brand);
+        }
+        .space-row__name { color: var(--ed-color-text-primary); }
+
+        /* radius row */
+        .radius-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+        .radius-card {
+            background: var(--ed-color-surface-2);
+            border: 1px solid var(--ed-color-hairline);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .radius-card__demo {
+            width: 80px;
+            height: 64px;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline-strong);
+        }
+        .radius-card__name {
+            font-family: var(--ed-font-mono);
+            font-size: var(--ed-font-size-xs);
+            color: var(--ed-color-text-primary);
+        }
+        .radius-card__val {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            color: var(--ed-color-text-faint);
+        }
+
+        /* elevation row */
+        .elev-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            padding: 32px;
+            background: var(--ed-color-surface-2);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+        }
+        .elev-card {
+            background: var(--ed-color-surface-1);
+            height: 96px;
+            border-radius: var(--ed-radius-md);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 12px 16px;
+            gap: 2px;
+        }
+        .elev-card__name {
+            font-family: var(--ed-font-mono);
+            font-size: var(--ed-font-size-xs);
+            color: var(--ed-color-text-primary);
+        }
+        .elev-card__role {
+            font-size: 11px;
+            color: var(--ed-color-text-muted);
+        }
+
+        /* motion row */
+        .motion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .motion-card {
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            padding: 16px;
+            background: var(--ed-color-surface-1);
+        }
+        .motion-card__track {
+            height: 24px;
+            background: var(--ed-color-surface-2);
+            border-radius: 2px;
+            position: relative;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .motion-card__dot {
+            position: absolute;
+            top: 4px; left: 4px;
+            width: 16px; height: 16px;
+            background: var(--ed-color-brand);
+            border-radius: 2px;
+        }
+        .motion-card:hover .motion-card__dot {
+            transform: translateX(calc(100% + 160px));
+        }
+        .motion-card[data-speed="fast"] .motion-card__dot { transition: transform var(--ed-transition-fast); }
+        .motion-card[data-speed="base"] .motion-card__dot { transition: transform var(--ed-transition-base); }
+        .motion-card[data-speed="slow"] .motion-card__dot { transition: transform var(--ed-transition-slow); }
+        .motion-card[data-speed="spring"] .motion-card__dot { transition: transform var(--ed-transition-spring); }
+
+        /* status / severity strip */
+        .badge-row { display: flex; flex-wrap: wrap; gap: 8px; }
+        .ed-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: var(--ed-radius-sm);
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            font-weight: var(--ed-font-weight-medium);
+            line-height: 1;
+        }
+        .ed-badge::before {
+            content: "";
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+    </style>
+</head>
+<body>
+<main class="ed-spec">
+    <header class="ed-spec__topbar">
+        <nav class="ed-spec__crumbs">
+            <a href="00-index.html">EditorialUI</a> <span>/</span> Foundations
+        </nav>
+        <div class="ed-spec__topbar-actions">
+            <span>v0.1.0 · draft</span>
+            <button type="button" class="ed-theme-toggle" data-ed-theme-toggle>Dark</button>
+        </div>
+    </header>
+
+    <p class="ed-spec__eyebrow">Foundations</p>
+    <h1 class="ed-spec__title">Tokens, type, and rhythm</h1>
+    <p class="ed-spec__lede">
+        EditorialUI is the design language for ModelRiskIQ. Restrained, dense, typographic — built for regulated finance, not consumer apps.
+        Every primitive consumes the tokens on this page; nothing else. If a value isn't here, add it here first.
+    </p>
+
+    <!-- ============================================================ -->
+    <!-- 01 · Posture -->
+    <!-- ============================================================ -->
+    <section class="ed-section">
+        <div class="ed-section__head">
+            <span class="ed-section__num">01</span>
+            <h2 class="ed-section__title">Posture</h2>
+        </div>
+        <p class="ed-section__sub">
+            Bloomberg Terminal × Stripe Dashboard, with editorial restraint. Information lives in tables and reading panels, not cards.
+            Color is reserved for meaning. Display sizes earn their slot. Sentence case throughout.
+        </p>
+
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span><strong>Cool-grey neutrals</strong>, generous hairlines, a single cobalt accent. Type does the heavy lifting.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span><strong>Light by default</strong> for governance, auth, and reading-room surfaces. Dark for long-session work — graph builder, monitoring.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><strong>Tables to cards</strong>. Tables read as tables. Cards are reserved for editorial moments and dashboards.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span><strong>Decorative gradients</strong>, drop shadows on flat surfaces, emoji, color used for branding rather than meaning.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span><strong>Title Case</strong>. Sentence case for buttons, headers, labels. Acronyms keep their natural form (OK, MFA, MRA, SR 11-7).</span></li>
+        </ul>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 02 · Color -->
+    <!-- ============================================================ -->
+    <section class="ed-section">
+        <div class="ed-section__head">
+            <span class="ed-section__num">02</span>
+            <h2 class="ed-section__title">Color</h2>
+        </div>
+        <p class="ed-section__sub">
+            Defined in <code>oklch()</code> for predictable lightness and consistent chroma across hues.
+            Toggle the theme above — every swatch resolves through the same token in light and dark.
+        </p>
+
+        <h3 style="font-size: var(--ed-font-size-md); font-weight: var(--ed-font-weight-semibold); margin: 32px 0 16px;">Brand &amp; accent</h3>
+        <div class="swatch-grid">
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-brand);"></div>
+                <div class="swatch-card__body">
+                    <p class="swatch-card__name">color-brand</p>
+                    <p class="swatch-card__role">Primary action. Cobalt, derived from existing #1E4276. Used for primary buttons, links, focus rings, selection.</p>
+                </div>
+            </div>
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-brand-bg);"></div>
+                <div class="swatch-card__body">
+                    <p class="swatch-card__name">color-brand-bg</p>
+                    <p class="swatch-card__role">Tinted soft surface. Selected rows, filter chips pressed, info banners.</p>
+                </div>
+            </div>
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-accent);"></div>
+                <div class="swatch-card__body">
+                    <p class="swatch-card__name">color-accent</p>
+                    <p class="swatch-card__role">Reserved for marketing / unauth surfaces only. Never product-UI primary.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="font-size: var(--ed-font-size-md); font-weight: var(--ed-font-weight-semibold); margin: 40px 0 16px;">Surfaces</h3>
+        <div class="swatch-grid">
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-surface-0); border-bottom-color: var(--ed-color-hairline);"></div>
+                <div class="swatch-card__body">
+                    <p class="swatch-card__name">color-surface-0</p>
+                    <p class="swatch-card__role">App background. The page itself.</p>
+                </div>
+            </div>
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-surface-1);"></div>
+                <div class="swatch-card__body">
+                    <p class="swatch-card__name">color-surface-1</p>
+                    <p class="swatch-card__role">Cards, panels, modals. The reading surface.</p>
+                </div>
+            </div>
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-surface-2);"></div>
+                <div class="swatch-card__body">
+                    <p class="swatch-card__name">color-surface-2</p>
+                    <p class="swatch-card__role">Subtle alt — table headers, code blocks, inset zones.</p>
+                </div>
+            </div>
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-surface-3);"></div>
+                <div class="swatch-card__body">
+                    <p class="swatch-card__name">color-surface-3</p>
+                    <p class="swatch-card__role">Hover state on raised elements (menu items, list rows).</p>
+                </div>
+            </div>
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-surface-4);"></div>
+                <div class="swatch-card__body">
+                    <p class="swatch-card__name">color-surface-4</p>
+                    <p class="swatch-card__role">Pressed / active. Briefly visible on click.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="font-size: var(--ed-font-size-md); font-weight: var(--ed-font-weight-semibold); margin: 40px 0 16px;">Text</h3>
+        <div class="swatch-grid">
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-surface-1); display: flex; align-items: center; justify-content: center; color: var(--ed-color-text-primary); font-weight: 600;">Text primary</div>
+                <div class="swatch-card__body"><p class="swatch-card__name">color-text-primary</p><p class="swatch-card__role">Body, headings, table values.</p></div>
+            </div>
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-surface-1); display: flex; align-items: center; justify-content: center; color: var(--ed-color-text-secondary);">Text secondary</div>
+                <div class="swatch-card__body"><p class="swatch-card__name">color-text-secondary</p><p class="swatch-card__role">Sub-copy, descriptions, helper text.</p></div>
+            </div>
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-surface-1); display: flex; align-items: center; justify-content: center; color: var(--ed-color-text-muted);">Text muted</div>
+                <div class="swatch-card__body"><p class="swatch-card__name">color-text-muted</p><p class="swatch-card__role">Eyebrows, table column heads, captions.</p></div>
+            </div>
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-surface-1); display: flex; align-items: center; justify-content: center; color: var(--ed-color-text-faint); font-family: var(--ed-font-mono); font-size: 11px;">Text faint</div>
+                <div class="swatch-card__body"><p class="swatch-card__name">color-text-faint</p><p class="swatch-card__role">Mono footnotes, IDs, IPs.</p></div>
+            </div>
+            <div class="swatch-card">
+                <div class="swatch-card__chip" style="background: var(--ed-color-surface-1); display: flex; align-items: center; justify-content: center; color: var(--ed-color-text-disabled);">Text disabled</div>
+                <div class="swatch-card__body"><p class="swatch-card__name">color-text-disabled</p><p class="swatch-card__role">Disabled controls. Below AA — never primary content.</p></div>
+            </div>
+        </div>
+
+        <h3 style="font-size: var(--ed-font-size-md); font-weight: var(--ed-font-weight-semibold); margin: 40px 0 16px;">Status &amp; severity</h3>
+        <p class="ed-section__sub" style="margin-top: 0;">Five status tones for general UI; five-step severity gradient for SR 11-7 findings, exceptions, observations.</p>
+
+        <div style="margin-bottom: 24px;">
+            <p class="ed-cell__label" style="margin-bottom: 12px;">Status</p>
+            <div class="badge-row">
+                <span class="ed-badge" style="color: var(--ed-color-status-success); background: var(--ed-color-status-success-bg);">Success</span>
+                <span class="ed-badge" style="color: var(--ed-color-status-warning); background: var(--ed-color-status-warning-bg);">Warning</span>
+                <span class="ed-badge" style="color: var(--ed-color-status-danger); background: var(--ed-color-status-danger-bg);">Danger</span>
+                <span class="ed-badge" style="color: var(--ed-color-status-info); background: var(--ed-color-status-info-bg);">Info</span>
+                <span class="ed-badge" style="color: var(--ed-color-status-neutral); background: var(--ed-color-status-neutral-bg);">Neutral</span>
+            </div>
+        </div>
+        <div style="margin-bottom: 24px;">
+            <p class="ed-cell__label" style="margin-bottom: 12px;">Severity (SR 11-7)</p>
+            <div class="badge-row">
+                <span class="ed-badge" style="color: var(--ed-color-severity-low); background: var(--ed-color-status-success-bg);">Low</span>
+                <span class="ed-badge" style="color: var(--ed-color-severity-medium); background: var(--ed-color-status-warning-bg);">Medium</span>
+                <span class="ed-badge" style="color: var(--ed-color-severity-high); background: var(--ed-color-status-warning-bg);">High</span>
+                <span class="ed-badge" style="color: var(--ed-color-severity-mra); background: var(--ed-color-status-danger-bg);">MRA</span>
+                <span class="ed-badge" style="color: var(--ed-color-severity-mria); background: var(--ed-color-status-danger-bg);">MRIA</span>
+            </div>
+        </div>
+        <div>
+            <p class="ed-cell__label" style="margin-bottom: 12px;">Lifecycle (graph runs)</p>
+            <div class="badge-row">
+                <span class="ed-badge" style="color: var(--ed-color-lifecycle-configured); background: var(--ed-color-status-neutral-bg);">Configured</span>
+                <span class="ed-badge" style="color: var(--ed-color-lifecycle-queued); background: var(--ed-color-status-info-bg);">Queued</span>
+                <span class="ed-badge" style="color: var(--ed-color-lifecycle-in-progress); background: var(--ed-color-status-warning-bg);">In progress</span>
+                <span class="ed-badge" style="color: var(--ed-color-lifecycle-completed); background: var(--ed-color-status-success-bg);">Completed</span>
+                <span class="ed-badge" style="color: var(--ed-color-lifecycle-errored); background: var(--ed-color-status-danger-bg);">Errored</span>
+                <span class="ed-badge" style="color: var(--ed-color-lifecycle-canceled); background: var(--ed-color-status-neutral-bg);">Canceled</span>
+            </div>
+        </div>
+
+        <div class="ed-note" style="margin-top: 32px;">
+            <strong>Never inline a hex literal in a component file.</strong> If a component needs a color that isn't tokenized, add the token to <code>tokens.css</code> first (with both light and dark entries) and reference it from there.
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 03 · Type -->
+    <!-- ============================================================ -->
+    <section class="ed-section">
+        <div class="ed-section__head">
+            <span class="ed-section__num">03</span>
+            <h2 class="ed-section__title">Type</h2>
+        </div>
+        <p class="ed-section__sub">
+            <strong>Inter Tight</strong> for sans, <strong>JetBrains Mono</strong> for mono. No third face.
+            Mono is reserved for IDs, IPs, codes, timestamps, table footnotes, and legal/system metadata.
+        </p>
+
+        <div style="border-top: 1px solid var(--ed-color-hairline); margin-top: 24px;">
+            <div class="type-row">
+                <div class="type-row__meta">font-size-display-lg<br>52 / 62 / -0.02em / 600</div>
+                <div class="type-row__sample" style="font-size: 52px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.05;">Display</div>
+                <div class="type-row__role">Brand panels.<br>Auth, marketing only.</div>
+            </div>
+            <div class="type-row">
+                <div class="type-row__meta">font-size-display<br>36 / 44 / -0.02em / 600</div>
+                <div class="type-row__sample" style="font-size: 36px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2;">Page hero</div>
+                <div class="type-row__role">Empty-state heroes,<br>landing sections.</div>
+            </div>
+            <div class="type-row">
+                <div class="type-row__meta">font-size-3xl<br>28 / 34 / -0.018em / 600</div>
+                <div class="type-row__sample" style="font-size: 28px; font-weight: 600; letter-spacing: -0.018em; line-height: 1.2;">Page title — H1</div>
+                <div class="type-row__role">One per page.<br>Top of any view.</div>
+            </div>
+            <div class="type-row">
+                <div class="type-row__meta">font-size-2xl<br>24 / 30 / -0.01em / 600</div>
+                <div class="type-row__sample" style="font-size: 24px; font-weight: 600; letter-spacing: -0.01em;">Section title — H2</div>
+                <div class="type-row__role">Section heads,<br>card titles.</div>
+            </div>
+            <div class="type-row">
+                <div class="type-row__meta">font-size-xl<br>20 / 28 / 0 / 500</div>
+                <div class="type-row__sample" style="font-size: 20px; font-weight: 500;">Subsection — H3</div>
+                <div class="type-row__role">Subsections,<br>dialog titles.</div>
+            </div>
+            <div class="type-row">
+                <div class="type-row__meta">font-size-lg<br>16 / 24 / 0 / 400</div>
+                <div class="type-row__sample" style="font-size: 16px;">Body large — used for emphasis copy and form fields at lg.</div>
+                <div class="type-row__role">Lede, large fields.</div>
+            </div>
+            <div class="type-row">
+                <div class="type-row__meta">font-size-md<br>14 / 21 / 0 / 400</div>
+                <div class="type-row__sample" style="font-size: 14px;">Body default — every paragraph, button label, and form value.</div>
+                <div class="type-row__role">Default body.</div>
+            </div>
+            <div class="type-row">
+                <div class="type-row__meta">font-size-sm<br>13 / 18 / 0 / 400</div>
+                <div class="type-row__sample" style="font-size: 13px;">Body small — dense table cells, secondary copy, helper text.</div>
+                <div class="type-row__role">Tables, helpers.</div>
+            </div>
+            <div class="type-row">
+                <div class="type-row__meta">font-size-xs<br>12 / 16 / 0 / 400</div>
+                <div class="type-row__sample" style="font-size: 12px;">Captions, footnotes, mono codes, badges.</div>
+                <div class="type-row__role">Metadata, badges.</div>
+            </div>
+            <div class="type-row">
+                <div class="type-row__meta">eyebrow<br>10 / 14 / 0.14em / 500 / uppercase</div>
+                <div class="type-row__sample" style="font-family: var(--ed-font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;">Section label · eyebrow</div>
+                <div class="type-row__role">Above titles, in tables,<br>above floating labels.</div>
+            </div>
+            <div class="type-row">
+                <div class="type-row__meta">mono<br>JetBrains Mono / 11-12px</div>
+                <div class="type-row__sample" style="font-family: var(--ed-font-mono); font-size: 12px;">M-9F4D-2026 · 10.214.7.42 · 2026-05-04 14:02:11Z</div>
+                <div class="type-row__role">IDs, IPs, timestamps,<br>system metadata.</div>
+            </div>
+        </div>
+
+        <div class="ed-note">
+            <strong>One H1 per page.</strong> Display sizes are scarce — auth screens, empty-state heroes, marketing. Inside the product, H1 = page title, H2 = section, H3 = subsection. Don't decorate with display.
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 04 · Spacing -->
+    <!-- ============================================================ -->
+    <section class="ed-section">
+        <div class="ed-section__head">
+            <span class="ed-section__num">04</span>
+            <h2 class="ed-section__title">Spacing</h2>
+        </div>
+        <p class="ed-section__sub">
+            4px base, 8px rhythm. Component padding lands on multiples of 4; section spacing on multiples of 8.
+            Use named tokens — never inline pixel values.
+        </p>
+
+        <div style="border: 1px solid var(--ed-color-hairline); border-radius: var(--ed-radius-md); padding: 24px; background: var(--ed-color-surface-1);">
+            <div class="space-rows">
+                <div class="space-row"><span class="space-row__name">space-1</span><span>4px</span><span class="space-row__bar" style="width: 4px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-2</span><span>8px</span><span class="space-row__bar" style="width: 8px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-3</span><span>12px</span><span class="space-row__bar" style="width: 12px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-4</span><span>16px</span><span class="space-row__bar" style="width: 16px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-5</span><span>20px</span><span class="space-row__bar" style="width: 20px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-6</span><span>24px</span><span class="space-row__bar" style="width: 24px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-7</span><span>28px</span><span class="space-row__bar" style="width: 28px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-8</span><span>32px</span><span class="space-row__bar" style="width: 32px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-10</span><span>40px</span><span class="space-row__bar" style="width: 40px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-12</span><span>48px</span><span class="space-row__bar" style="width: 48px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-16</span><span>64px</span><span class="space-row__bar" style="width: 64px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-20</span><span>80px</span><span class="space-row__bar" style="width: 80px;"></span></div>
+                <div class="space-row"><span class="space-row__name">space-24</span><span>96px</span><span class="space-row__bar" style="width: 96px;"></span></div>
+            </div>
+        </div>
+
+        <div class="ed-note">
+            <strong>Standard control heights:</strong> sm <code>28px</code>, md <code>36px</code> (default), lg <code>44px</code>, xl <code>56px</code>. Buttons, inputs, selects, switches all align to these.
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 05 · Radius -->
+    <!-- ============================================================ -->
+    <section class="ed-section">
+        <div class="ed-section__head">
+            <span class="ed-section__num">05</span>
+            <h2 class="ed-section__title">Radius</h2>
+        </div>
+        <p class="ed-section__sub">
+            Tight by default. Most controls use <code>radius-sm</code> (2px). Reserved larger radii: cards <code>md</code>, modals <code>lg</code>, pills only when shape is the affordance.
+        </p>
+
+        <div class="radius-grid">
+            <div class="radius-card">
+                <div class="radius-card__demo" style="border-radius: var(--ed-radius-none);"></div>
+                <div><p class="radius-card__name">none</p><p class="radius-card__val">0px · table cells, full-bleed</p></div>
+            </div>
+            <div class="radius-card">
+                <div class="radius-card__demo" style="border-radius: var(--ed-radius-sm);"></div>
+                <div><p class="radius-card__name">sm</p><p class="radius-card__val">2px · default · buttons, fields, badges</p></div>
+            </div>
+            <div class="radius-card">
+                <div class="radius-card__demo" style="border-radius: var(--ed-radius-md);"></div>
+                <div><p class="radius-card__name">md</p><p class="radius-card__val">4px · cards, popovers, menus</p></div>
+            </div>
+            <div class="radius-card">
+                <div class="radius-card__demo" style="border-radius: var(--ed-radius-lg);"></div>
+                <div><p class="radius-card__name">lg</p><p class="radius-card__val">8px · modals, side panels</p></div>
+            </div>
+            <div class="radius-card">
+                <div class="radius-card__demo" style="border-radius: var(--ed-radius-pill);"></div>
+                <div><p class="radius-card__name">pill</p><p class="radius-card__val">9999px · filter chips, tags only</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 06 · Elevation -->
+    <!-- ============================================================ -->
+    <section class="ed-section">
+        <div class="ed-section__head">
+            <span class="ed-section__num">06</span>
+            <h2 class="ed-section__title">Elevation</h2>
+        </div>
+        <p class="ed-section__sub">
+            Shadows are quiet. Use elevation only for floating/temporary surfaces — popovers, dropdowns, modals. Cards and panels sit flat with hairlines.
+        </p>
+
+        <div class="elev-grid">
+            <div class="elev-card" style="box-shadow: var(--ed-elevation-1);">
+                <div class="elev-card__name">elevation-1</div>
+                <div class="elev-card__role">Resting card edge</div>
+            </div>
+            <div class="elev-card" style="box-shadow: var(--ed-elevation-2);">
+                <div class="elev-card__name">elevation-2</div>
+                <div class="elev-card__role">Popover, dropdown</div>
+            </div>
+            <div class="elev-card" style="box-shadow: var(--ed-elevation-3);">
+                <div class="elev-card__name">elevation-3</div>
+                <div class="elev-card__role">Modal, side panel</div>
+            </div>
+            <div class="elev-card" style="box-shadow: var(--ed-elevation-4);">
+                <div class="elev-card__name">elevation-4</div>
+                <div class="elev-card__role">Command palette</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 07 · Motion -->
+    <!-- ============================================================ -->
+    <section class="ed-section">
+        <div class="ed-section__head">
+            <span class="ed-section__num">07</span>
+            <h2 class="ed-section__title">Motion</h2>
+        </div>
+        <p class="ed-section__sub">
+            Motion is functional, never decorative. Hover any card below to see the curve.
+            All durations honor <code>prefers-reduced-motion</code> — they collapse to 0ms.
+        </p>
+
+        <div class="motion-grid">
+            <div class="motion-card" data-speed="fast">
+                <div class="motion-card__track"><div class="motion-card__dot"></div></div>
+                <p class="swatch-card__name">transition-fast</p>
+                <p class="swatch-card__role" style="font-size: var(--ed-font-size-xs); color: var(--ed-color-text-muted);">80ms ease · button press, focus shift</p>
+            </div>
+            <div class="motion-card" data-speed="base">
+                <div class="motion-card__track"><div class="motion-card__dot"></div></div>
+                <p class="swatch-card__name">transition-base</p>
+                <p class="swatch-card__role" style="font-size: var(--ed-font-size-xs); color: var(--ed-color-text-muted);">120ms ease · default · most state changes</p>
+            </div>
+            <div class="motion-card" data-speed="slow">
+                <div class="motion-card__track"><div class="motion-card__dot"></div></div>
+                <p class="swatch-card__name">transition-slow</p>
+                <p class="swatch-card__role" style="font-size: var(--ed-font-size-xs); color: var(--ed-color-text-muted);">200ms ease · drawer, modal open</p>
+            </div>
+            <div class="motion-card" data-speed="spring">
+                <div class="motion-card__track"><div class="motion-card__dot"></div></div>
+                <p class="swatch-card__name">transition-spring</p>
+                <p class="swatch-card__role" style="font-size: var(--ed-font-size-xs); color: var(--ed-color-text-muted);">320ms cubic-bezier · cross-fades, scene changes</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 08 · Iconography -->
+    <!-- ============================================================ -->
+    <section class="ed-section">
+        <div class="ed-section__head">
+            <span class="ed-section__num">08</span>
+            <h2 class="ed-section__title">Iconography</h2>
+        </div>
+        <p class="ed-section__sub">
+            Single icon family — line-weight 1.5px on a 16px grid. Do not mix families.
+            <code>EdIcon</code> wraps the source, exposes <code>size</code> (xs/sm/md/lg) and <code>color</code> (semantic — inherit, primary, brand, success, warning, danger).
+        </p>
+
+        <div class="ed-note">
+            Icon family is <strong>not yet selected</strong>. Recommendation: <code>lucide-react</code> (line-weight, comprehensive, MIT, swap-compatible with the existing <code>react-icons</code>). Implementer to confirm before phase 1B finishes.
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 09 · Z-index -->
+    <!-- ============================================================ -->
+    <section class="ed-section">
+        <div class="ed-section__head">
+            <span class="ed-section__num">09</span>
+            <h2 class="ed-section__title">Z-index</h2>
+        </div>
+        <p class="ed-section__sub">
+            Discrete tiers. Never use raw numeric z-index in a component — pick the named layer.
+        </p>
+
+        <table class="ed-tokens">
+            <thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead>
+            <tbody>
+                <tr><td>z-dropdown</td><td>1100</td><td>Select / combobox menu</td></tr>
+                <tr><td>z-popover</td><td>1200</td><td>Popover, anchored menu</td></tr>
+                <tr><td>z-overlay</td><td>1300</td><td>Modal scrim</td></tr>
+                <tr><td>z-drawer</td><td>1350</td><td>Side panel / drawer</td></tr>
+                <tr><td>z-modal</td><td>1400</td><td>Modal content</td></tr>
+                <tr><td>z-tooltip</td><td>1500</td><td>Tooltip</td></tr>
+                <tr><td>z-command-palette</td><td>1600</td><td>cmdk palette</td></tr>
+                <tr><td>z-toast</td><td>1700</td><td>Toast / notification stack — over everything</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 10 · Implementer notes -->
+    <!-- ============================================================ -->
+    <section class="ed-section">
+        <div class="ed-section__head">
+            <span class="ed-section__num">10</span>
+            <h2 class="ed-section__title">Implementer notes</h2>
+        </div>
+
+        <p class="ed-section__sub">
+            EditorialUI ships in parallel with the existing ProdicusUI library. Don't replace; co-exist until consumers are migrated.
+        </p>
+
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--prefer">Land</span><span>Tokens go in <code>src/theme/tokens-v2.scss</code>. Lift <code>shared/tokens.css</code> verbatim — token names are already prefixed <code>--ed-*</code> so they don't collide.</span></li>
+            <li><span class="verdict verdict--prefer">Land</span><span>JS access via <code>src/theme/tokens-v2.ts</code>, mirroring the existing <code>tokens.ts</code> shape: <code>cssVar('color-brand')</code>, <code>token('color-brand')</code>, plus typed token unions.</span></li>
+            <li><span class="verdict verdict--prefer">Land</span><span>Components live under <code>src/components/EditorialUI/</code>. Component prefix <code>Ed</code> (e.g. <code>EdButton</code>, <code>EdDataTable</code>). One folder per component, one Storybook story file alongside.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Storybook category <code>EditorialUI/&lt;Group&gt;</code> — Inputs, Selection, Feedback, Containers, Display, Navigation, Data. The category mirrors this spec doc's grouping.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Theme switching: same <code>data-theme</code> attribute as the existing system — one mechanism, both libraries respect it.</span></li>
+            <li><span class="verdict verdict--avoid">Don't</span><span>Don't wrap a Radix primitive in EditorialUI if a thin adapter over the existing ProdicusUI primitive will do — but only if the existing primitive is genuinely token-driven and stateless. Most aren't; build fresh on Radix.</span></li>
+            <li><span class="verdict verdict--avoid">Don't</span><span>Don't add a new token mid-implementation without updating this doc and <code>tokens.css</code>. The doc is the contract.</span></li>
+        </ul>
+    </section>
+
+    <footer class="ed-spec__foot">
+        <span>EditorialUI · Foundations · v0.1.0 draft</span>
+        <span><a href="00-index.html">Back to index</a></span>
+    </footer>
+</main>
+</body>
+</html>

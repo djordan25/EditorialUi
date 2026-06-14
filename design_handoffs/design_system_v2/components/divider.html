@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdDivider · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "E5",
+    "group": "Display",
+    "name": "EdDivider",
+    "lede": "Hairline rule for separating sibling regions. Horizontal, vertical, dashed, and labeled variants. Prefer space and headings; reach for a divider only when neither is sufficient."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Variants</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">horizontal — default</span><div class="ed-cell__demo ed-cell__demo--block"><div style="max-width: 480px;"><p style="margin: 0; font-size: 13px;">First paragraph.</p><hr class="ed-divider ed-divider--h"><p style="margin: 0; font-size: 13px;">Second paragraph, separated by hairline.</p></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">horizontal — strong</span><div class="ed-cell__demo ed-cell__demo--block"><div style="max-width: 480px;"><p style="margin: 0; font-size: 13px;">Section A.</p><hr class="ed-divider ed-divider--h ed-divider--strong"><p style="margin: 0; font-size: 13px;">Section B (strong rule).</p></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">horizontal — dashed</span><div class="ed-cell__demo ed-cell__demo--block"><div style="max-width: 480px;"><p style="margin: 0; font-size: 13px;">Required fields above.</p><hr class="ed-divider ed-divider--h ed-divider--dashed"><p style="margin: 0; font-size: 13px;">Optional fields below.</p></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">vertical — inline separator</span><div class="ed-cell__demo ed-cell__demo--block"><div style="display: flex; align-items: center; gap: var(--ed-space-3); font-size: 13px;"><span>v3.2.0</span><div class="ed-divider ed-divider--v"></div><span>updated 11:42 UTC</span><div class="ed-divider ed-divider--v"></div><span>marcus.chen</span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">labeled</span><div class="ed-cell__demo ed-cell__demo--block"><div style="max-width: 480px;"><div class="ed-divider ed-divider--labeled"><span class="ed-divider__label">2026 — Q1</span></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">in menu</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="position: static; max-height: none; width: 200px;"><div class="ed-menu__item">Open</div><div class="ed-menu__item">Duplicate</div><div class="ed-menu__separator"></div><div class="ed-menu__item ed-menu__item--danger">Delete</div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Subtle separation where space and headings can't do the job (menus, dense metadata strips, timelines).</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Labeled divider for time-based grouping in feeds and logs.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>Whitespace over a divider when content is already clearly structured.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>A heading (H2/H3) when the next region is a real section.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Stacking dividers. Two adjacent dividers means you have spacing wrong.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Use <code>&lt;hr&gt;</code> for horizontal dividers between text blocks. Decorative dividers (menus, inline strips) use <code>&lt;div role="separator"&gt;</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Vertical separator inside a metadata strip: <code>aria-hidden="true"</code> — screen readers read content sequentially anyway.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Display/EdDivider
+├─ Horizontal, Strong, Dashed
+├─ Vertical
+├─ Labeled
+└─ InMenu, InMetadataStrip</code></pre>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,87 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--ed-space-2);
+    max-width: 360px;
+    margin: 0 auto;
+    padding: var(--ed-space-12) var(--ed-space-8);
+}
+
+/* ---- Visual ---- */
+.visual {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--ed-space-2);
+    border: 1.5px dashed var(--ed-color-hairline-bold);
+    border-radius: var(--ed-radius-pill);
+    color: var(--ed-color-text-muted);
+}
+
+.toneDanger .visual {
+    color: var(--ed-color-status-danger);
+    border-color: var(--ed-color-status-danger);
+}
+
+.toneSuccess .visual {
+    color: var(--ed-color-status-success);
+    border-color: var(--ed-color-status-success);
+}
+
+/* ---- Title ---- */
+.title {
+    margin: 0;
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-lg);
+    font-weight: var(--ed-font-weight-semibold);
+    color: var(--ed-color-text-primary);
+    line-height: var(--ed-line-height-snug);
+}
+
+/* ---- Body ---- */
+.body {
+    margin: 0;
+    font-size: var(--ed-font-size-sm);
+    color: var(--ed-color-text-secondary);
+    line-height: var(--ed-line-height-base);
+    text-wrap: pretty;
+}
+
+/* ---- Actions ---- */
+.actions {
+    display: flex;
+    gap: var(--ed-space-2);
+    margin-top: var(--ed-space-4);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* ---- Compact ---- */
+.compact {
+    padding: var(--ed-space-6) var(--ed-space-4);
+    gap: var(--ed-space-1);
+
+    .visual {
+        width: 32px;
+        height: 32px;
+        margin-bottom: var(--ed-space-1);
+    }
+
+    .title {
+        font-size: var(--ed-font-size-md);
+    }
+
+    .body {
+        font-size: var(--ed-font-size-xs);
+    }
+
+    .actions {
+        margin-top: var(--ed-space-3);
+    }
+}

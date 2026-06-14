@@ -1,0 +1,20 @@
+<!-- Match the design spec's font source exactly (editorialui_spec/shared/fonts.css)
+     so visual-verify diffs reflect real geometry/token drift, not font-cut differences. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<!-- Match the spec page's <body> baseline so inherited typography (font-family,
+     size, line-height, color) on wrapper elements matches the spec, not the
+     browser default (Times New Roman / 16px). -->
+<style>
+  body {
+    font-family: var(--ed-font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ed-color-text-primary);
+    background: var(--ed-color-surface-0);
+  }
+</style>

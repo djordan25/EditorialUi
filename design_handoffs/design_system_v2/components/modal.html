@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdModal · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .x { width:16px; height:16px; }
+        .stage { position: relative; background: var(--ed-color-surface-2); border-radius: var(--ed-radius-sm); padding: 24px; display: flex; justify-content: center; }
+        .field-stack { display: flex; flex-direction: column; gap: 14px; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "D2",
+    "group": "Containers",
+    "name": "EdModal",
+    "lede": "Convention layer over EdDialog with title + body + footer slots and a busy state. Use this for almost every modal — it bakes in the patterns that make the auth, finding, and exam flows consistent."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Patterns</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">confirmation — single action, danger phrasing</span><div class="ed-cell__demo ed-cell__demo--block stage">
+                <div class="ed-dialog ed-dialog--sm">
+                    <div class="ed-dialog__header"><div class="ed-dialog__header-body"><h3 class="ed-dialog__title">Reopen finding F-2438?</h3></div><button class="ed-dialog__close" aria-label="Close"><svg class="icn x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
+                    <div class="ed-dialog__body" style="font-size: 13px;">Closure timestamp will be cleared and the finding will re-enter the validation queue.</div>
+                    <div class="ed-dialog__footer"><button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button><button class="ed-btn ed-btn--primary ed-btn--sm">Reopen</button></div>
+                </div>
+            </div></div>
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">form — single-column, labels above inputs</span><div class="ed-cell__demo ed-cell__demo--block stage">
+                <div class="ed-dialog ed-dialog--md">
+                    <div class="ed-dialog__header"><div class="ed-dialog__header-body"><h3 class="ed-dialog__title">New finding</h3><p class="ed-dialog__subtitle">PD model — quarterly review</p></div><button class="ed-dialog__close" aria-label="Close"><svg class="icn x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
+                    <div class="ed-dialog__body">
+                        <div class="field-stack">
+                            <div class="ed-field"><label class="ed-field__label ed-field__label--required">Title</label><input class="ed-input" placeholder="Short, factual headline"></div>
+                            <div class="ed-field"><label class="ed-field__label ed-field__label--required">Severity</label><button class="ed-select__trigger"><span class="ed-select__value">Medium</span><svg class="icn" viewBox="0 0 24 24" style="width:14px; height:14px;"><polyline points="6,9 12,15 18,9"/></svg></button></div>
+                            <div class="ed-field"><label class="ed-field__label">Description</label><textarea class="ed-input" style="height: 80px; padding: 10px 12px; resize:vertical;" placeholder="What is the issue, evidence, and recommended action?"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="ed-dialog__footer ed-dialog__footer--with-meta">
+                        <span class="ed-dialog__footer-meta">All fields autosave</span>
+                        <div style="display:flex; gap:8px;"><button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button><button class="ed-btn ed-btn--secondary ed-btn--sm">Save draft</button><button class="ed-btn ed-btn--primary ed-btn--sm">Open finding</button></div>
+                    </div>
+                </div>
+            </div></div>
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">busy — disable footer, show inline progress</span><div class="ed-cell__demo ed-cell__demo--block stage">
+                <div class="ed-dialog ed-dialog--md" aria-busy="true">
+                    <div class="ed-dialog__header"><div class="ed-dialog__header-body"><h3 class="ed-dialog__title">Importing 312 findings</h3><p class="ed-dialog__subtitle">From audit-period-2025Q4.csv</p></div></div>
+                    <div class="ed-dialog__body" style="display:flex; flex-direction: column; gap: 12px;">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 12px;"><span style="color: var(--ed-color-text-secondary);">Stage 2 of 4 — validating columns</span><span style="font-family: var(--ed-font-mono);">42%</span></div>
+                            <div class="ed-meter ed-meter--lg"><div class="ed-meter__fill" style="width: 42%;"></div></div>
+                        </div>
+                        <p style="margin: 0; color: var(--ed-color-text-muted); font-size: 12px;">Closing this dialog will cancel the import.</p>
+                    </div>
+                    <div class="ed-dialog__footer"><button class="ed-btn ed-btn--ghost ed-btn--sm" disabled>Hide</button><button class="ed-btn ed-btn--primary ed-btn--sm" style="background: var(--ed-color-status-danger);">Cancel import</button></div>
+                </div>
+            </div></div>
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">multi-step — stepper at top, single-action footer</span><div class="ed-cell__demo ed-cell__demo--block stage">
+                <div class="ed-dialog ed-dialog--lg">
+                    <div class="ed-dialog__header" style="padding-bottom: 0; border-bottom: 0;"><div class="ed-dialog__header-body"><h3 class="ed-dialog__title">Open audit period</h3></div><button class="ed-dialog__close" aria-label="Close"><svg class="icn x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
+                    <div style="padding: 8px 20px 16px; border-bottom: 1px solid var(--ed-color-hairline);">
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--ed-color-hairline); border-radius: 4px; overflow: hidden;">
+                            <div style="padding: 10px 12px; background: var(--ed-color-status-success-bg); border-right: 1px solid var(--ed-color-hairline); font-size: 12px;"><div style="font-family: var(--ed-font-mono); font-size: 10px; color: var(--ed-color-status-success); text-transform: uppercase; letter-spacing: 0.06em;">01 · Done</div><div style="margin-top: 2px; font-weight: 500;">Period</div></div>
+                            <div style="padding: 10px 12px; background: var(--ed-color-brand-bg); border-right: 1px solid var(--ed-color-hairline); font-size: 12px;"><div style="font-family: var(--ed-font-mono); font-size: 10px; color: var(--ed-color-brand); text-transform: uppercase; letter-spacing: 0.06em;">02 · Active</div><div style="margin-top: 2px; font-weight: 500;">Models in scope</div></div>
+                            <div style="padding: 10px 12px; border-right: 1px solid var(--ed-color-hairline); font-size: 12px;"><div style="font-family: var(--ed-font-mono); font-size: 10px; color: var(--ed-color-text-muted); text-transform: uppercase; letter-spacing: 0.06em;">03</div><div style="margin-top: 2px; color: var(--ed-color-text-secondary);">Validators</div></div>
+                            <div style="padding: 10px 12px; font-size: 12px;"><div style="font-family: var(--ed-font-mono); font-size: 10px; color: var(--ed-color-text-muted); text-transform: uppercase; letter-spacing: 0.06em;">04</div><div style="margin-top: 2px; color: var(--ed-color-text-secondary);">Confirm</div></div>
+                        </div>
+                    </div>
+                    <div class="ed-dialog__body" style="height: 140px;">Step 2 content — pick models, scope, etc.</div>
+                    <div class="ed-dialog__footer ed-dialog__footer--with-meta">
+                        <button class="ed-btn ed-btn--ghost ed-btn--sm">← Back</button>
+                        <div style="display:flex; gap:8px;"><button class="ed-btn ed-btn--ghost ed-btn--sm">Save and close</button><button class="ed-btn ed-btn--primary ed-btn--sm">Continue →</button></div>
+                    </div>
+                </div>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Footer compositions</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">single primary — informational</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-dialog__footer" style="border-radius: var(--ed-radius-sm); border: 1px solid var(--ed-color-hairline);"><button class="ed-btn ed-btn--primary ed-btn--sm">Got it</button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">cancel + primary — default</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-dialog__footer" style="border-radius: var(--ed-radius-sm); border: 1px solid var(--ed-color-hairline);"><button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button><button class="ed-btn ed-btn--primary ed-btn--sm">Confirm</button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">cancel + secondary + primary — form save</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-dialog__footer" style="border-radius: var(--ed-radius-sm); border: 1px solid var(--ed-color-hairline);"><button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button><button class="ed-btn ed-btn--secondary ed-btn--sm">Save draft</button><button class="ed-btn ed-btn--primary ed-btn--sm">Open</button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with meta — shortcut hint</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-dialog__footer ed-dialog__footer--with-meta" style="border-radius: var(--ed-radius-sm); border: 1px solid var(--ed-color-hairline);"><span class="ed-dialog__footer-meta">⌘↩ confirm · esc cancel</span><div style="display:flex; gap:8px;"><button class="ed-btn ed-btn--ghost ed-btn--sm">Cancel</button><button class="ed-btn ed-btn--primary ed-btn--sm">Confirm</button></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Copy guidance</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Title</span><span>Verb-led question for confirmations: <code>"Reopen finding F-2438?"</code>. Statement for forms: <code>"New finding"</code>.</span></li>
+            <li><span class="verdict verdict--use">Body</span><span>What will happen, in past tense. <code>"Closure timestamp will be cleared and the finding will re-enter the queue."</code></span></li>
+            <li><span class="verdict verdict--use">Primary action</span><span>Echo the title verb: <code>"Reopen"</code>, <code>"Delete period"</code>, <code>"Open finding"</code>. Never <code>"OK"</code> or <code>"Submit"</code>.</span></li>
+            <li><span class="verdict verdict--use">Cancel</span><span>Always <code>"Cancel"</code> for confirmations. <code>"Keep editing"</code> when interrupting unsaved work.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Confirmations, focused forms (≤ 8 fields), wizards, busy interruptions.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdDrawer</code> when the content is about a specific row/entity in the current list — drawer keeps context.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>Inline forms when the form lives within a page workflow.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Modals as the default UI for everything. They block context and interrupt scanning.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Inherits all of <code>EdDialog</code>'s a11y. Adds: primary action receives default focus when no input is present; first input when one is.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Busy state sets <code>aria-busy="true"</code> on dialog and disables non-cancel actions. Live region announces stage changes ("Stage 2 of 4: validating columns").</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Containers/EdModal
+├─ Confirmation, Form, MultiStep
+├─ Busy
+├─ FooterPrimaryOnly, FooterTriple, FooterWithMeta
+└─ DangerVariant</code></pre>
+    </section>
+</main>
+</body>
+</html>

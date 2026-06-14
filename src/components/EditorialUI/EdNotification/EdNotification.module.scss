@@ -1,0 +1,99 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ed-space-3);
+    padding: var(--ed-space-3) 14px;
+    background: var(--ed-color-surface-1);
+    border: 1px solid var(--ed-color-hairline-strong);
+    border-left-width: 3px;
+    border-radius: var(--ed-radius-sm);
+    line-height: 1.4;
+}
+
+.icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    margin-top: 1px; /* optical align to title cap height */
+}
+
+.body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.title {
+    margin: 0;
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-md);
+    font-weight: var(--ed-font-weight-medium);
+    color: var(--ed-color-text-primary);
+    line-height: var(--ed-line-height-snug);
+}
+
+.desc {
+    margin: 0;
+    font-size: var(--ed-font-size-sm);
+    color: var(--ed-color-text-secondary);
+    line-height: var(--ed-line-height-base);
+}
+
+.actions {
+    display: flex;
+    gap: var(--ed-space-2);
+    margin-top: var(--ed-space-2);
+}
+
+.close {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    margin: -2px -4px 0 0;
+    border-radius: var(--ed-radius-sm);
+    color: var(--ed-color-text-muted);
+    cursor: pointer;
+    transition: background var(--ed-transition-base), color var(--ed-transition-base);
+
+    &:hover {
+        background: var(--ed-color-surface-2);
+        color: var(--ed-color-text-primary);
+    }
+    &:focus-visible {
+        outline: 2px solid var(--ed-color-focus-ring);
+        outline-offset: 1px;
+    }
+}
+
+/* ---- Severities — left rail + icon color ---- */
+.info    { border-left-color: var(--ed-color-status-info);    background: var(--ed-color-status-info-bg);    .icon { color: var(--ed-color-status-info); } }
+.success { border-left-color: var(--ed-color-status-success); background: var(--ed-color-status-success-bg); .icon { color: var(--ed-color-status-success); } }
+.warning { border-left-color: var(--ed-color-status-warning); background: var(--ed-color-status-warning-bg); .icon { color: var(--ed-color-status-warning); } }
+.danger  { border-left-color: var(--ed-color-status-danger);  background: var(--ed-color-status-danger-bg);  .icon { color: var(--ed-color-status-danger); } }
+
+/* ---- Subtle variant (inside cards) ---- */
+.subtle {
+    border-left-width: 1px;
+    background: var(--ed-color-surface-2);
+
+    &.info, &.success, &.warning, &.danger {
+        border-left-color: var(--ed-color-hairline-strong);
+    }
+    .icon { color: var(--ed-color-text-muted); }
+}
+
+/* ---- Compact variant (single line) ---- */
+.compact {
+    align-items: center;
+    padding: var(--ed-space-2) var(--ed-space-3);
+
+    .body { flex-direction: row; align-items: center; gap: var(--ed-space-2); }
+    .icon { margin-top: 0; }
+}

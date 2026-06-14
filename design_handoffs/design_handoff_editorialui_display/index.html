@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditorialUI · Display bundle</title>
+    <link rel="stylesheet" href="../design_system_v2/shared/fonts.css">
+    <link rel="stylesheet" href="../design_system_v2/shared/tokens.css">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            background: var(--ed-color-surface-0);
+            color: var(--ed-color-text-primary);
+            font-family: var(--ed-font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 40px 96px; }
+        .eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 8px;
+        }
+        h1 {
+            font-family: var(--ed-font-sans);
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin: 0 0 8px;
+        }
+        .lede {
+            font-size: 16px;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 32px;
+            max-width: 64ch;
+        }
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 56px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        h2 .h2-eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--ed-color-text-muted);
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+        }
+        .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 8px;
+            border-radius: var(--ed-radius-sm);
+            background: var(--ed-color-brand-bg);
+            color: var(--ed-color-brand);
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .pill--neutral { background: var(--ed-color-status-neutral-bg); color: var(--ed-color-status-neutral); }
+
+        .cc-callout {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 26px;
+            margin: 32px 0;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-left: 3px solid var(--ed-color-brand);
+            border-radius: var(--ed-radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: border-color var(--ed-transition-base);
+        }
+        .cc-callout:hover { border-color: var(--ed-color-brand); }
+        .cc-callout__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--ed-radius-md);
+            background: var(--ed-color-brand);
+            color: var(--ed-color-brand-contrast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--ed-font-mono);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .cc-callout__body { display: flex; flex-direction: column; gap: 2px; }
+        .cc-callout__eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+        }
+        .cc-callout__title { font-size: 16px; font-weight: 600; color: var(--ed-color-text-primary); }
+        .cc-callout__sub { font-size: 13px; color: var(--ed-color-text-secondary); margin-top: 2px; }
+        .cc-callout__arrow { font-family: var(--ed-font-mono); font-size: 13px; color: var(--ed-color-brand); letter-spacing: 0.04em; }
+
+        .component {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            align-items: flex-start;
+        }
+        .component:last-child { border-bottom: none; }
+        .component__head { position: sticky; top: 0; padding-top: 4px; }
+        .component__meta {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            margin: 0 0 6px;
+        }
+        .component__title {
+            font-family: var(--ed-font-mono);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ed-color-text-primary);
+            margin: 0 0 12px;
+        }
+        .component__lede { font-size: 13px; color: var(--ed-color-text-secondary); margin: 0 0 12px; line-height: 1.55; }
+        .component__files {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            color: var(--ed-color-text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--ed-color-hairline);
+        }
+        .component__files b { color: var(--ed-color-text-secondary); font-weight: 400; }
+        .component__shots { display: flex; flex-direction: column; gap: 12px; }
+        .shot {
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            overflow: hidden;
+            background: var(--ed-color-surface-1);
+        }
+        .shot img { display: block; width: 100%; height: auto; }
+
+        .tree {
+            font-family: var(--ed-font-mono);
+            font-size: 12.5px;
+            line-height: 1.75;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            padding: 18px 22px;
+            color: var(--ed-color-text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .tree b { color: var(--ed-color-text-primary); font-weight: 500; }
+        .tree em { color: var(--ed-color-text-muted); font-style: normal; }
+
+        .ship-list { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 0; }
+        .ship-list li {
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+        }
+        .ship-list code {
+            font-family: var(--ed-font-mono);
+            font-size: 12px;
+            color: var(--ed-color-text-primary);
+            min-width: 28ch;
+        }
+        .ship-list span { font-size: 13px; color: var(--ed-color-text-secondary); }
+
+        .footnote {
+            margin-top: 48px;
+            padding: 20px 24px;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .footnote strong { color: var(--ed-color-text-primary); font-weight: 500; }
+        code { font-family: var(--ed-font-mono); font-size: 12.5px; }
+
+        @media (max-width: 760px) {
+            .component { grid-template-columns: 1fr; gap: 16px; }
+            .component__head { position: static; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <p class="eyebrow">EditorialUI · Implementation</p>
+    <h1>Bundle 4 — Display</h1>
+    <p class="lede">
+        Six small visual building blocks: metadata tags, status badges,
+        interactive filter chips, dividers, and progress feedback
+        (linear + circular). Plain React + CSS — no new dependencies.
+    </p>
+
+    <div class="pills">
+        <span class="pill">Bundle 4 · Display</span>
+        <span class="pill pill--neutral">6 components · 24 files · 1 extra export</span>
+        <span class="pill pill--neutral">No new deps</span>
+    </div>
+
+    <a class="cc-callout" href="CLAUDE_CODE_PROMPT.md">
+        <span class="cc-callout__icon">cc</span>
+        <span class="cc-callout__body">
+            <span class="cc-callout__eyebrow">Hand-off prompt</span>
+            <span class="cc-callout__title">CLAUDE_CODE_PROMPT.md</span>
+            <span class="cc-callout__sub">Paste into Claude Code (with this bundle attached) to land it in <code>apostlerisk</code>. Assumes Bundles 1–3 already merged; covers the dual Storybook category split and two optional follow-up swaps (<code>EdComboBox</code> tags, <code>EdPasswordInput</code> meter).</span>
+        </span>
+        <span class="cc-callout__arrow">open ↗</span>
+    </a>
+
+    <h2><span class="h2-eyebrow">01</span> Components</h2>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">E1 · Display</p>
+            <h3 class="component__title">EdTag</h3>
+            <p class="component__lede">Compact label for entity metadata — categories, regulations, business unit, model family. Five tones, optional close button (default <code>"Remove {label}"</code> aria-label). Sentence / kebab case, lower visual weight than EdStatusBadge.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdTag.tsx</span>
+                <span><b>scss</b> EdTag.module.scss</span>
+                <span><b>stories</b> EdTag.stories.tsx</span>
+                <span><b>tests</b> EdTag.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdTag.png" alt="EdTag — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdTag.png" alt="EdTag — tones and use cases"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">C4 · Feedback</p>
+            <h3 class="component__title">EdStatusBadge</h3>
+            <p class="component__lede">Compact label for status, severity, or lifecycle. Three styles × six tones. Mono uppercase for institutional feel. Optional 6px leading dot for states that imply motion. Non-interactive — never attach onClick.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdStatusBadge.tsx</span>
+                <span><b>scss</b> EdStatusBadge.module.scss</span>
+                <span><b>stories</b> EdStatusBadge.stories.tsx</span>
+                <span><b>tests</b> EdStatusBadge.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdStatusBadge.png" alt="EdStatusBadge — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdStatusBadge.png" alt="EdStatusBadge — style x tone matrix and canonical lifecycle"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">E4 · Display</p>
+            <h3 class="component__title">EdChip</h3>
+            <p class="component__lede">Pill-shaped interactive control. Three behaviour kinds: <code>toggle</code> (role=checkbox), <code>radio</code> (use inside <code>role=radiogroup</code>), <code>input</code> (removable token, Backspace removes). Optional count, dot, or leading icon. Count is woven into the accessible name automatically.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdChip.tsx</span>
+                <span><b>scss</b> EdChip.module.scss</span>
+                <span><b>stories</b> EdChip.stories.tsx</span>
+                <span><b>tests</b> EdChip.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdChip.png" alt="EdChip — variants"></div>
+            <div class="shot"><img src="screenshots/02-EdChip.png" alt="EdChip — decision rules and a11y"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">E5 · Display</p>
+            <h3 class="component__title">EdDivider</h3>
+            <p class="component__lede">Hairline rule for separating sibling regions. Horizontal (renders <code>&lt;hr&gt;</code>), vertical, dashed, labeled. <code>decorative</code> switches to <code>aria-hidden</code> div — use for vertical separators in metadata strips. Prefer space and headings first.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdDivider.tsx</span>
+                <span><b>scss</b> EdDivider.module.scss</span>
+                <span><b>stories</b> EdDivider.stories.tsx</span>
+                <span><b>tests</b> EdDivider.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdDivider.png" alt="EdDivider — variants"></div>
+            <div class="shot"><img src="screenshots/02-EdDivider.png" alt="EdDivider — decision rules and a11y"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">C6 · Feedback</p>
+            <h3 class="component__title">EdProgressMeter</h3>
+            <p class="component__lede">Linear progress bar. Determinate (pass <code>percent</code>) or indeterminate (omit). Five tones (brand / success / warning / danger / muted). <code>EdProgressSegmented</code> is the fixed-N variant for stage-based progress and password-strength bands. <code>prefers-reduced-motion</code> handled.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdProgressMeter.tsx</span>
+                <span><b>scss</b> EdProgressMeter.module.scss</span>
+                <span><b>stories</b> EdProgressMeter.stories.tsx</span>
+                <span><b>tests</b> EdProgressMeter.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdProgressMeter.png" alt="EdProgressMeter — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdProgressMeter.png" alt="EdProgressMeter — states matrix"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">C3 · Feedback</p>
+            <h3 class="component__title">EdCircularProgress</h3>
+            <p class="component__lede">Spinner (indeterminate, <code>role=status</code>) + ring (determinate, <code>role=progressbar</code>) with optional centered value. Three sizes (sm 14 / md 20 / lg 32). Honors <code>prefers-reduced-motion</code> — rotation becomes a pulse.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdCircularProgress.tsx</span>
+                <span><b>scss</b> EdCircularProgress.module.scss</span>
+                <span><b>stories</b> EdCircularProgress.stories.tsx</span>
+                <span><b>tests</b> EdCircularProgress.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdCircularProgress.png" alt="EdCircularProgress — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdCircularProgress.png" alt="EdCircularProgress — sizes and context"></div>
+        </div>
+    </div>
+
+    <h2><span class="h2-eyebrow">02</span> Drop locations</h2>
+    <div class="tree">design_handoff_editorialui_display/
+└── src/
+    └── components/
+        └── EditorialUI/
+            ├── <b>index.ts</b>                  <em>UPDATED · barrel adds 6 components + EdProgressSegmented</em>
+            ├── EdTag/
+            ├── EdStatusBadge/
+            ├── EdChip/
+            ├── EdDivider/
+            ├── EdProgressMeter/          <em>exports EdProgressMeter + EdProgressSegmented</em>
+            └── EdCircularProgress/</div>
+
+    <h2><span class="h2-eyebrow">03</span> Runtime dependencies</h2>
+    <ul class="ship-list">
+        <li><em style="color: var(--ed-color-text-muted); font-style: normal;">— none new —</em><span>All six components are plain React + CSS. <code>lucide-react</code> is already on the project from Bundle 1.</span></li>
+    </ul>
+
+    <h2><span class="h2-eyebrow">04</span> Two follow-up swaps (optional polish, separate PRs)</h2>
+    <ul class="ship-list">
+        <li><code>EdComboBox</code> multi-mode tags<span>Replace the inline tag chips in the trigger with <code>&lt;EdTag tone="brand" onRemove={...}&gt;</code>. Search <code>// TODO(bundle-4)</code> in <code>EdComboBox.tsx</code>.</span></li>
+        <li><code>EdPasswordInput</code> strength meter<span>Delegate to <code>&lt;EdProgressSegmented segments=&#123;4&#125; filled=&#123;...&#125; tone=&#123;...&#125; valueText=&#123;...&#125;&gt;</code>. Inherits reduced-motion handling for free.</span></li>
+    </ul>
+
+    <h2><span class="h2-eyebrow">05</span> What this codifies</h2>
+    <ul class="ship-list">
+        <li><code>EdTag</code> vs <code>EdStatusBadge</code><span>Tag is for what something IS (metadata). Badge is for state. Different shape, different role, never interchangeable.</span></li>
+        <li><code>EdChip</code> is interactive<span>Three behaviour modes (<code>toggle</code> / <code>radio</code> / <code>input</code>) — never decorative. For decorative use <code>EdTag</code>.</span></li>
+        <li>Progress always has a label<span>Every <code>EdProgressMeter</code> / <code>EdCircularProgress</code> requires a visible label or an <code>ariaLabel</code>. A bare spinner with no accessible name is a regression.</span></li>
+        <li><code>aria-valuetext</code> is the spoken string<span>Pass it when the visible value has context (<code>"68%, 2,142 of 3,150"</code>). Default for determinate is just <code>"{N}%"</code>.</span></li>
+        <li><code>prefers-reduced-motion</code> is respected<span>Indeterminate sweeps fall back to static low-opacity bars; spinners fall back to opacity pulses. Pattern to follow in future motion components.</span></li>
+    </ul>
+
+    <div class="footnote">
+        <strong>Next up — Bundle 5 (Feedback):</strong>
+        <code>EdNotification</code>, <code>EdDialog</code>, <code>EdEmptyState</code>,
+        <code>EdTooltip</code>. These compose on top of the visual building blocks
+        in this bundle — notifications use EdStatusBadge tones and EdIcon; empty
+        states use EdButton + EdIcon; tooltips will surface as the labelled wrapper
+        for EdIconButton when its label isn't otherwise visible.
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditorialUI · Principles</title>
+    <link rel="stylesheet" href="shared/spec.css">
+    <script src="shared/spec.js" defer></script>
+</head>
+<body>
+<main class="ed-spec">
+    <header class="ed-spec__topbar">
+        <nav class="ed-spec__crumbs"><a href="00-index.html">EditorialUI</a> <span>/</span> Principles</nav>
+        <div class="ed-spec__topbar-actions">
+            <span>v0.1.0 · draft</span>
+            <button type="button" class="ed-theme-toggle" data-ed-theme-toggle>Dark</button>
+        </div>
+    </header>
+
+    <p class="ed-spec__eyebrow">Principles</p>
+    <h1 class="ed-spec__title">How EditorialUI thinks</h1>
+    <p class="ed-spec__lede">
+        Read this before adding a primitive, a variant, or a token. The goal is one coherent visual language an SR 11-7 examiner trusts on sight, that holds up across thousands of dense rows and hundreds of dialogs.
+    </p>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">01</span><h2 class="ed-section__title">Reference posture</h2></div>
+        <p class="ed-section__sub">Bloomberg Terminal × Stripe Dashboard, with editorial restraint. Not Notion, not Atlassian, not consumer SaaS. Banks live in spreadsheets and reading rooms — the product should feel like an instrument paired with a quiet reading panel.</p>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">02</span><h2 class="ed-section__title">Generic primitives vs. domain wrappers</h2></div>
+        <p class="ed-section__sub">EditorialUI ships <strong>generic primitives only</strong>. Token-driven, single-responsibility, no Redux/routing/localStorage coupling. Domain wrappers (GraphLockSwitch, ProdicusGraphVersionSelect, ExaminerModeBanner) stay in <code>ProdicusUI/</code> until phase 2 — they get rebuilt on top of EditorialUI primitives at consumer-migration time.</p>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">03</span><h2 class="ed-section__title">Selection components — when to use which</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">EdSelect</span><span>≤7 fixed options, no search.</span></li>
+            <li><span class="verdict verdict--use">EdComboBox</span><span>&gt;7 options, in-list search.</span></li>
+            <li><span class="verdict verdict--use">EdAutocomplete</span><span>Free-text input plus suggestions (tag input, search-as-you-type).</span></li>
+            <li><span class="verdict verdict--use">EdMenu</span><span>Command targets, not value selection.</span></li>
+            <li><span class="verdict verdict--use">EdContextMenu</span><span>Right-click only.</span></li>
+            <li><span class="verdict verdict--use">EdFilterChipRow</span><span>Multi-select filters above a table.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">04</span><h2 class="ed-section__title">Tables vs. cards</h2></div>
+        <p class="ed-section__sub"><strong>EdDataTable</strong> (TanStack-backed, virtualized, sortable, selectable) is the going-forward primitive for inventory pages and dialog lists. <strong>EdNativeTable</strong> for static-display cases (3-row metadata grids in side panels). Cards are reserved for editorial moments and dashboard tiles, not list views.</p>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">05</span><h2 class="ed-section__title">Modals vs. dialogs vs. side panels</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">EdModal</span><span>Convenience wrapper — title bar + button set + busy state. Default for forms and confirmations.</span></li>
+            <li><span class="verdict verdict--use">EdDialog</span><span>Lower-level Radix primitive. Reach for it when EdModal's API is too restrictive.</span></li>
+            <li><span class="verdict verdict--use">EdSidePanel</span><span>Inspect-without-leaving. Detail views, audit trails, run logs. Persistent or dismissable.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Click-away dismissal. Both Modal and Dialog suppress click-away by default; Escape always dismisses.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">06</span><h2 class="ed-section__title">SR 11-7 severity</h2></div>
+        <p class="ed-section__sub">Findings, exceptions, and observations all share the five-step severity gradient: <strong>Low → Medium → High → MRA → MRIA</strong>. Don't pick ad-hoc colors per feature. Use <code>EdStatusBadge</code> with <code>severity</code> prop, or read <code>--ed-color-severity-*</code> tokens directly for SVG/chart code.</p>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">07</span><h2 class="ed-section__title">Audit-trail conventions</h2></div>
+        <p class="ed-section__sub">Superseded rows: <code>--ed-color-row-superseded</code> background, <code>--ed-color-text-secondary</code> text. Timestamps in <code>--ed-font-mono</code> for scannability. Never delete an audit-relevant row — supersede it. The replacing row references the superseded one's ID.</p>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">08</span><h2 class="ed-section__title">Examiner mode</h2></div>
+        <p class="ed-section__sub">When a user holds the EXAMINER role, a persistent banner renders between TopBar and main content. Read-only is enforced server-side; the banner is the user-visible reminder. EditorialUI primitives respect a global <code>data-readonly</code> attribute — disabled visuals applied without per-component handling.</p>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">09</span><h2 class="ed-section__title">Sentence case</h2></div>
+        <p class="ed-section__sub">Buttons, menu items, headings, dialog titles — all sentence case. Acronyms preserve their natural form (OK, MFA, MRA, SR 11-7). The <code>text-transform</code> property is not used for case conversion — the canonical label lives in the JSX.</p>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">10</span><h2 class="ed-section__title">Theme posture</h2></div>
+        <p class="ed-section__sub"><strong>Light is default</strong> for governance, auth, reading-room, and inventory surfaces. <strong>Dark</strong> is the long-session mode for graph builder and monitoring. Auth is policy-locked to light via <code>data-theme="light"</code> on the AuthLayout wrapper. To prevent FOUC, <code>applyStoredThemePreference()</code> runs at module load before React mounts.</p>
+    </section>
+
+    <footer class="ed-spec__foot">
+        <span>EditorialUI · Principles · v0.1.0 draft</span>
+        <span><a href="00-index.html">Back to index</a></span>
+    </footer>
+</main>
+</body>
+</html>

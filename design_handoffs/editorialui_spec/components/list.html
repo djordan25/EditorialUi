@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdList · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--ed-color-surface-3); display: flex; align-items: center; justify-content: center; font-family: var(--ed-font-mono); font-size: 11px; color: var(--ed-color-text-primary); flex-shrink: 0; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "F3",
+    "group": "Navigation",
+    "name": "EdList",
+    "lede": "Vertical list of selectable / scannable rows. Use for short, decorated catalogues — picker results, recent items, user mentions. For data-dense or sortable lists, use EdDataTable."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div class="ed-list" style="width: 100%; max-width: 480px;">
+                <div class="ed-list__group-label">Recent</div>
+                <div class="ed-list__item ed-list__item--selected">
+                    <div class="avatar">MC</div>
+                    <div class="ed-list__item-body">
+                        <div class="ed-list__item-title">Marcus Chen</div>
+                        <div class="ed-list__item-desc">Validation · 14 open</div>
+                    </div>
+                    <span class="ed-list__item-meta">⌘1</span>
+                </div>
+                <div class="ed-list__item">
+                    <div class="avatar">PR</div>
+                    <div class="ed-list__item-body">
+                        <div class="ed-list__item-title">Priya Rao</div>
+                        <div class="ed-list__item-desc">Validation · 8 open</div>
+                    </div>
+                </div>
+                <div class="ed-list__item ed-list__item--disabled">
+                    <div class="avatar">HL</div>
+                    <div class="ed-list__item-body">
+                        <div class="ed-list__item-title">Hanna Lindqvist</div>
+                        <div class="ed-list__item-desc">Risk ops · out of office</div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Item</strong> — 40px+ tall. Optional leading avatar/icon, body, trailing meta.</div>
+                <div class="ed-anatomy__callout"><strong>Title + description</strong> — title in primary, description in muted below.</div>
+                <div class="ed-anatomy__callout"><strong>Group label</strong> — mono uppercase header; surface-2 background.</div>
+                <div class="ed-anatomy__callout"><strong>States</strong> — hover, selected (brand bg), disabled. Same patterns as menu items.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Variants</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">simple — single line</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-list"><div class="ed-list__item">Findings</div><div class="ed-list__item ed-list__item--selected">Audit log</div><div class="ed-list__item">Validators</div><div class="ed-list__item">Settings</div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with avatar + desc</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-list"><div class="ed-list__item"><div class="avatar">MC</div><div class="ed-list__item-body"><div class="ed-list__item-title">Marcus Chen</div><div class="ed-list__item-desc">14 open · 2 overdue</div></div></div><div class="ed-list__item"><div class="avatar">PR</div><div class="ed-list__item-body"><div class="ed-list__item-title">Priya Rao</div><div class="ed-list__item-desc">8 open · 0 overdue</div></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with leading icon + meta</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-list"><div class="ed-list__item"><svg class="icn" viewBox="0 0 24 24" style="color: var(--ed-color-text-muted);"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16" y2="16"/></svg><div class="ed-list__item-body">Search findings</div><span class="ed-list__item-meta">⌘K</span></div><div class="ed-list__item"><svg class="icn" viewBox="0 0 24 24" style="color: var(--ed-color-text-muted);"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><div class="ed-list__item-body">New finding</div><span class="ed-list__item-meta">⌘N</span></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">grouped</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-list"><div class="ed-list__group-label">Recent</div><div class="ed-list__item">F-2438 · Stale documentation</div><div class="ed-list__item">F-2401 · Backtest mismatch</div><div class="ed-list__group-label">Pinned</div><div class="ed-list__item">F-2287 · Drift threshold</div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">empty</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-list" style="text-align: center; padding: 24px;"><span style="font-size: 13px; color: var(--ed-color-text-muted);">No matches</span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">loading skeleton</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-list">
+                <div class="ed-list__item" style="pointer-events: none;"><div style="width: 24px; height: 24px; border-radius: 50%; background: var(--ed-color-surface-3);"></div><div class="ed-list__item-body"><div style="height: 12px; background: var(--ed-color-surface-3); border-radius: 2px; max-width: 140px;"></div><div style="height: 10px; background: var(--ed-color-surface-3); border-radius: 2px; max-width: 100px; margin-top: 6px;"></div></div></div>
+                <div class="ed-list__item" style="pointer-events: none;"><div style="width: 24px; height: 24px; border-radius: 50%; background: var(--ed-color-surface-3);"></div><div class="ed-list__item-body"><div style="height: 12px; background: var(--ed-color-surface-3); border-radius: 2px; max-width: 180px;"></div><div style="height: 10px; background: var(--ed-color-surface-3); border-radius: 2px; max-width: 80px; margin-top: 6px;"></div></div></div>
+            </div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Picker results, recent items, user / entity selectors, command-palette results.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdDataTable</code> when rows have ≥3 columns, sorting, or selection-with-actions.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdMenu</code> for action lists triggered from a button.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdAccordion</code> when items expand to reveal content.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Lists of more than ~12 items without search. Add a filter input above, or switch to a table.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Use <code>&lt;ul&gt;</code> / <code>&lt;li&gt;</code> when items are static. Selectable list: <code>role="listbox"</code> + <code>role="option"</code> + <code>aria-selected</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Up/Down arrows move focus through items. Enter/Space selects.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Group labels use <code>role="group"</code> with <code>aria-labelledby</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Trailing meta is included in the accessible name: <code>aria-label="Marcus Chen, 14 open, 2 overdue"</code>.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Navigation/EdList
+├─ Simple, WithAvatar, WithIconMeta
+├─ Grouped
+├─ Empty, LoadingSkeleton
+└─ KeyboardNavigation</code></pre>
+    </section>
+</main>
+</body>
+</html>

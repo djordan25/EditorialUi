@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdEmptyState · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width: 24px; height: 24px; stroke: currentColor; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        .empty-host { background: var(--ed-color-surface-1); border: 1px solid var(--ed-color-hairline); border-radius: var(--ed-radius-md); }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "C2",
+    "group": "Feedback",
+    "name": "EdEmptyState",
+    "lede": "Centered title + body + action shown when a region has no data — first-use, filtered-no-results, error, or success-no-action. Always offer a next step where one exists."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div class="empty-host" style="height: 320px; display: flex; align-items: center; justify-content: center;">
+                <div class="ed-empty">
+                    <div class="ed-empty__visual">
+                        <svg class="icn" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <h2 class="ed-empty__title">No findings in this period</h2>
+                    <p class="ed-empty__body">Findings appear here once an examination opens. You can open one from the audit period selector.</p>
+                    <div class="ed-empty__actions">
+                        <button class="ed-btn ed-btn--primary ed-btn--sm">Open audit period</button>
+                        <button class="ed-btn ed-btn--ghost ed-btn--sm">View archive</button>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Visual</strong> — small, restrained. Single-glyph icon in dashed circle. No illustrations.</div>
+                <div class="ed-anatomy__callout"><strong>Title</strong> — what's missing, in plain language. Sentence case, no punctuation.</div>
+                <div class="ed-anatomy__callout"><strong>Body</strong> — why and what unblocks it. ≤ 2 sentences.</div>
+                <div class="ed-anatomy__callout"><strong>Actions</strong> — 0, 1, or 2. Primary is the unblocking action; secondary is a side path.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Variants by reason</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">first use — no data yet</span><div class="ed-cell__demo ed-cell__demo--block"><div class="empty-host" style="padding: 24px 12px;"><div class="ed-empty"><div class="ed-empty__visual"><svg class="icn" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><h2 class="ed-empty__title">No findings yet</h2><p class="ed-empty__body">Create the first finding to begin tracking validation issues.</p><div class="ed-empty__actions"><button class="ed-btn ed-btn--primary ed-btn--sm">New finding</button></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">filtered — no results</span><div class="ed-cell__demo ed-cell__demo--block"><div class="empty-host" style="padding: 24px 12px;"><div class="ed-empty"><div class="ed-empty__visual"><svg class="icn" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><h2 class="ed-empty__title">No findings match these filters</h2><p class="ed-empty__body">Try widening the date range or removing severity filters.</p><div class="ed-empty__actions"><button class="ed-btn ed-btn--ghost ed-btn--sm">Clear filters</button></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">error — load failed</span><div class="ed-cell__demo ed-cell__demo--block"><div class="empty-host" style="padding: 24px 12px;"><div class="ed-empty"><div class="ed-empty__visual" style="color: var(--ed-color-status-danger); border-color: var(--ed-color-status-danger);"><svg class="icn" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h2 class="ed-empty__title">Couldn't load findings</h2><p class="ed-empty__body">The model registry is unreachable. Last successful sync: 2 hours ago.</p><div class="ed-empty__actions"><button class="ed-btn ed-btn--secondary ed-btn--sm">Retry</button><button class="ed-btn ed-btn--ghost ed-btn--sm">Check sync status</button></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">success — done, no action</span><div class="ed-cell__demo ed-cell__demo--block"><div class="empty-host" style="padding: 24px 12px;"><div class="ed-empty"><div class="ed-empty__visual" style="color: var(--ed-color-status-success); border-color: var(--ed-color-status-success);"><svg class="icn" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><h2 class="ed-empty__title">Inbox is clear</h2><p class="ed-empty__body">No findings need your attention right now.</p></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">permission — restricted</span><div class="ed-cell__demo ed-cell__demo--block"><div class="empty-host" style="padding: 24px 12px;"><div class="ed-empty"><div class="ed-empty__visual"><svg class="icn" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h2 class="ed-empty__title">Restricted to validators</h2><p class="ed-empty__body">Your role doesn't include closure rights. Ask a validator to take action.</p><div class="ed-empty__actions"><button class="ed-btn ed-btn--ghost ed-btn--sm">Request access</button></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">compact — inside small panel</span><div class="ed-cell__demo ed-cell__demo--block"><div class="empty-host" style="padding: 8px;"><div class="ed-empty ed-empty--compact"><div class="ed-empty__visual"><svg class="icn" style="width:18px; height:18px;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><h2 class="ed-empty__title">No comments</h2><p class="ed-empty__body">Add the first comment to start a thread.</p></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Copy guidance</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Title</span><span>Plain. <code>"No findings yet"</code> not <code>"Nothing to see here!"</code>. Avoid exclamation, slang, jokes.</span></li>
+            <li><span class="verdict verdict--use">Body</span><span>State the cause AND the unblock. <code>"Findings appear here once an examination opens. Open one from the period selector."</code></span></li>
+            <li><span class="verdict verdict--use">Actions</span><span>Primary verbs only. <code>"Create finding"</code>, <code>"Clear filters"</code>, <code>"Retry"</code>. Skip CTAs the user can't perform.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Animated illustrations, mascots, "Oops!" copy, or apologies. This is institutional software.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Inside table bodies, list panels, drawer/inspector contents, dashboard widgets when no data is present.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdNotification</code> when content exists but a state needs flagging (banner above the data).</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>Skeletons (<code>EdSkeleton</code>) during initial load — empty state is for genuinely empty.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Empty state in modals or quickly-resolved areas. Just hide the section.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Title is the first heading inside the host region. Use the heading level appropriate to placement.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Visual icon is decorative — <code>aria-hidden="true"</code>. Title carries meaning.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Buttons inherit standard <code>EdButton</code> a11y.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Feedback/EdEmptyState
+├─ FirstUse, NoResults, Error, Success, Restricted
+├─ Compact (inside small panels)
+├─ ZeroAction (no buttons)
+└─ TwoActions (primary + secondary)</code></pre>
+    </section>
+</main>
+</body>
+</html>

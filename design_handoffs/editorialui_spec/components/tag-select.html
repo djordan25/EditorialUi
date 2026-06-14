@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdTagSelect · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "E3",
+    "group": "Display",
+    "name": "EdTagSelect",
+    "lede": "Multi-select input that renders selected values as removable tags. Picks from a known list (combobox-style) with optional free-text creation. The classic 'add to multiple categories' input."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div style="width: 380px;">
+                <p class="ed-field__label" style="margin-bottom: 6px;">Regulatory scope</p>
+                <div class="ed-select__trigger" style="height: auto; min-height: 36px; padding: 6px 12px; flex-wrap: wrap; gap: 4px;">
+                    <span class="ed-tag ed-tag--brand">PRA SS3/21<svg class="icn ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span>
+                    <span class="ed-tag ed-tag--brand">CCAR 2025<svg class="icn ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span>
+                    <span class="ed-tag ed-tag--brand">IFRS 9<svg class="icn ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span>
+                    <input style="flex:1; min-width: 80px; border: 0; outline: 0; background: none; font-size: 13px; font-family: var(--ed-font-sans);" placeholder="Add…">
+                </div>
+                <p class="ed-field__hint">Type to search regulations, press Enter to add.</p>
+            </div>
+            <div style="margin-top: 24px; display: flex; gap: 24px; flex-wrap: wrap;">
+                <div class="ed-anatomy__callout"><strong>Field</strong> — auto-growing height. Wraps on overflow.</div>
+                <div class="ed-anatomy__callout"><strong>Tags</strong> — brand tone by default. Each has a remove button.</div>
+                <div class="ed-anatomy__callout"><strong>Inline input</strong> — final slot. Type to filter the menu and add.</div>
+                <div class="ed-anatomy__callout"><strong>Menu</strong> — combobox dropdown anchored below.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">States</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">empty</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-select__trigger" style="min-height: 36px; padding: 6px 12px;"><span style="flex: 1; color: var(--ed-color-text-faint); font-size: 13px;">Select tags…</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">populated</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-select__trigger" style="height: auto; min-height: 36px; padding: 6px 12px; flex-wrap: wrap; gap: 4px;"><span class="ed-tag ed-tag--brand">PRA<svg class="icn ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span><span class="ed-tag ed-tag--brand">CCAR<svg class="icn ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">disabled</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-select__trigger" style="height: auto; min-height: 36px; padding: 6px 12px; flex-wrap: wrap; gap: 4px; background: var(--ed-color-surface-2); opacity: 0.6;"><span class="ed-tag">PRA</span><span class="ed-tag">CCAR</span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">error</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-select__trigger ed-select__trigger--error" style="height: auto; min-height: 36px; padding: 6px 12px;"><span style="flex: 1; color: var(--ed-color-text-faint); font-size: 13px;">Select tags…</span></div><p class="ed-field__hint ed-field__hint--error">At least one regulation required.</p></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Multi-tag forms — regulations, business units, owners, watchers, categories.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdComboBox</code> (multi) when you don't want the inline tag display (e.g. compact dropdown trigger).</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdCheckbox</code> group when ≤6 fixed options.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Free-text creation on production-critical lists. Lock to known values.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Build on Radix Combobox with <code>multiple</code>. Each selected tag is keyboard-focusable; Backspace from empty input removes last.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Each tag's close button has <code>aria-label="Remove {tag}"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Live region announces additions/removals: "{tag} added. 3 of 12 selected."</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Display/EdTagSelect
+├─ Empty, Populated, Overflowing
+├─ Searchable, AllowCreate
+├─ Disabled, Error
+└─ KeyboardBackspaceRemove</code></pre>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdDataTable · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .sort-icn { width: 10px; height: 10px; stroke:currentColor; stroke-width: 2; fill: none; stroke-linecap: round; vertical-align: -1px;}
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "G1",
+    "group": "Data",
+    "name": "EdDataTable",
+    "lede": "The going-forward primitive for inventory pages, picker dialogs, audit log tables. TanStack-backed: virtualized, sortable, selectable, server-paginated. Dense by default — tables read as tables, not cards."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 0;">
+            <div class="ed-table-wrap">
+                <div class="ed-table__toolbar">
+                    <label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--indeterminate"><span class="ed-checkbox__indeterminate"></span></span></label>
+                    <span style="font-size: 13px; color: var(--ed-color-text-secondary);">3 selected</span>
+                    <button class="ed-btn ed-btn--secondary ed-btn--sm">Reassign…</button>
+                    <button class="ed-btn ed-btn--ghost ed-btn--sm">Export</button>
+                    <button class="ed-btn ed-btn--ghost ed-btn--sm" style="color: var(--ed-color-status-danger);">Close findings</button>
+                    <div class="ed-table__toolbar-spacer"></div>
+                    <button class="ed-icon-btn" aria-label="Column settings"><svg class="icn" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+                </div>
+                <table class="ed-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 36px;"><label class="ed-checkbox"><span class="ed-checkbox__box"></span></label></th>
+                            <th aria-sort="none">ID<svg class="sort-icn" viewBox="0 0 12 12"><polyline points="3,5 6,2 9,5"/><polyline points="3,7 6,10 9,7"/></svg></th>
+                            <th aria-sort="ascending">Title<svg class="sort-icn" viewBox="0 0 12 12"><polyline points="3,5 6,2 9,5"/></svg></th>
+                            <th>Severity</th>
+                            <th>Status</th>
+                            <th aria-sort="none">Owner<svg class="sort-icn" viewBox="0 0 12 12"><polyline points="3,5 6,2 9,5"/><polyline points="3,7 6,10 9,7"/></svg></th>
+                            <th aria-sort="descending">Due<svg class="sort-icn" viewBox="0 0 12 12"><polyline points="3,7 6,10 9,7"/></svg></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr aria-selected="true">
+                            <td><label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg width="10" height="10" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9 10,3"/></svg></span></label></td>
+                            <td class="ed-table__cell--mono">F-2438</td>
+                            <td>Stale model documentation</td>
+                            <td><span class="ed-badge ed-badge--soft ed-badge--warning">MEDIUM</span></td>
+                            <td><span class="ed-badge ed-badge--soft ed-badge--warning"><span class="ed-badge__dot" style="background: var(--ed-color-status-warning);"></span>OPEN</span></td>
+                            <td>Marcus Chen</td>
+                            <td class="ed-table__cell--mono">2026-04-22</td>
+                            <td class="ed-table__cell--actions"><button class="ed-icon-btn ed-icon-btn--sm" aria-label="More"><svg class="icn" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></td>
+                        </tr>
+                        <tr aria-selected="true">
+                            <td><label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg width="10" height="10" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9 10,3"/></svg></span></label></td>
+                            <td class="ed-table__cell--mono">F-2401</td>
+                            <td>Backtest mismatch — PD retail</td>
+                            <td><span class="ed-badge ed-badge--solid ed-badge--danger">MRA</span></td>
+                            <td><span class="ed-badge ed-badge--soft ed-badge--danger"><span class="ed-badge__dot" style="background: var(--ed-color-status-danger);"></span>OVERDUE</span></td>
+                            <td>Priya Rao</td>
+                            <td class="ed-table__cell--mono" style="color: var(--ed-color-status-danger);">2026-04-05</td>
+                            <td class="ed-table__cell--actions"><button class="ed-icon-btn ed-icon-btn--sm" aria-label="More"><svg class="icn" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></td>
+                        </tr>
+                        <tr aria-selected="true">
+                            <td><label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg width="10" height="10" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9 10,3"/></svg></span></label></td>
+                            <td class="ed-table__cell--mono">F-2399</td>
+                            <td>Drift threshold not configured</td>
+                            <td><span class="ed-badge ed-badge--soft ed-badge--neutral">LOW</span></td>
+                            <td><span class="ed-badge ed-badge--soft ed-badge--info">IN_REVIEW</span></td>
+                            <td>Hanna Lindqvist</td>
+                            <td class="ed-table__cell--mono">2026-05-14</td>
+                            <td class="ed-table__cell--actions"><button class="ed-icon-btn ed-icon-btn--sm" aria-label="More"><svg class="icn" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></td>
+                        </tr>
+                        <tr class="ed-table__row--superseded">
+                            <td><label class="ed-checkbox"><span class="ed-checkbox__box"></span></label></td>
+                            <td class="ed-table__cell--mono">F-2287</td>
+                            <td>Stale documentation (superseded by F-2438)</td>
+                            <td><span class="ed-badge ed-badge--outline ed-badge--neutral">SUPERSEDED</span></td>
+                            <td><span class="ed-badge ed-badge--outline ed-badge--neutral">CLOSED</span></td>
+                            <td>Marcus Chen</td>
+                            <td class="ed-table__cell--mono">2026-02-14</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="ed-table__footer">
+                    <span>Showing 1–4 of 312 · 3 selected</span>
+                    <span style="display: flex; align-items: center; gap: 8px;"><button class="ed-icon-btn ed-icon-btn--sm" aria-label="Previous"><svg class="icn" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button><span>1 / 78</span><button class="ed-icon-btn ed-icon-btn--sm" aria-label="Next"><svg class="icn" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button></span>
+                </div>
+            </div>
+            <div style="padding: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Toolbar</strong> — selection summary + bulk actions on left, settings on right. Hides when nothing selected.</div>
+                <div class="ed-anatomy__callout"><strong>Header</strong> — mono uppercase eyebrow. Sortable columns show <code>aria-sort</code> + caret.</div>
+                <div class="ed-anatomy__callout"><strong>Row</strong> — 40px tall (default), 32px (compact). Hover + selected states.</div>
+                <div class="ed-anatomy__callout"><strong>Superseded</strong> — dimmed row with surface-2 tint. Audit-trail visual convention.</div>
+                <div class="ed-anatomy__callout"><strong>Footer</strong> — range + paginator. Mono. Sticky to bottom.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Density</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">default — 40px rows</span><div class="ed-cell__demo ed-cell__demo--block"><table class="ed-table"><thead><tr><th>ID</th><th>Title</th><th>Severity</th></tr></thead><tbody><tr><td class="ed-table__cell--mono">F-2438</td><td>Stale documentation</td><td><span class="ed-badge ed-badge--soft ed-badge--warning">MEDIUM</span></td></tr><tr><td class="ed-table__cell--mono">F-2401</td><td>Backtest mismatch</td><td><span class="ed-badge ed-badge--solid ed-badge--danger">MRA</span></td></tr></tbody></table></div></div>
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">compact — 32px rows (audit log, run history)</span><div class="ed-cell__demo ed-cell__demo--block"><table class="ed-table ed-table--compact"><thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Target</th></tr></thead><tbody><tr><td class="ed-table__cell--mono">11:42:08</td><td>Marcus Chen</td><td>opened</td><td class="ed-table__cell--mono">F-2438</td></tr><tr><td class="ed-table__cell--mono">11:41:55</td><td>Marcus Chen</td><td>assigned</td><td class="ed-table__cell--mono">F-2438 → himself</td></tr><tr><td class="ed-table__cell--mono">11:39:12</td><td>Hanna L.</td><td>created</td><td class="ed-table__cell--mono">F-2438</td></tr></tbody></table></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">States</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">empty</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-table-wrap" style="padding: 32px; text-align: center;"><span style="font-size: 13px; color: var(--ed-color-text-muted);">No findings match these filters.</span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">loading skeleton</span><div class="ed-cell__demo ed-cell__demo--block"><table class="ed-table"><thead><tr><th>ID</th><th>Title</th><th>Severity</th></tr></thead><tbody>
+                <tr><td><div style="height: 10px; width: 50px; background: var(--ed-color-surface-3);"></div></td><td><div style="height: 10px; width: 180px; background: var(--ed-color-surface-3);"></div></td><td><div style="height: 14px; width: 60px; background: var(--ed-color-surface-3); border-radius: 2px;"></div></td></tr>
+                <tr><td><div style="height: 10px; width: 50px; background: var(--ed-color-surface-3);"></div></td><td><div style="height: 10px; width: 220px; background: var(--ed-color-surface-3);"></div></td><td><div style="height: 14px; width: 60px; background: var(--ed-color-surface-3); border-radius: 2px;"></div></td></tr>
+            </tbody></table></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">error</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-table-wrap" style="padding: 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;"><svg class="ed-icon ed-icon--lg ed-icon--danger" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><span style="font-weight: 500;">Couldn't load findings</span><span style="font-size: 13px; color: var(--ed-color-text-secondary);">Registry sync is unreachable.</span><button class="ed-btn ed-btn--secondary ed-btn--sm">Retry</button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">filtered no-results</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-table-wrap" style="padding: 32px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;"><svg class="ed-icon ed-icon--lg ed-icon--muted" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span style="font-weight: 500;">No findings match "drift threshold"</span><button class="ed-btn ed-btn--ghost ed-btn--sm">Clear filters</button></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Patterns</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Virtualization</span><span>Required for &gt; 100 rows. Use TanStack Virtual. Row height fixed per density.</span></li>
+            <li><span class="verdict verdict--use">Sorting</span><span>Single column at a time. Server-side for paginated tables (URL param). Client-side for fully-loaded sets.</span></li>
+            <li><span class="verdict verdict--use">Selection</span><span>Checkbox column on left. Header checkbox = select-all (page) or indeterminate when partial.</span></li>
+            <li><span class="verdict verdict--use">Bulk actions</span><span>Appear in toolbar when ≥ 1 row selected. Destructive (close, delete) gets danger styling.</span></li>
+            <li><span class="verdict verdict--use">Pagination</span><span>Footer paginator with range + prev/next. Page size in column settings popover, persisted per user.</span></li>
+            <li><span class="verdict verdict--use">Row actions</span><span>Trailing icon-button opens an EdMenu. Don't put more than 2 inline icon-buttons per row.</span></li>
+            <li><span class="verdict verdict--use">Row click</span><span>Opens detail in EdSidePanel (or navigates to detail route). Checkbox click only toggles selection.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Inventory pages: Findings, Models, Validators, Runs, Audit log. Any list with ≥ 3 columns or ≥ 50 rows.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdNativeTable</code> for static 3-row metadata grids in side panels.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdList</code> for picker results, recent items — anywhere selection is the point and rows have 1–2 fields.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Card grids in place of tables. Tables read as tables.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Semantic <code>&lt;table&gt;</code> + <code>&lt;thead&gt;</code> + <code>&lt;tbody&gt;</code> + <code>&lt;th scope="col"&gt;</code>. Virtualizer must keep table semantics intact.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Sortable headers: <code>&lt;button&gt;</code> inside <code>&lt;th aria-sort="ascending|descending|none"&gt;</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Row checkbox has <code>aria-label="Select row F-2438"</code>. Selected row: <code>aria-selected="true"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Live region announces selection changes: "3 of 312 selected".</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Keyboard: Tab cycles to row checkbox + last action button. Arrow keys NOT used — tables are not grids in this product (Excel-style nav would conflict with screen readers).</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Data/EdDataTable
+├─ Default (10 rows)
+├─ Selection (toolbar + bulk actions)
+├─ Sortable (server + client)
+├─ Compact (audit log density)
+├─ Zebra
+├─ WithSuperseded
+├─ Empty, Loading, Error, NoResults
+├─ Virtualized (1000+ rows)
+└─ Paginated</code></pre>
+    </section>
+</main>
+</body>
+</html>

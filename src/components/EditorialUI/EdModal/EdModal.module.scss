@@ -1,0 +1,28 @@
+@use '../../../theme/tokens-v2';
+
+.busyDialog {
+    /* Hook for any busy-specific chrome adjustments. */
+}
+
+/* Dim + freeze the body content while the modal is busy. */
+.bodyBusy {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}
+
+.busyRegion {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ed-space-2);
+    margin-top: var(--ed-space-4);
+    padding-top: var(--ed-space-4);
+    border-top: 1px solid var(--ed-color-hairline);
+}
+
+.busyStatus {
+    margin: 0;
+    font-size: var(--ed-font-size-xs);
+    color: var(--ed-color-text-muted);
+    line-height: var(--ed-line-height-snug);
+}

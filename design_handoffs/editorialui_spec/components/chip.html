@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdChip · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "E4",
+    "group": "Display",
+    "name": "EdChip",
+    "lede": "Pill-shaped interactive control — filters, segmented selectors, removable input tokens. Used by EdFilterChipRow internally; available standalone for ad-hoc filter rows and selection groups."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Variants</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">unselected</span><div class="ed-cell__demo"><span class="ed-chip">All</span><span class="ed-chip">Open<span class="ed-chip__count">87</span></span></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">selected</span><div class="ed-cell__demo"><span class="ed-chip ed-chip--selected">All</span><span class="ed-chip ed-chip--selected">Open<span class="ed-chip__count">87</span></span></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">input (form context)</span><div class="ed-cell__demo"><span class="ed-chip ed-chip--input">PRA SS3/21</span><span class="ed-chip ed-chip--input">CCAR<svg class="icn ed-chip__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with leading dot (status)</span><div class="ed-cell__demo"><span class="ed-chip"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--ed-color-status-warning);"></span>In review</span></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with leading icon</span><div class="ed-cell__demo"><span class="ed-chip"><svg class="icn" viewBox="0 0 24 24" style="width:12px; height:12px;"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>Filters</span></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">disabled</span><div class="ed-cell__demo"><span class="ed-chip" style="opacity: 0.5; cursor: not-allowed;">Archived</span></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Inline filter rows, segmented selectors with 2–4 options, removable input tokens in tag selects.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdFilterChipRow</code> when you need ≥3 chips with counts, overflow, and standard wiring.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdTag</code> for non-interactive metadata. Chips imply you can click them.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdButton</code> for action verbs. Chips are for selection.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Selection chip: <code>&lt;button role="checkbox"&gt;</code> with <code>aria-checked</code>, or <code>role="radio"</code> for single-select group.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Input chip: focusable; Backspace / Delete removes it.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Count badge included in accessible name: <code>aria-label="Open, 87 items"</code>.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Display/EdChip
+├─ Unselected, Selected, Disabled
+├─ WithCount, WithDot, WithIcon
+├─ Input (closable)
+└─ AsRadioGroup, AsCheckboxGroup</code></pre>
+    </section>
+</main>
+</body>
+</html>

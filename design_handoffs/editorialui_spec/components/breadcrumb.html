@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdBreadcrumb · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:12px; height:12px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "F2",
+    "group": "Navigation",
+    "name": "EdBreadcrumb",
+    "lede": "Path-back trail showing the user's location in a hierarchy. Last crumb is the current page (non-link). Used on detail pages and nested workflows; never on flat top-level routes."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <nav class="ed-breadcrumb">
+                <a class="ed-breadcrumb__item" href="#">Findings</a>
+                <span class="ed-breadcrumb__separator">/</span>
+                <a class="ed-breadcrumb__item" href="#">2026-Q1 audit</a>
+                <span class="ed-breadcrumb__separator">/</span>
+                <a class="ed-breadcrumb__item" href="#">Credit risk</a>
+                <span class="ed-breadcrumb__separator">/</span>
+                <span class="ed-breadcrumb__item ed-breadcrumb__item--current">F-2438 · Stale documentation</span>
+            </nav>
+            <div style="margin-top: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Crumb</strong> — links by default; final crumb is plain text (current page).</div>
+                <div class="ed-anatomy__callout"><strong>Separator</strong> — mono <code>/</code> in faint color. Decorative.</div>
+                <div class="ed-anatomy__callout"><strong>Truncation</strong> — each crumb caps at 200px before ellipsis.</div>
+                <div class="ed-anatomy__callout"><strong>Overflow</strong> — when total width exceeds parent, collapse middle into a "…" popover.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Variants</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">default</span><div class="ed-cell__demo ed-cell__demo--block"><nav class="ed-breadcrumb"><a class="ed-breadcrumb__item" href="#">Findings</a><span class="ed-breadcrumb__separator">/</span><a class="ed-breadcrumb__item" href="#">2026-Q1 audit</a><span class="ed-breadcrumb__separator">/</span><span class="ed-breadcrumb__item ed-breadcrumb__item--current">F-2438</span></nav></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with overflow (long path)</span><div class="ed-cell__demo ed-cell__demo--block"><nav class="ed-breadcrumb"><a class="ed-breadcrumb__item" href="#">Findings</a><span class="ed-breadcrumb__separator">/</span><span class="ed-breadcrumb__overflow">…</span><span class="ed-breadcrumb__separator">/</span><a class="ed-breadcrumb__item" href="#">Credit risk</a><span class="ed-breadcrumb__separator">/</span><span class="ed-breadcrumb__item ed-breadcrumb__item--current">F-2438</span></nav></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">single back link (compact)</span><div class="ed-cell__demo ed-cell__demo--block"><nav class="ed-breadcrumb"><a class="ed-breadcrumb__item" href="#" style="display: inline-flex; align-items: center; gap: 4px;"><svg class="icn" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back to Findings</a></nav></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with chevron separator (Stripe-style)</span><div class="ed-cell__demo ed-cell__demo--block"><nav class="ed-breadcrumb"><a class="ed-breadcrumb__item" href="#">Findings</a><span class="ed-breadcrumb__separator"><svg class="icn" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span><a class="ed-breadcrumb__item" href="#">2026-Q1</a><span class="ed-breadcrumb__separator"><svg class="icn" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span><span class="ed-breadcrumb__item ed-breadcrumb__item--current">F-2438</span></nav></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Detail pages 2+ levels deep. Nested workflows. Embedded views in modals where context needs to be reasserted.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Compact back-link variant when the hierarchy is shallow (single parent).</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>The page title alone when there's no parent. No "Home / Page" — just "Page".</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Breadcrumbs as primary navigation. They're orientation, not a route picker.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Including the brand or top-level "Home" as a crumb. The TopBar already covers that.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Wrapping <code>&lt;nav aria-label="Breadcrumb"&gt;</code> + <code>&lt;ol&gt;</code> with <code>&lt;li&gt;</code> per crumb.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Current crumb sets <code>aria-current="page"</code>; renders as plain text (not a link).</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Separators are <code>aria-hidden="true"</code>. Use CSS pseudo-element OR aria-hidden span — never both.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Overflow "…" is a button that opens a menu listing hidden crumbs.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Navigation/EdBreadcrumb
+├─ TwoLevel, ThreeLevel
+├─ WithOverflow
+├─ BackLinkVariant
+└─ ChevronSeparator</code></pre>
+    </section>
+</main>
+</body>
+</html>

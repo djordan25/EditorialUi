@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdContextMenu · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .kbd { font-family: var(--ed-font-mono); font-size: 10px; color: var(--ed-color-text-faint); margin-left: auto; padding-left: 12px; }
+        .row-stage { background: var(--ed-color-surface-2); border-radius: var(--ed-radius-sm); padding: 24px; display: flex; align-items: flex-start; justify-content: center; min-height: 280px; gap: 12px; position: relative; }
+        .row-target { background: var(--ed-color-surface-1); border: 1px solid var(--ed-color-hairline); border-radius: 4px; padding: 12px 16px; font-size: 13px; display: flex; gap: 14px; align-items: center; min-width: 320px; }
+        .row-target--hot { box-shadow: 0 0 0 2px var(--ed-color-brand); border-color: var(--ed-color-brand); }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "D5",
+    "group": "Containers",
+    "name": "EdContextMenu",
+    "lede": "Right-click menu for direct manipulation of an entity. Same look as EdMenu, different trigger. Reserved for power users — every action must also be reachable via the visible UI."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 0;">
+            <div class="row-stage">
+                <div class="row-target row-target--hot">
+                    <span class="ed-badge ed-badge--soft ed-badge--warning"><span class="ed-badge__dot" style="background: var(--ed-color-status-warning);"></span>OPEN</span>
+                    <div><div style="font-family: var(--ed-font-mono); font-size: 11px; color: var(--ed-color-text-muted);">F-2438</div><div>Stale model documentation</div></div>
+                </div>
+                <div class="ed-menu" style="width: 220px; max-height: none; position: absolute; top: 80px; left: calc(50% + 40px); box-shadow: var(--ed-elevation-3);">
+                    <div class="ed-menu__item">Open finding<span class="kbd">↵</span></div>
+                    <div class="ed-menu__item ed-menu__item--active">Reassign owner</div>
+                    <div class="ed-menu__separator"></div>
+                    <div class="ed-menu__group-label">Status</div>
+                    <div class="ed-menu__item">Mark as closed</div>
+                    <div class="ed-menu__item">Move to draft</div>
+                    <div class="ed-menu__separator"></div>
+                    <div class="ed-menu__item">Copy ID<span class="kbd">⌘C</span></div>
+                    <div class="ed-menu__separator"></div>
+                    <div class="ed-menu__item ed-menu__item--danger">Delete</div>
+                </div>
+            </div>
+            <div style="padding: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Trigger</strong> — right-click on a target row, card, or node. Long-press on touch.</div>
+                <div class="ed-anatomy__callout"><strong>Target highlight</strong> — target row gets a 2px brand outline while menu is open.</div>
+                <div class="ed-anatomy__callout"><strong>Anchor</strong> — menu appears at click position, auto-flips if it would clip viewport.</div>
+                <div class="ed-anatomy__callout"><strong>Items</strong> — same look as <code>EdMenu</code>. Don't invent new visual patterns.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Triggers</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">table row</span><div class="ed-cell__demo ed-cell__demo--block" style="font-size: 13px;">Right-click anywhere in the row body. Reveals row-scoped actions: open, reassign, status changes, copy ID, delete.</div></div>
+            <div class="ed-cell"><span class="ed-cell__label">graph node</span><div class="ed-cell__demo ed-cell__demo--block" style="font-size: 13px;">Right-click on a node in the dependency graph. Reveals node-scoped actions: zoom to, expand subtree, hide, copy node ID.</div></div>
+            <div class="ed-cell"><span class="ed-cell__label">canvas background</span><div class="ed-cell__demo ed-cell__demo--block" style="font-size: 13px;">Right-click on empty canvas. Reveals canvas-scoped actions: fit to view, reset zoom, paste.</div></div>
+            <div class="ed-cell"><span class="ed-cell__label">text selection</span><div class="ed-cell__demo ed-cell__demo--block" style="font-size: 13px;">Right-click within a code/log block with selection. Reveals copy / search / open. Defer to native browser menu when unsure.</div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Behavior</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Build on Radix ContextMenu. Suppresses native browser menu when the trigger area is registered.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>On open, target gets a visible focus / selection outline. Removed on dismiss.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Items must mirror an action available in the visible UI (row toolbar, edit button). Context menus are accelerators, never the only path.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Long-press (700ms) on touch triggers the menu. Visual press feedback during the hold.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Hiding destructive actions only in the context menu. Delete must be reachable from the visible row.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Power-user accelerators on table rows, graph nodes, and canvases.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdMenu</code> for declared, button-triggered actions.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Context menus inside dialogs and modals. Too many input modes.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Keyboard equivalent: focused row + <kbd>Shift+F10</kbd> or <kbd>Menu key</kbd> opens the same menu at the row's bounding box.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Menu uses Radix's full a11y wiring — role=menu, menuitem, focus management.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Touch trigger announces "Press and hold for actions" on first encounter.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Containers/EdContextMenu
+├─ OnTableRow
+├─ OnGraphNode
+├─ OnCanvas
+├─ WithSubmenu
+└─ TouchLongPress</code></pre>
+    </section>
+</main>
+</body>
+</html>

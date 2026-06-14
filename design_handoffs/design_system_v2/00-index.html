@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditorialUI</title>
+    <link rel="stylesheet" href="shared/spec.css">
+    <script src="shared/spec.js" defer></script>
+    <style>
+        .ed-index {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1px;
+            background: var(--ed-color-hairline);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            overflow: hidden;
+            margin-bottom: 48px;
+        }
+        .ed-index__item {
+            background: var(--ed-color-surface-1);
+            padding: 20px 20px 24px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: background var(--ed-transition-base);
+            min-height: 100px;
+        }
+        .ed-index__item:hover { background: var(--ed-color-surface-2); }
+        .ed-index__item[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }
+        .ed-index__num {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+        }
+        .ed-index__name {
+            font-size: var(--ed-font-size-lg);
+            font-weight: var(--ed-font-weight-semibold);
+            letter-spacing: var(--ed-tracking-snug);
+            color: var(--ed-color-text-primary);
+            margin: 0;
+        }
+        .ed-index__sub {
+            font-size: var(--ed-font-size-sm);
+            color: var(--ed-color-text-secondary);
+            margin: 0;
+            line-height: var(--ed-line-height-snug);
+        }
+        .ed-index__status {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            color: var(--ed-color-text-faint);
+            margin-top: auto;
+            padding-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .ed-index__status--ready { color: var(--ed-color-status-success); }
+        .ed-index__status--draft { color: var(--ed-color-status-warning); }
+        .ed-index__status--todo  { color: var(--ed-color-text-faint); }
+
+        .ed-group__head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            border-top: 1px solid var(--ed-color-hairline-strong);
+            padding-top: 16px;
+            margin: 48px 0 16px;
+        }
+        .ed-group__title { font-size: var(--ed-font-size-xl); font-weight: var(--ed-font-weight-semibold); margin: 0; }
+        .ed-group__count { font-family: var(--ed-font-mono); font-size: var(--ed-font-size-xs); color: var(--ed-color-text-muted); }
+    </style>
+</head>
+<body>
+<main class="ed-spec">
+    <header class="ed-spec__topbar">
+        <nav class="ed-spec__crumbs">EditorialUI</nav>
+        <div class="ed-spec__topbar-actions">
+            <span>v0.1.0 · draft · 37 primitives</span>
+            <button type="button" class="ed-theme-toggle" data-ed-theme-toggle>Dark</button>
+        </div>
+    </header>
+
+    <p class="ed-spec__eyebrow">Design system</p>
+    <h1 class="ed-spec__title">EditorialUI</h1>
+    <p class="ed-spec__lede">
+        Component spec for ModelRiskIQ's next-generation design system. Built in parallel with the existing ProdicusUI library; consumers migrate one at a time.
+        Inter Tight + JetBrains Mono. Light-default, polished dark. Built on Radix.
+    </p>
+
+    <!-- Foundations -->
+    <div class="ed-group__head">
+        <h2 class="ed-group__title">Foundations</h2>
+        <span class="ed-group__count">3 / 3</span>
+    </div>
+    <div class="ed-index">
+        <a class="ed-index__item" href="01-foundations.html">
+            <span class="ed-index__num">01</span>
+            <h3 class="ed-index__name">Foundations</h3>
+            <p class="ed-index__sub">Tokens, type, color, spacing, radii, motion, z-index.</p>
+            <span class="ed-index__status ed-index__status--draft">Draft</span>
+        </a>
+        <a class="ed-index__item" href="02-principles.html">
+            <span class="ed-index__num">02</span>
+            <h3 class="ed-index__name">Principles</h3>
+            <p class="ed-index__sub">Posture, naming, decision rules, conventions.</p>
+            <span class="ed-index__status ed-index__status--draft">Draft</span>
+        </a>
+        <a class="ed-index__item" href="00-index.html" aria-disabled="true">
+            <span class="ed-index__num">03</span>
+            <h3 class="ed-index__name">Iconography</h3>
+            <p class="ed-index__sub">Icon family, sizes, color tokens, EdIcon wrapper.</p>
+            <span class="ed-index__status ed-index__status--todo">Pending</span>
+        </a>
+    </div>
+
+    <!-- Inputs -->
+    <div class="ed-group__head"><h2 class="ed-group__title">Inputs</h2><span class="ed-group__count">8 / 8</span></div>
+    <div class="ed-index">
+        <a class="ed-index__item" href="components/button.html"><span class="ed-index__num">A1</span><h3 class="ed-index__name">EdButton</h3><p class="ed-index__sub">Primary, secondary, ghost, danger, link.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/icon-button.html"><span class="ed-index__num">A2</span><h3 class="ed-index__name">EdIconButton</h3><p class="ed-index__sub">Icon-only button with aria-label.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/text-field.html"><span class="ed-index__num">A3</span><h3 class="ed-index__name">EdTextField</h3><p class="ed-index__sub">Label, hint, error, adornments, mono variant.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/password-input.html"><span class="ed-index__num">A4</span><h3 class="ed-index__name">EdPasswordInput</h3><p class="ed-index__sub">Reveal toggle, 4-band strength meter.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/checkbox.html"><span class="ed-index__num">A5</span><h3 class="ed-index__name">EdCheckbox</h3><p class="ed-index__sub">Checked, indeterminate, disabled, group.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/switch.html"><span class="ed-index__num">A6</span><h3 class="ed-index__name">EdSwitch</h3><p class="ed-index__sub">On/off, with label, in settings rows.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/radio-group.html"><span class="ed-index__num">A7</span><h3 class="ed-index__name">EdRadioGroup</h3><p class="ed-index__sub">Vertical, horizontal, with descriptions.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/form-control-label.html"><span class="ed-index__num">A8</span><h3 class="ed-index__name">EdFormControlLabel</h3><p class="ed-index__sub">Label + control + hint + error composition.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+    </div>
+
+    <!-- Selection -->
+    <div class="ed-group__head"><h2 class="ed-group__title">Selection</h2><span class="ed-group__count">5 / 5</span></div>
+    <div class="ed-index">
+        <a class="ed-index__item" href="components/select.html"><span class="ed-index__num">B1</span><h3 class="ed-index__name">EdSelect</h3><p class="ed-index__sub">≤7 fixed options. No search.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/combobox.html"><span class="ed-index__num">B2</span><h3 class="ed-index__name">EdComboBox</h3><p class="ed-index__sub">&gt;7 options, in-list search.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/autocomplete.html"><span class="ed-index__num">B3</span><h3 class="ed-index__name">EdAutocomplete</h3><p class="ed-index__sub">Free-text + suggestions.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/date-range-picker.html"><span class="ed-index__num">B4</span><h3 class="ed-index__name">EdDateRangePicker</h3><p class="ed-index__sub">Date range, presets.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/filter-chip-row.html"><span class="ed-index__num">B5</span><h3 class="ed-index__name">EdFilterChipRow</h3><p class="ed-index__sub">Multi-select filters above tables.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+    </div>
+
+    <!-- Feedback -->
+    <div class="ed-group__head"><h2 class="ed-group__title">Feedback</h2><span class="ed-group__count">6 / 6</span></div>
+    <div class="ed-index">
+        <a class="ed-index__item" href="components/notification.html"><span class="ed-index__num">C1</span><h3 class="ed-index__name">EdNotification</h3><p class="ed-index__sub">Inline banner — info/success/warning/danger.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/empty-state.html"><span class="ed-index__num">C2</span><h3 class="ed-index__name">EdEmptyState</h3><p class="ed-index__sub">Title, body, action. Empty/error/no-results.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/circular-progress.html"><span class="ed-index__num">C3</span><h3 class="ed-index__name">EdCircularProgress</h3><p class="ed-index__sub">Spinner, indeterminate + determinate.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/status-badge.html"><span class="ed-index__num">C4</span><h3 class="ed-index__name">EdStatusBadge</h3><p class="ed-index__sub">Status / severity / lifecycle. Soft, solid, outline.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/tooltip.html"><span class="ed-index__num">C5</span><h3 class="ed-index__name">EdTooltip</h3><p class="ed-index__sub">Anchored, delayed, dark on light / light on dark.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/progress-meter.html"><span class="ed-index__num">C6</span><h3 class="ed-index__name">EdProgressMeter</h3><p class="ed-index__sub">Linear bar + segmented stage progress.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+    </div>
+
+    <!-- Containers -->
+    <div class="ed-group__head"><h2 class="ed-group__title">Containers</h2><span class="ed-group__count">9 / 9</span></div>
+    <div class="ed-index">
+        <a class="ed-index__item" href="components/dialog.html"><span class="ed-index__num">D1</span><h3 class="ed-index__name">EdDialog</h3><p class="ed-index__sub">Low-level Radix dialog.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/modal.html"><span class="ed-index__num">D2</span><h3 class="ed-index__name">EdModal</h3><p class="ed-index__sub">Title + body + footer + busy state.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/popover.html"><span class="ed-index__num">D3</span><h3 class="ed-index__name">EdPopover</h3><p class="ed-index__sub">Anchored panel, arbitrary content.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/menu.html"><span class="ed-index__num">D4</span><h3 class="ed-index__name">EdMenu</h3><p class="ed-index__sub">Dropdown command targets.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/context-menu.html"><span class="ed-index__num">D5</span><h3 class="ed-index__name">EdContextMenu</h3><p class="ed-index__sub">Right-click menu.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/side-panel.html"><span class="ed-index__num">D6</span><h3 class="ed-index__name">EdSidePanel</h3><p class="ed-index__sub">Inspector panel, persistent or dismissable.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/accordion.html"><span class="ed-index__num">D7</span><h3 class="ed-index__name">EdAccordion</h3><p class="ed-index__sub">Collapsible sections.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/disclosure.html"><span class="ed-index__num">D8</span><h3 class="ed-index__name">EdDisclosure</h3><p class="ed-index__sub">Inline show/hide for a single block.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/card.html"><span class="ed-index__num">D9</span><h3 class="ed-index__name">EdCard</h3><p class="ed-index__sub">Bordered surface for dashboard tiles + summaries.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+    </div>
+
+    <!-- Display -->
+    <div class="ed-group__head"><h2 class="ed-group__title">Display</h2><span class="ed-group__count">6 / 6</span></div>
+    <div class="ed-index">
+        <a class="ed-index__item" href="components/tag.html"><span class="ed-index__num">E1</span><h3 class="ed-index__name">EdTag</h3><p class="ed-index__sub">Static or removable label.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/tag-container.html"><span class="ed-index__num">E2</span><h3 class="ed-index__name">EdTagContainer</h3><p class="ed-index__sub">Wraps tags with overflow rules.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/tag-select.html"><span class="ed-index__num">E3</span><h3 class="ed-index__name">EdTagSelect</h3><p class="ed-index__sub">Multi-select via tag chips.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/chip.html"><span class="ed-index__num">E4</span><h3 class="ed-index__name">EdChip</h3><p class="ed-index__sub">Pill — filter or input chip.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/divider.html"><span class="ed-index__num">E5</span><h3 class="ed-index__name">EdDivider</h3><p class="ed-index__sub">Hairline divider, horizontal/vertical.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/icon.html"><span class="ed-index__num">E6</span><h3 class="ed-index__name">EdIcon</h3><p class="ed-index__sub">Icon wrapper, semantic size + color.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+    </div>
+
+    <!-- Navigation -->
+    <div class="ed-group__head"><h2 class="ed-group__title">Navigation</h2><span class="ed-group__count">3 / 3</span></div>
+    <div class="ed-index">
+        <a class="ed-index__item" href="components/tabs.html"><span class="ed-index__num">F1</span><h3 class="ed-index__name">EdTabs</h3><p class="ed-index__sub">Underline tabs, optional counts.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/breadcrumb.html"><span class="ed-index__num">F2</span><h3 class="ed-index__name">EdBreadcrumb</h3><p class="ed-index__sub">Path crumbs with overflow.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/list.html"><span class="ed-index__num">F3</span><h3 class="ed-index__name">EdList</h3><p class="ed-index__sub">Selectable / scannable list.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+    </div>
+
+    <!-- Data -->
+    <div class="ed-group__head"><h2 class="ed-group__title">Data</h2><span class="ed-group__count">3 / 3</span></div>
+    <div class="ed-index">
+        <a class="ed-index__item" href="components/data-table.html"><span class="ed-index__num">G1</span><h3 class="ed-index__name">EdDataTable</h3><p class="ed-index__sub">Virtualized, sortable, selectable. TanStack-backed.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/native-table.html"><span class="ed-index__num">G2</span><h3 class="ed-index__name">EdNativeTable</h3><p class="ed-index__sub">Static metadata grids. No virtualization.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+        <a class="ed-index__item" href="components/form.html"><span class="ed-index__num">G3</span><h3 class="ed-index__name">EdForm</h3><p class="ed-index__sub">Form layout primitive — react-hook-form integration.</p><span class="ed-index__status ed-index__status--draft">Draft</span></a>
+    </div>
+
+    <footer class="ed-spec__foot">
+        <span>EditorialUI · 37 primitives · Inter Tight + JetBrains Mono</span>
+        <span>Light default · Dark via data-theme="dark"</span>
+    </footer>
+</main>
+</body>
+</html>

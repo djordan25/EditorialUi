@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdTag · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "E1",
+    "group": "Display",
+    "name": "EdTag",
+    "lede": "Compact label for metadata — categories, regulations, business unit, model family. Lower visual weight than EdStatusBadge (which is for state). Sentence case, regular weight."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div style="display:flex; gap: 8px; flex-wrap: wrap;">
+                <span class="ed-tag">credit-risk</span>
+                <span class="ed-tag ed-tag--brand">PD-Retail</span>
+                <span class="ed-tag ed-tag--success">production</span>
+                <span class="ed-tag">PRA SS3/21<svg class="ed-icon ed-icon--xs ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span>
+            </div>
+            <div style="margin-top: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Height</strong> — 22px. Padding 0/8. Radius 2px.</div>
+                <div class="ed-anatomy__callout"><strong>Type</strong> — Inter Tight, 12px, weight 500. Sentence/kebab case.</div>
+                <div class="ed-anatomy__callout"><strong>Tone</strong> — neutral default. Brand / success / warning / danger when paired with category meaning.</div>
+                <div class="ed-anatomy__callout"><strong>Close</strong> — optional X. Only when tag is dismissable in context.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Tones</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">neutral (default)</span><div class="ed-cell__demo"><span class="ed-tag">credit-risk</span><span class="ed-tag">market-risk</span><span class="ed-tag">operational</span></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">brand</span><div class="ed-cell__demo"><span class="ed-tag ed-tag--brand">PD-Retail</span><span class="ed-tag ed-tag--brand">LGD-Wholesale</span></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">success</span><div class="ed-cell__demo"><span class="ed-tag ed-tag--success">production</span><span class="ed-tag ed-tag--success">approved</span></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">warning</span><div class="ed-cell__demo"><span class="ed-tag ed-tag--warning">draft</span><span class="ed-tag ed-tag--warning">review</span></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">danger</span><div class="ed-cell__demo"><span class="ed-tag ed-tag--danger">deprecated</span><span class="ed-tag ed-tag--danger">retired</span></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">neutral surface</span><div class="ed-cell__demo"><span class="ed-tag ed-tag--neutral">unassigned</span></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Use cases</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">metadata on entity row</span><div class="ed-cell__demo ed-cell__demo--block"><div style="display:flex; gap:8px; flex-wrap:wrap;"><span class="ed-tag">credit-risk</span><span class="ed-tag">retail</span><span class="ed-tag">PRA SS3/21</span><span class="ed-tag">CCAR 2025</span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">filter token in input</span><div class="ed-cell__demo ed-cell__demo--block"><div style="display:flex; gap:8px; flex-wrap:wrap; padding: 6px 10px; border: 1px solid var(--ed-color-hairline-strong); border-radius: var(--ed-radius-sm);"><span class="ed-tag ed-tag--brand">PD-Retail<svg class="ed-icon ed-icon--xs ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span><span class="ed-tag ed-tag--brand">retail<svg class="ed-icon ed-icon--xs ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span><span style="font-size: 13px; color: var(--ed-color-text-faint);">Add tag…</span></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Persistent metadata about an entity — what it IS (categories, regulations, version, area).</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdStatusBadge</code> for state (open, overdue, in-review). Different shape, different role.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdChip</code> when the affordance is "toggleable filter" (pill shape, hover behavior).</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Tag clouds. Tags should be enumerable and meaningful, not decorative.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Non-interactive tag uses <code>&lt;span&gt;</code>. Don't apply role unless behavior changes.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Close button is a <code>&lt;button&gt;</code> with <code>aria-label="Remove {tag name}"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Tone color paired with label — never color alone (e.g. red tag without "deprecated" label).</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Display/EdTag
+├─ Tones (neutral/brand/success/warning/danger)
+├─ Closable
+├─ WithIcon (optional leading)
+└─ InMetadata (entity row use case)</code></pre>
+    </section>
+</main>
+</body>
+</html>

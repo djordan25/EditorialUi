@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdSwitch · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "A6",
+    "group": "Inputs",
+    "name": "EdSwitch",
+    "lede": "Boolean toggle for settings that take effect immediately. Reads as state-of-the-world: on/off — never as a selection. Pairs with a label only; never grouped."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">States</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">off</span><div class="ed-cell__demo"><label class="ed-switch"><span class="ed-switch__track"><span class="ed-switch__thumb"></span></span><span>Notifications</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">on</span><div class="ed-cell__demo"><label class="ed-switch"><span class="ed-switch__track ed-switch__track--on"><span class="ed-switch__thumb"></span></span><span>Notifications</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">focus</span><div class="ed-cell__demo"><label class="ed-switch"><span class="ed-switch__track ed-switch__track--on ed-switch__track--focus"><span class="ed-switch__thumb"></span></span><span>Notifications</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">disabled · off</span><div class="ed-cell__demo"><label class="ed-switch"><span class="ed-switch__track ed-switch__track--disabled"><span class="ed-switch__thumb"></span></span><span style="color: var(--ed-color-text-disabled);">Notifications</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">disabled · on</span><div class="ed-cell__demo"><label class="ed-switch"><span class="ed-switch__track ed-switch__track--on ed-switch__track--disabled"><span class="ed-switch__thumb"></span></span><span style="color: var(--ed-color-text-disabled);">Notifications</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">loading (saving)</span><div class="ed-cell__demo"><label class="ed-switch"><span class="ed-switch__track ed-switch__track--on" style="opacity:0.6;"><span class="ed-switch__thumb"></span></span><span>Notifications <small style="color: var(--ed-color-text-muted); font-family: var(--ed-font-mono); font-size:11px; margin-left:6px;">saving…</small></span></label></div><span class="ed-cell__note">Server-mediated changes.</span></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">In a settings list</h2></div>
+        <p class="ed-section__sub">Common pattern: setting label + secondary description on the left, switch flush right. Row height is 56px.</p>
+        <div class="ed-anatomy" style="padding:0;">
+            <div style="width:100%; max-width:560px; background: var(--ed-color-surface-1); border:1px solid var(--ed-color-hairline); border-radius: var(--ed-radius-md);">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid var(--ed-color-hairline); gap:24px;">
+                    <div>
+                        <div style="font-weight:500; color: var(--ed-color-text-primary);">Email me when validations complete</div>
+                        <div style="font-size: var(--ed-font-size-sm); color: var(--ed-color-text-secondary); margin-top:2px;">For graphs you own or co-own.</div>
+                    </div>
+                    <label class="ed-switch"><span class="ed-switch__track ed-switch__track--on"><span class="ed-switch__thumb"></span></span></label>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid var(--ed-color-hairline); gap:24px;">
+                    <div>
+                        <div style="font-weight:500; color: var(--ed-color-text-primary);">Page on MRIA findings</div>
+                        <div style="font-size: var(--ed-font-size-sm); color: var(--ed-color-text-secondary); margin-top:2px;">PagerDuty integration via the Risk Ops escalation policy.</div>
+                    </div>
+                    <label class="ed-switch"><span class="ed-switch__track"><span class="ed-switch__thumb"></span></span></label>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; gap:24px;">
+                    <div>
+                        <div style="font-weight:500; color: var(--ed-color-text-primary);">Examiner sessions audit log</div>
+                        <div style="font-size: var(--ed-font-size-sm); color: var(--ed-color-text-secondary); margin-top:2px;">Locked by org policy — cannot be disabled.</div>
+                    </div>
+                    <label class="ed-switch"><span class="ed-switch__track ed-switch__track--on ed-switch__track--disabled"><span class="ed-switch__thumb"></span></span></label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Settings that flip a real-world state instantly (notifications on, dark mode on, examiner-mode banner visible).</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Inline within a row of settings, flush right.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Inside forms with a Save button. If the change requires confirmation, use <code>EdCheckbox</code>.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Grouping multiple switches as a multi-select. Use <code>EdCheckbox</code> for selection semantics.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Use Radix Switch — provides <code>role="switch"</code> + <code>aria-checked</code> + keyboard support.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Label is part of the click target. Don't separate switch from its label.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>If the change is async, optimistically toggle UI but show a "saving…" inline; revert + show error on failure.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Inputs/EdSwitch
+├─ Off, On
+├─ Disabled (off, on)
+├─ Loading
+├─ InSettingsRow
+└─ WithDescription</code></pre>
+    </section>
+</main>
+</body>
+</html>

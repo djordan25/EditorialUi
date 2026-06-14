@@ -1,0 +1,21 @@
+{
+  "name": "editorialui-verify-forms",
+  "private": true,
+  "type": "module",
+  "description": "Visual verification harness for EditorialUI Bundle 2 (Forms). Diffs Storybook stories against the design spec HTML.",
+  "scripts": {
+    "verify": "node visual-verify.mjs",
+    "verify:list": "node visual-verify.mjs --list-spec",
+    "verify:textfield": "node visual-verify.mjs EdTextField",
+    "verify:passwordinput": "node visual-verify.mjs EdPasswordInput",
+    "verify:checkbox": "node visual-verify.mjs EdCheckbox",
+    "verify:radiogroup": "node visual-verify.mjs EdRadioGroup",
+    "verify:switch": "node visual-verify.mjs EdSwitch",
+    "verify:formcontrollabel": "node visual-verify.mjs EdFormControlLabel"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0",
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0"
+  }
+}

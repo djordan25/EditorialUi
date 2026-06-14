@@ -1,0 +1,249 @@
+// EditorialUI · design tokens (v2)
+//
+// Single source of truth for the new design system. Coexists with the existing
+// tokens.scss; all properties are `--ed-*` prefixed so they cannot collide.
+//
+// Light is the default; dark activates via `[data-theme="dark"]` on any ancestor.
+
+:root,
+[data-theme='light'] {
+    /* ---- Brand / accent ---- */
+    --ed-color-brand:           oklch(38% 0.09 245);
+    --ed-color-brand-hover:     oklch(34% 0.09 245);
+    --ed-color-brand-pressed:   oklch(30% 0.085 245);
+    --ed-color-brand-contrast:  #ffffff;
+    /* Text/icon on a solid status fill (danger/solid badges). White in both
+       themes — the status fills stay saturated, so the contrast text must too. */
+    --ed-color-text-on-solid:   #ffffff;
+    --ed-color-brand-bg:        oklch(95% 0.018 245);
+    --ed-color-brand-bg-strong: oklch(90% 0.030 245);
+
+    --ed-color-accent:          oklch(58% 0.16 30);
+    --ed-color-accent-hover:    oklch(54% 0.16 30);
+    --ed-color-accent-contrast: #ffffff;
+
+    /* ---- Surfaces ---- */
+    --ed-color-surface-0:       oklch(98.5% 0.004 240);
+    --ed-color-surface-1:       #ffffff;
+    --ed-color-surface-2:       oklch(96.5% 0.005 245);
+    --ed-color-surface-3:       oklch(94% 0.006 245);
+    --ed-color-surface-4:       oklch(91% 0.007 245);
+    --ed-color-surface-input:   #ffffff;
+    --ed-color-surface-overlay: oklch(20% 0.012 250 / 0.45);
+    --ed-color-surface-inverse: oklch(20% 0.012 250);
+
+    /* ---- Text ---- */
+    --ed-color-text-primary:    oklch(20% 0.012 250);
+    --ed-color-text-secondary:  oklch(34% 0.012 250);
+    --ed-color-text-muted:      oklch(48% 0.012 250);
+    --ed-color-text-faint:      oklch(62% 0.010 250);
+    --ed-color-text-disabled:   oklch(72% 0.008 250);
+    --ed-color-text-inverse:    oklch(98% 0.004 240);
+    --ed-color-text-link:       var(--ed-color-brand);
+
+    /* ---- Borders ---- */
+    --ed-color-hairline:        oklch(91% 0.005 250);
+    --ed-color-hairline-strong: oklch(82% 0.008 250);
+    --ed-color-hairline-bold:   oklch(72% 0.010 250);
+    --ed-color-border-focus:    var(--ed-color-brand);
+
+    /* ---- Status ---- */
+    --ed-color-status-success:    oklch(50% 0.10 155);
+    --ed-color-status-success-bg: oklch(95% 0.022 155);
+    --ed-color-status-warning:    oklch(62% 0.12 75);
+    --ed-color-status-warning-bg: oklch(95% 0.030 75);
+    --ed-color-status-danger:     oklch(52% 0.16 25);
+    --ed-color-status-danger-bg:  oklch(95% 0.030 25);
+    --ed-color-status-info:       oklch(50% 0.10 245);
+    --ed-color-status-info-bg:    var(--ed-color-brand-bg);
+    --ed-color-status-neutral:    oklch(48% 0.012 250);
+    --ed-color-status-neutral-bg: oklch(94% 0.006 245);
+
+    /* ---- Severity (SR 11-7) ---- */
+    --ed-color-severity-low:    oklch(50% 0.10 155);
+    --ed-color-severity-medium: oklch(62% 0.12 75);
+    --ed-color-severity-high:   oklch(56% 0.14 50);
+    --ed-color-severity-mra:    oklch(52% 0.16 25);
+    --ed-color-severity-mria:   oklch(38% 0.14 22);
+
+    /* ---- Lifecycle (graph runs) ---- */
+    --ed-color-lifecycle-configured:  oklch(48% 0.012 250);
+    --ed-color-lifecycle-queued:      oklch(50% 0.10 245);
+    --ed-color-lifecycle-in-progress: oklch(62% 0.12 75);
+    --ed-color-lifecycle-completed:   oklch(50% 0.10 155);
+    --ed-color-lifecycle-errored:     oklch(52% 0.16 25);
+    --ed-color-lifecycle-canceled:    oklch(62% 0.010 250);
+
+    /* ---- Semantic ---- */
+    --ed-color-button-bg-primary:         var(--ed-color-brand);
+    --ed-color-button-bg-primary-hover:   var(--ed-color-brand-hover);
+    --ed-color-button-bg-primary-pressed: var(--ed-color-brand-pressed);
+    --ed-color-focus-ring:                var(--ed-color-brand);
+    --ed-color-row-hover:                 oklch(95% 0.005 245);
+    --ed-color-row-selected:              var(--ed-color-brand-bg);
+    --ed-color-row-superseded:            oklch(97% 0.004 245);
+
+    /* ---- Elevation ---- */
+    --ed-elevation-0: none;
+    --ed-elevation-1: 0 1px 2px oklch(20% 0.012 250 / 0.05);
+    --ed-elevation-2: 0 2px 6px oklch(20% 0.012 250 / 0.08);
+    --ed-elevation-3: 0 6px 16px oklch(20% 0.012 250 / 0.10);
+    --ed-elevation-4: 0 12px 32px oklch(20% 0.012 250 / 0.14);
+}
+
+[data-theme='dark'] {
+    --ed-color-brand:           oklch(62% 0.13 245);
+    --ed-color-brand-hover:     oklch(68% 0.13 245);
+    --ed-color-brand-pressed:   oklch(56% 0.13 245);
+    --ed-color-brand-contrast:  oklch(15% 0.012 250);
+    --ed-color-brand-bg:        oklch(40% 0.09 245 / 0.18);
+    --ed-color-brand-bg-strong: oklch(45% 0.10 245 / 0.28);
+
+    --ed-color-accent:          oklch(70% 0.16 30);
+    --ed-color-accent-hover:    oklch(74% 0.16 30);
+
+    --ed-color-surface-0:       oklch(15% 0.010 250);
+    --ed-color-surface-1:       oklch(18% 0.010 250);
+    --ed-color-surface-2:       oklch(21% 0.010 250);
+    --ed-color-surface-3:       oklch(24% 0.010 250);
+    --ed-color-surface-4:       oklch(28% 0.012 250);
+    --ed-color-surface-input:   oklch(20% 0.010 250);
+    --ed-color-surface-overlay: oklch(8% 0.008 250 / 0.65);
+    --ed-color-surface-inverse: oklch(98% 0.004 240);
+
+    --ed-color-text-primary:    oklch(96% 0.005 240);
+    --ed-color-text-secondary:  oklch(80% 0.008 245);
+    --ed-color-text-muted:      oklch(66% 0.010 245);
+    --ed-color-text-faint:      oklch(54% 0.010 245);
+    --ed-color-text-disabled:   oklch(42% 0.010 245);
+    --ed-color-text-inverse:    oklch(20% 0.012 250);
+
+    --ed-color-hairline:        oklch(30% 0.010 250);
+    --ed-color-hairline-strong: oklch(38% 0.012 250);
+    --ed-color-hairline-bold:   oklch(50% 0.012 250);
+
+    --ed-color-status-success:    oklch(72% 0.14 155);
+    --ed-color-status-success-bg: oklch(40% 0.10 155 / 0.20);
+    --ed-color-status-warning:    oklch(78% 0.14 75);
+    --ed-color-status-warning-bg: oklch(50% 0.12 75 / 0.20);
+    --ed-color-status-danger:     oklch(70% 0.18 25);
+    --ed-color-status-danger-bg:  oklch(45% 0.16 25 / 0.20);
+    --ed-color-status-info:       oklch(72% 0.13 245);
+    --ed-color-status-info-bg:    var(--ed-color-brand-bg);
+    --ed-color-status-neutral:    oklch(72% 0.010 245);
+    --ed-color-status-neutral-bg: oklch(28% 0.010 250);
+
+    --ed-color-severity-low:    oklch(72% 0.14 155);
+    --ed-color-severity-medium: oklch(78% 0.14 75);
+    --ed-color-severity-high:   oklch(74% 0.16 50);
+    --ed-color-severity-mra:    oklch(70% 0.18 25);
+    --ed-color-severity-mria:   oklch(58% 0.18 22);
+
+    --ed-color-lifecycle-configured:  oklch(72% 0.010 245);
+    --ed-color-lifecycle-queued:      oklch(72% 0.13 245);
+    --ed-color-lifecycle-in-progress: oklch(78% 0.14 75);
+    --ed-color-lifecycle-completed:   oklch(72% 0.14 155);
+    --ed-color-lifecycle-errored:     oklch(70% 0.18 25);
+    --ed-color-lifecycle-canceled:    oklch(60% 0.010 245);
+
+    --ed-color-row-hover:      oklch(28% 0.012 250 / 0.6);
+    --ed-color-row-selected:   var(--ed-color-brand-bg);
+    --ed-color-row-superseded: oklch(20% 0.010 250 / 0.5);
+
+    --ed-elevation-1: 0 1px 2px oklch(0% 0 0 / 0.4);
+    --ed-elevation-2: 0 2px 6px oklch(0% 0 0 / 0.45);
+    --ed-elevation-3: 0 6px 16px oklch(0% 0 0 / 0.5);
+    --ed-elevation-4: 0 12px 32px oklch(0% 0 0 / 0.55);
+}
+
+:root {
+    /* ---- Spacing (4px grid; 8px is the rhythm unit) ---- */
+    --ed-space-0:  0;
+    --ed-space-1:  4px;
+    --ed-space-2:  8px;
+    --ed-space-3:  12px;
+    --ed-space-4:  16px;
+    --ed-space-5:  20px;
+    --ed-space-6:  24px;
+    --ed-space-7:  28px;
+    --ed-space-8:  32px;
+    --ed-space-10: 40px;
+    --ed-space-12: 48px;
+    --ed-space-16: 64px;
+    --ed-space-20: 80px;
+    --ed-space-24: 96px;
+
+    /* ---- Radii ---- */
+    --ed-radius-none: 0;
+    --ed-radius-sm:   2px;
+    --ed-radius-md:   4px;
+    --ed-radius-lg:   8px;
+    --ed-radius-xl:   12px;
+    --ed-radius-pill: 9999px;
+
+    /* ---- Borders ---- */
+    --ed-border-thin:  1px;
+    --ed-border-thick: 2px;
+
+    /* ---- Type ---- */
+    --ed-font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ed-font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+    --ed-font-size-2xs: 11px;
+    --ed-font-size-xs:  12px;
+    --ed-font-size-sm:  13px;
+    --ed-font-size-md:  14px;
+    --ed-font-size-lg:  16px;
+    --ed-font-size-xl:  20px;
+    --ed-font-size-2xl: 24px;
+    --ed-font-size-3xl: 28px;
+    --ed-font-size-display: 36px;
+    --ed-font-size-display-lg: 52px;
+
+    --ed-font-weight-regular:  400;
+    --ed-font-weight-medium:   500;
+    --ed-font-weight-semibold: 600;
+    --ed-font-weight-bold:     700;
+
+    --ed-line-height-tight:  1.2;
+    --ed-line-height-snug:   1.35;
+    --ed-line-height-base:   1.5;
+    --ed-line-height-loose:  1.7;
+
+    --ed-tracking-tight:   -0.02em;
+    --ed-tracking-snug:    -0.01em;
+    --ed-tracking-normal:  0;
+    --ed-tracking-wide:    0.04em;
+    --ed-tracking-eyebrow: 0.14em;
+
+    /* ---- Motion ---- */
+    --ed-transition-fast:   80ms ease;
+    --ed-transition-base:   120ms ease;
+    --ed-transition-slow:   200ms ease;
+    --ed-transition-spring: 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    /* ---- Z-index ---- */
+    --ed-z-dropdown:        1100;
+    --ed-z-popover:         1200;
+    --ed-z-overlay:         1300;
+    --ed-z-drawer:          1350;
+    --ed-z-modal:           1400;
+    --ed-z-tooltip:         1500;
+    --ed-z-command-palette: 1600;
+    --ed-z-toast:           1700;
+
+    /* ---- Control sizing ---- */
+    --ed-control-h-sm: 28px;
+    --ed-control-h-md: 36px;
+    --ed-control-h-lg: 44px;
+    --ed-control-h-xl: 56px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --ed-transition-fast:   0ms;
+        --ed-transition-base:   0ms;
+        --ed-transition-slow:   0ms;
+        --ed-transition-spring: 0ms;
+    }
+}

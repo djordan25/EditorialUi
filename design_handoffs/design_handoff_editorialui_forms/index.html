@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditorialUI · Forms bundle</title>
+    <link rel="stylesheet" href="../design_system_v2/shared/fonts.css">
+    <link rel="stylesheet" href="../design_system_v2/shared/tokens.css">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            background: var(--ed-color-surface-0);
+            color: var(--ed-color-text-primary);
+            font-family: var(--ed-font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 40px 96px; }
+        .eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 8px;
+        }
+        h1 {
+            font-family: var(--ed-font-sans);
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin: 0 0 8px;
+        }
+        .lede {
+            font-size: 16px;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 32px;
+            max-width: 64ch;
+        }
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 56px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        h2 .h2-eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--ed-color-text-muted);
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+        }
+        .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 8px;
+            border-radius: var(--ed-radius-sm);
+            background: var(--ed-color-brand-bg);
+            color: var(--ed-color-brand);
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .pill--neutral { background: var(--ed-color-status-neutral-bg); color: var(--ed-color-status-neutral); }
+
+        .cc-callout {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 26px;
+            margin: 32px 0;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-left: 3px solid var(--ed-color-brand);
+            border-radius: var(--ed-radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: border-color var(--ed-transition-base);
+        }
+        .cc-callout:hover { border-color: var(--ed-color-brand); }
+        .cc-callout__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--ed-radius-md);
+            background: var(--ed-color-brand);
+            color: var(--ed-color-brand-contrast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--ed-font-mono);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .cc-callout__body { display: flex; flex-direction: column; gap: 2px; }
+        .cc-callout__eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+        }
+        .cc-callout__title { font-size: 16px; font-weight: 600; color: var(--ed-color-text-primary); }
+        .cc-callout__sub { font-size: 13px; color: var(--ed-color-text-secondary); margin-top: 2px; }
+        .cc-callout__arrow { font-family: var(--ed-font-mono); font-size: 13px; color: var(--ed-color-brand); letter-spacing: 0.04em; }
+
+        .component {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            align-items: flex-start;
+        }
+        .component:last-child { border-bottom: none; }
+        .component__head { position: sticky; top: 0; padding-top: 4px; }
+        .component__meta {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            margin: 0 0 6px;
+        }
+        .component__title {
+            font-family: var(--ed-font-mono);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ed-color-text-primary);
+            margin: 0 0 12px;
+        }
+        .component__lede {
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 12px;
+            line-height: 1.55;
+        }
+        .component__files {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            color: var(--ed-color-text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--ed-color-hairline);
+        }
+        .component__files b { color: var(--ed-color-text-secondary); font-weight: 400; }
+        .component__shots { display: flex; flex-direction: column; gap: 12px; }
+        .shot {
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            overflow: hidden;
+            background: var(--ed-color-surface-1);
+        }
+        .shot img { display: block; width: 100%; height: auto; }
+
+        .tree {
+            font-family: var(--ed-font-mono);
+            font-size: 12.5px;
+            line-height: 1.75;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            padding: 18px 22px;
+            color: var(--ed-color-text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .tree b { color: var(--ed-color-text-primary); font-weight: 500; }
+        .tree em { color: var(--ed-color-text-muted); font-style: normal; }
+
+        .ship-list { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 0; }
+        .ship-list li {
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+        }
+        .ship-list code {
+            font-family: var(--ed-font-mono);
+            font-size: 12px;
+            color: var(--ed-color-text-primary);
+            min-width: 28ch;
+        }
+        .ship-list span { font-size: 13px; color: var(--ed-color-text-secondary); }
+
+        .footnote {
+            margin-top: 48px;
+            padding: 20px 24px;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .footnote strong { color: var(--ed-color-text-primary); font-weight: 500; }
+        code { font-family: var(--ed-font-mono); font-size: 12.5px; }
+
+        @media (max-width: 760px) {
+            .component { grid-template-columns: 1fr; gap: 16px; }
+            .component__head { position: static; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <p class="eyebrow">EditorialUI · Implementation</p>
+    <h1>Bundle 2 — Forms</h1>
+    <p class="lede">
+        Six form primitives — text inputs, password capture, checkbox, radio group,
+        switch, and the composition primitive that wraps arbitrary controls in the
+        same label / hint / error shell.
+    </p>
+
+    <div class="pills">
+        <span class="pill">Bundle 2 · Forms</span>
+        <span class="pill pill--neutral">6 components · 24 files</span>
+        <span class="pill pill--neutral">React 19 · Radix · Vitest</span>
+    </div>
+
+    <a class="cc-callout" href="CLAUDE_CODE_PROMPT.md">
+        <span class="cc-callout__icon">cc</span>
+        <span class="cc-callout__body">
+            <span class="cc-callout__eyebrow">Hand-off prompt</span>
+            <span class="cc-callout__title">CLAUDE_CODE_PROMPT.md</span>
+            <span class="cc-callout__sub">Paste into Claude Code (with this bundle attached) to land it in <code>apostlerisk</code>. Assumes Bundle 1 is already merged; includes deps, prop-shape diffs vs ProdicusUI, and per-component success checks.</span>
+        </span>
+        <span class="cc-callout__arrow">open ↗</span>
+    </a>
+
+    <h2><span class="h2-eyebrow">01</span> Components</h2>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">A3 · Inputs</p>
+            <h3 class="component__title">EdTextField</h3>
+            <p class="component__lede">Single-line text input bundled with label + hint/error. Sizes sm/md/lg, mono variant for IDs/paths, prefix/suffix adornments, readonly + error states. Auto ARIA wiring.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdTextField.tsx</span>
+                <span><b>scss</b> EdTextField.module.scss</span>
+                <span><b>stories</b> EdTextField.stories.tsx</span>
+                <span><b>tests</b> EdTextField.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdTextField.png" alt="EdTextField — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdTextField.png" alt="EdTextField — states, adornments, sizes, mono variant"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">A4 · Inputs</p>
+            <h3 class="component__title">EdPasswordInput</h3>
+            <p class="component__lede">EdTextField specialised for passwords. Opt-in <code>revealable</code> toggle (auto-masks on blur + after 30s). Optional strength meter with <code>role="progressbar"</code> — caller computes the band, server-side policy remains source of truth.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdPasswordInput.tsx</span>
+                <span><b>scss</b> EdPasswordInput.module.scss</span>
+                <span><b>stories</b> EdPasswordInput.stories.tsx</span>
+                <span><b>tests</b> EdPasswordInput.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdPasswordInput.png" alt="EdPasswordInput — states (default, revealed, error, disabled)"></div>
+            <div class="shot"><img src="screenshots/02-EdPasswordInput.png" alt="EdPasswordInput — strength meter (weak, fair, good, strong)"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">A5 · Inputs · Radix</p>
+            <h3 class="component__title">EdCheckbox</h3>
+            <p class="component__lede">Multi-select / consent / table-row toggle. Three states (unchecked, checked, indeterminate → <code>aria-checked="mixed"</code>). Optional description for consent rows. Wraps Radix Checkbox.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdCheckbox.tsx</span>
+                <span><b>scss</b> EdCheckbox.module.scss</span>
+                <span><b>stories</b> EdCheckbox.stories.tsx</span>
+                <span><b>tests</b> EdCheckbox.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdCheckbox.png" alt="EdCheckbox — anatomy and states"></div>
+            <div class="shot"><img src="screenshots/02-EdCheckbox.png" alt="EdCheckbox — with description, group vertical"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">A7 · Inputs · Radix</p>
+            <h3 class="component__title">EdRadioGroup + EdRadio</h3>
+            <p class="component__lede">2–5 mutually-exclusive options. Vertical (default) or horizontal layout, optional per-item descriptions. Arrow-key nav + roving tabindex from Radix. <code>EdRadio</code> only exists inside <code>EdRadioGroup</code>.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdRadioGroup.tsx</span>
+                <span><b>scss</b> EdRadioGroup.module.scss</span>
+                <span><b>stories</b> EdRadioGroup.stories.tsx</span>
+                <span><b>tests</b> EdRadioGroup.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdRadioGroup.png" alt="EdRadioGroup — single radio states"></div>
+            <div class="shot"><img src="screenshots/02-EdRadioGroup.png" alt="EdRadioGroup — vertical / horizontal layouts, with descriptions"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">A6 · Inputs · Radix</p>
+            <h3 class="component__title">EdSwitch</h3>
+            <p class="component__lede">Boolean toggle for settings that take effect immediately. <code>inline</code> or <code>row</code> layout. <code>loading</code> renders an inline "saving…" tag for optimistic-update flows. Reads as state-of-the-world, never as a selection.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdSwitch.tsx</span>
+                <span><b>scss</b> EdSwitch.module.scss</span>
+                <span><b>stories</b> EdSwitch.stories.tsx</span>
+                <span><b>tests</b> EdSwitch.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdSwitch.png" alt="EdSwitch — states (off, on, focus, disabled, loading)"></div>
+            <div class="shot"><img src="screenshots/02-EdSwitch.png" alt="EdSwitch — in a settings list"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">A8 · Inputs</p>
+            <h3 class="component__title">EdFormControlLabel</h3>
+            <p class="component__lede">Composition primitive — wraps any control with consistent label + hint/error layout. Single-child clone OR render-prop slot. Stack and row layouts. Use when EdTextField doesn't fit.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdFormControlLabel.tsx</span>
+                <span><b>scss</b> EdFormControlLabel.module.scss</span>
+                <span><b>stories</b> EdFormControlLabel.stories.tsx</span>
+                <span><b>tests</b> EdFormControlLabel.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdFormControlLabel.png" alt="EdFormControlLabel — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdFormControlLabel.png" alt="EdFormControlLabel — composing arbitrary controls"></div>
+        </div>
+    </div>
+
+    <h2><span class="h2-eyebrow">02</span> Drop locations</h2>
+    <div class="tree">design_handoff_editorialui_forms/
+└── src/
+    └── components/
+        └── EditorialUI/
+            ├── <b>index.ts</b>                  <em>UPDATED · barrel adds 6 exports</em>
+            ├── EdTextField/
+            ├── EdPasswordInput/
+            ├── EdCheckbox/
+            ├── EdRadioGroup/
+            ├── EdSwitch/
+            └── EdFormControlLabel/</div>
+
+    <h2><span class="h2-eyebrow">03</span> New runtime dependencies</h2>
+    <ul class="ship-list">
+        <li><code>@radix-ui/react-checkbox</code><span>EdCheckbox</span></li>
+        <li><code>@radix-ui/react-radio-group</code><span>EdRadioGroup, EdRadio</span></li>
+        <li><code>@radix-ui/react-switch</code><span>EdSwitch</span></li>
+    </ul>
+    <p style="font-size: 13px; color: var(--ed-color-text-muted); margin-top: 12px;">
+        <code>EdTextField</code>, <code>EdPasswordInput</code>, and <code>EdFormControlLabel</code> wrap native inputs + Bundle-1's <code>EdIcon</code>/<code>EdIconButton</code> — no new deps.
+    </p>
+
+    <h2><span class="h2-eyebrow">04</span> What this bundle codifies</h2>
+    <ul class="ship-list">
+        <li><code>error</code> replaces <code>hint</code><span>Mutually exclusive — matches the spec's decision rule. Components render only one at a time.</span></li>
+        <li>Auto ARIA wiring<span>Components generate <code>id</code>, set <code>htmlFor</code>, build <code>aria-describedby</code>, flip <code>aria-invalid</code> / <code>aria-required</code>. Callers pass <code>error="…"</code>.</span></li>
+        <li>Sentence case labels<span>Eyebrow visual (mono uppercase) is rendered by the component, not the caller.</span></li>
+        <li>Required is a prop<span>The <code>*</code> is decorative CSS; the semantic signal is <code>aria-required</code>. Never put "(required)" in helper text.</span></li>
+        <li>Switches don't gate forms<span>For "include in submission" use <code>EdCheckbox</code>. Switches flip state-of-the-world instantly.</span></li>
+    </ul>
+
+    <div class="footnote">
+        <strong>Next up — Bundle 3 (Selection):</strong>
+        <code>EdSelect</code>, <code>EdComboBox</code>, <code>EdAutocomplete</code>.
+        These build on <code>EdFormControlLabel</code> and reuse the popover patterns
+        introduced by Radix in this bundle's checkbox-via-Popper interactions.
+    </div>
+</div>
+</body>
+</html>

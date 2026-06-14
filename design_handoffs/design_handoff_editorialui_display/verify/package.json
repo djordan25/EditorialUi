@@ -1,0 +1,21 @@
+{
+  "name": "editorialui-verify-display",
+  "private": true,
+  "type": "module",
+  "description": "Visual verification harness for EditorialUI Bundle 4 (Display). Diffs Storybook stories against the design spec HTML.",
+  "scripts": {
+    "verify": "node visual-verify.mjs",
+    "verify:list": "node visual-verify.mjs --list-spec",
+    "verify:tag": "node visual-verify.mjs EdTag",
+    "verify:statusbadge": "node visual-verify.mjs EdStatusBadge",
+    "verify:chip": "node visual-verify.mjs EdChip",
+    "verify:divider": "node visual-verify.mjs EdDivider",
+    "verify:progressmeter": "node visual-verify.mjs EdProgressMeter",
+    "verify:circularprogress": "node visual-verify.mjs EdCircularProgress"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0",
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0"
+  }
+}

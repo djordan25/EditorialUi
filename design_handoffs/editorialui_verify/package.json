@@ -1,0 +1,18 @@
+{
+  "name": "editorialui-verify",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Standalone visual-verification harness for EditorialUI. Two-tier gate: computed-style diff (hard) + alignment-tolerant pixel diff (advisory), against the design spec HTML.",
+  "bin": { "editorialui-verify": "visual-verify.mjs" },
+  "scripts": {
+    "verify": "node visual-verify.mjs",
+    "verify:strict": "node visual-verify.mjs --pixel",
+    "list": "node visual-verify.mjs --list-spec"
+  },
+  "dependencies": {
+    "playwright": "^1.48.0",
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0"
+  }
+}

@@ -1,0 +1,76 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--ed-radius-sm);
+    color: var(--ed-color-text-secondary);
+    cursor: pointer;
+    transition:
+        background var(--ed-transition-base),
+        border-color var(--ed-transition-base),
+        color var(--ed-transition-base);
+
+    &:hover:not(:disabled) {
+        background: var(--ed-color-surface-2);
+        color: var(--ed-color-text-primary);
+    }
+    &:active:not(:disabled) {
+        background: var(--ed-color-surface-3);
+    }
+    &:focus-visible {
+        outline: 2px solid var(--ed-color-focus-ring);
+        outline-offset: 2px;
+    }
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+
+/* Sizes */
+.sm { width: var(--ed-control-h-sm); height: var(--ed-control-h-sm); }
+.md { width: var(--ed-control-h-md); height: var(--ed-control-h-md); }
+.lg { width: var(--ed-control-h-lg); height: var(--ed-control-h-lg); }
+
+/* Variants */
+.default {
+    /* Inherits the root chrome. */
+}
+
+.bordered {
+    background: var(--ed-color-surface-1);
+    border-color: var(--ed-color-hairline-strong);
+
+    &:hover:not(:disabled) {
+        border-color: var(--ed-color-hairline-bold);
+    }
+}
+
+.filled {
+    background: var(--ed-color-brand);
+    color: var(--ed-color-brand-contrast);
+
+    &:hover:not(:disabled) {
+        background: var(--ed-color-brand-hover);
+        color: var(--ed-color-brand-contrast);
+    }
+    &:active:not(:disabled) {
+        background: var(--ed-color-brand-pressed);
+    }
+}
+
+/* Pressed (toggle on) */
+.pressed {
+    background: var(--ed-color-brand-bg);
+    color: var(--ed-color-brand);
+
+    &:hover:not(:disabled) {
+        background: var(--ed-color-brand-bg-strong);
+        color: var(--ed-color-brand);
+    }
+}

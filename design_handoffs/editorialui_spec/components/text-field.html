@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdTextField · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "A3",
+    "group": "Inputs",
+    "name": "EdTextField",
+    "lede": "Single-line text input. The workhorse — anywhere a user enters a string. Pairs label, control, and helper / error text into one component so layout never drifts."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy">
+            <div class="ed-anatomy__stage" style="width: 360px;">
+                <div class="ed-field">
+                    <label class="ed-field__label">Email address</label>
+                    <div class="ed-field__control">
+                        <input class="ed-field__input" type="email" value="h.lindqvist@modelriskiq.com">
+                    </div>
+                    <p class="ed-field__hint">Used for sign-in and notifications.</p>
+                </div>
+                <div class="ed-callout" style="top: -2px; left: -200px;"><span class="ed-callout__num">1</span><div class="ed-callout__line"></div><span>Label (eyebrow)</span></div>
+                <div class="ed-callout" style="top: 30px; left: -200px;"><span class="ed-callout__num">2</span><div class="ed-callout__line"></div><span>Control</span></div>
+                <div class="ed-callout" style="top: 30px; right: -180px;"><span>Input</span><div class="ed-callout__line"></div><span class="ed-callout__num">3</span></div>
+                <div class="ed-callout" style="top: 70px; left: -200px;"><span class="ed-callout__num">4</span><div class="ed-callout__line"></div><span>Hint / error</span></div>
+            </div>
+        </div>
+        <ul class="ed-anatomy-key">
+            <li><b>1</b><span><strong>Label</strong> — mono eyebrow style. Sentence case. Required indicator: trailing <code>*</code> in danger color.</span></li>
+            <li><b>2</b><span><strong>Control</strong> — 36px (md). Border carries focus + error states.</span></li>
+            <li><b>3</b><span><strong>Input</strong> — Inter Tight 14px, mono variant for IDs/codes.</span></li>
+            <li><b>4</b><span><strong>Hint / error</strong> — 12px. Hint is muted; error swaps to danger color and replaces hint.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">States</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">default</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Model name</label><div class="ed-field__control"><input class="ed-field__input" placeholder="e.g. PD-Wholesale-2026"></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">filled</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Model name</label><div class="ed-field__control"><input class="ed-field__input" value="PD-Wholesale-2026"></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">hover</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Model name</label><div class="ed-field__control" style="border-color: var(--ed-color-hairline-bold);"><input class="ed-field__input" placeholder="e.g. PD-Wholesale-2026"></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">focus</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Model name</label><div class="ed-field__control ed-field__control--focused"><input class="ed-field__input" value="PD-Wholesale-2026"></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">error</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label ed-field__label--required">Model name</label><div class="ed-field__control ed-field__control--error"><input class="ed-field__input" value="pd_wholesale!2026"></div><p class="ed-field__hint ed-field__hint--error">Use only letters, numbers, and dashes.</p></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">disabled</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Model name</label><div class="ed-field__control ed-field__control--disabled"><input class="ed-field__input" value="PD-Wholesale-2026" disabled></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">readonly</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Model ID</label><div class="ed-field__control ed-field__control--readonly"><input class="ed-field__input ed-field__input--mono" value="M-9F4D-2026" readonly></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with hint</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Replication path</label><div class="ed-field__control"><input class="ed-field__input ed-field__input--mono" placeholder="s3://..."></div><p class="ed-field__hint">Where validation snapshots are stored.</p></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">With adornments</h2></div>
+        <p class="ed-section__sub">Prefix and suffix slots for icons, units, paste/clear actions. Adornments inherit muted text color and don't intercept input clicks.</p>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">prefix icon</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Search</label><div class="ed-field__control"><span class="ed-field__adornment ed-field__adornment--prefix"><svg class="icn" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16" y2="16"/></svg></span><input class="ed-field__input" placeholder="Find a model…"></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">suffix unit</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Threshold</label><div class="ed-field__control"><input class="ed-field__input" value="0.05"><span class="ed-field__adornment ed-field__adornment--suffix" style="font-family: var(--ed-font-mono); font-size: 12px;">bps</span></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">suffix clear</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Filter</label><div class="ed-field__control"><input class="ed-field__input" value="Wholesale"><button class="ed-field__adornment ed-field__adornment--suffix" style="border:none; background:none; padding:0; cursor:pointer;" aria-label="Clear"><svg class="icn" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Sizes</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">sm — 28px</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Search</label><div class="ed-field__control ed-field__control--sm"><input class="ed-field__input" placeholder="Find…" style="font-size: 13px;"></div></div></div><span class="ed-cell__note">Toolbar inline filters.</span></div>
+            <div class="ed-cell"><span class="ed-cell__label">md — 36px (default)</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Search</label><div class="ed-field__control"><input class="ed-field__input" placeholder="Find…"></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">lg — 44px</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Search</label><div class="ed-field__control ed-field__control--lg"><input class="ed-field__input" placeholder="Find…" style="font-size: 16px;"></div></div></div><span class="ed-cell__note">Auth, hero forms.</span></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Mono variant</h2></div>
+        <p class="ed-section__sub">Use the mono input for IDs, IPs, file paths, codes, and any value that benefits from monospaced alignment.</p>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">model ID</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Model ID</label><div class="ed-field__control"><input class="ed-field__input ed-field__input--mono" value="M-9F4D-2026"></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">file path</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">S3 path</label><div class="ed-field__control"><input class="ed-field__input ed-field__input--mono" value="s3://mriq/snapshots/2026-Q2/"></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">timestamp</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Run started</label><div class="ed-field__control ed-field__control--readonly"><input class="ed-field__input ed-field__input--mono" value="2026-05-04T14:02:11Z" readonly></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Twin — light + dark</h2></div>
+        <div class="ed-twin">
+            <div class="ed-twin__pane ed-twin__pane--light" data-theme="light" style="display:flex; flex-direction:column; gap:16px; width:100%;">
+                <div class="ed-field"><label class="ed-field__label">Email</label><div class="ed-field__control"><input class="ed-field__input" placeholder="you@bank.com"></div></div>
+                <div class="ed-field"><label class="ed-field__label ed-field__label--required">Password</label><div class="ed-field__control ed-field__control--error"><input class="ed-field__input" type="password" value="•••"></div><p class="ed-field__hint ed-field__hint--error">Incorrect password.</p></div>
+            </div>
+            <div class="ed-twin__pane ed-twin__pane--dark" data-theme="dark" style="display:flex; flex-direction:column; gap:16px; width:100%;">
+                <div class="ed-field"><label class="ed-field__label">Email</label><div class="ed-field__control"><input class="ed-field__input" placeholder="you@bank.com"></div></div>
+                <div class="ed-field"><label class="ed-field__label ed-field__label--required">Password</label><div class="ed-field__control ed-field__control--error"><input class="ed-field__input" type="password" value="•••"></div><p class="ed-field__hint ed-field__hint--error">Incorrect password.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Tokens</h2></div>
+        <table class="ed-tokens">
+            <tbody>
+                <tr><td>--ed-control-h-md</td><td>36px</td><td>Default control height.</td></tr>
+                <tr><td>--ed-color-surface-input</td><td>white / surface-input</td><td>Field background. Different in dark — slightly lifted from surface-1.</td></tr>
+                <tr><td>--ed-color-hairline-strong</td><td>1px solid</td><td>Default border.</td></tr>
+                <tr><td>--ed-color-border-focus</td><td>brand</td><td>Focus border, paired with 3px brand-bg shadow halo.</td></tr>
+                <tr><td>--ed-color-status-danger</td><td>red</td><td>Error border + hint color.</td></tr>
+                <tr><td>--ed-color-text-muted</td><td>—</td><td>Hint color.</td></tr>
+                <tr><td>--ed-color-text-faint</td><td>—</td><td>Placeholder color.</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>For any single-line string input. Required indicator goes on the label, not as helper text.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Mono variant for IDs, IPs, paths, codes, regex, JSON values inside a single field.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>Helper text over placeholder for the kind of value expected. Placeholder vanishes on type — helper persists.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Inline labels (label inside the field). Eyebrow labels read better in dense forms.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Showing both hint and error simultaneously. Error replaces hint.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Label is always rendered. Use <code>visuallyHidden</code> only when label is duplicated semantically (e.g. search input next to a "Search" eyebrow).</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Error sets <code>aria-invalid="true"</code>. Hint/error linked via <code>aria-describedby</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Required state sets <code>aria-required="true"</code>; the <code>*</code> on the label is decorative.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Inputs/EdTextField
+├─ Default
+├─ Filled
+├─ Hover, Focus
+├─ Error
+├─ Disabled, Readonly
+├─ Sizes (sm, md, lg)
+├─ WithPrefix, WithSuffix, WithClear
+├─ MonoVariant
+└─ Required</code></pre>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdSelect · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .check-icn { width: 14px; height: 14px; stroke:currentColor; stroke-width: 2; fill:none; stroke-linecap:round; stroke-linejoin:round;}
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "B1",
+    "group": "Selection",
+    "name": "EdSelect",
+    "lede": "Compact dropdown for choosing one of ≤7 fixed, known options. No search. For more options or unknowns, use EdComboBox or EdAutocomplete."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding:32px;">
+            <div style="display:flex; gap:48px; align-items:flex-start;">
+                <div style="width:240px;">
+                    <p class="ed-field__label" style="margin-bottom:6px;">Severity</p>
+                    <button class="ed-select__trigger ed-select__trigger--open">
+                        <span class="ed-select__value">Medium</span>
+                        <svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+                    </button>
+                </div>
+                <div class="ed-menu" style="position:static; width:240px; max-height:none;">
+                    <div class="ed-menu__item">Low</div>
+                    <div class="ed-menu__item ed-menu__item--selected ed-menu__item--active">
+                        <svg class="check-icn ed-menu__item-check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,5"/></svg>
+                        Medium
+                    </div>
+                    <div class="ed-menu__item">High</div>
+                    <div class="ed-menu__item">MRA</div>
+                    <div class="ed-menu__item">MRIA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">States</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">default</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Severity</label><button class="ed-select__trigger"><span class="ed-select__value ed-select__value--placeholder">Select severity…</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">filled</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Severity</label><button class="ed-select__trigger"><span class="ed-select__value">Medium</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">focus</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Severity</label><button class="ed-select__trigger ed-select__trigger--focused"><span class="ed-select__value">Medium</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">open</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Severity</label><button class="ed-select__trigger ed-select__trigger--open"><span class="ed-select__value">Medium</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">error</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label ed-field__label--required">Severity</label><button class="ed-select__trigger ed-select__trigger--error"><span class="ed-select__value ed-select__value--placeholder">Select severity…</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button><p class="ed-field__hint ed-field__hint--error">Required.</p></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">disabled</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Severity</label><button class="ed-select__trigger" disabled><span class="ed-select__value">Medium</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Menu variants</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">simple list</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="position:static; max-height:none; min-width:200px;">
+                <div class="ed-menu__item">Daily</div>
+                <div class="ed-menu__item ed-menu__item--selected"><svg class="check-icn ed-menu__item-check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,5"/></svg>Weekly</div>
+                <div class="ed-menu__item">Monthly</div>
+                <div class="ed-menu__item">On-demand</div>
+            </div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">grouped</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="position:static; max-height:none; min-width:240px;">
+                <div class="ed-menu__group-label">Active</div>
+                <div class="ed-menu__item ed-menu__item--selected"><svg class="check-icn ed-menu__item-check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,5"/></svg>Production</div>
+                <div class="ed-menu__item">Staging</div>
+                <div class="ed-menu__item">Development</div>
+                <div class="ed-menu__separator"></div>
+                <div class="ed-menu__group-label">Archived</div>
+                <div class="ed-menu__item">2025 Q4</div>
+                <div class="ed-menu__item">2025 Q3</div>
+            </div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with metadata</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="position:static; max-height:none; min-width:280px;">
+                <div class="ed-menu__item">Hanna Lindqvist <span class="ed-menu__item-meta">Risk Ops</span></div>
+                <div class="ed-menu__item ed-menu__item--selected"><svg class="check-icn ed-menu__item-check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,5"/></svg>Marcus Chen <span class="ed-menu__item-meta">Validation</span></div>
+                <div class="ed-menu__item">Priya Rao <span class="ed-menu__item-meta">Validation</span></div>
+                <div class="ed-menu__item ed-menu__item--disabled">Examiner (read-only)</div>
+            </div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Sizes</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">sm — 28px</span><div class="ed-cell__demo ed-cell__demo--block"><button class="ed-select__trigger" style="height:28px; padding:0 10px; font-size:13px;"><span class="ed-select__value">All severities</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">md — 36px (default)</span><div class="ed-cell__demo ed-cell__demo--block"><button class="ed-select__trigger"><span class="ed-select__value">Medium</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">lg — 44px</span><div class="ed-cell__demo ed-cell__demo--block"><button class="ed-select__trigger" style="height:44px; padding:0 14px; font-size:16px;"><span class="ed-select__value">Medium</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Twin — light + dark</h2></div>
+        <div class="ed-twin">
+            <div class="ed-twin__pane ed-twin__pane--light" data-theme="light" style="display:flex; gap:24px; align-items:flex-start;">
+                <div style="width:200px;"><p class="ed-field__label" style="margin-bottom:6px;">Severity</p><button class="ed-select__trigger"><span class="ed-select__value">Medium</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div>
+                <div class="ed-menu" style="position:static; max-height:none; width:200px;"><div class="ed-menu__item">Low</div><div class="ed-menu__item ed-menu__item--selected"><svg class="check-icn ed-menu__item-check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,5"/></svg>Medium</div><div class="ed-menu__item">High</div></div>
+            </div>
+            <div class="ed-twin__pane ed-twin__pane--dark" data-theme="dark" style="display:flex; gap:24px; align-items:flex-start;">
+                <div style="width:200px;"><p class="ed-field__label" style="margin-bottom:6px;">Severity</p><button class="ed-select__trigger"><span class="ed-select__value">Medium</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div>
+                <div class="ed-menu" style="position:static; max-height:none; width:200px;"><div class="ed-menu__item">Low</div><div class="ed-menu__item ed-menu__item--selected"><svg class="check-icn ed-menu__item-check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,5"/></svg>Medium</div><div class="ed-menu__item">High</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>≤7 fixed, known options. Severity, cadence, role, environment, status filter.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Grouped sections for related options (Active / Archived). Use a separator + group label.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdComboBox</code> for &gt;7 options or any list a user might type to find. Switching at 7 isn't a hard line — choose by usage, not count.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Free text. Select is for picking from known options only.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>2-option selects — use <code>EdRadioGroup</code> or <code>EdSwitch</code>.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Use Radix Select. <code>role="combobox"</code> + <code>aria-expanded</code> + <code>aria-controls</code> handled.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Type-ahead matches first letter of items. Arrow keys navigate. Enter / Space selects.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Selected item gets <code>aria-selected="true"</code>; visible check icon is decorative.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Selection/EdSelect
+├─ Default, Filled, Open
+├─ Sizes (sm, md, lg)
+├─ Grouped, WithMetadata
+├─ Error, Disabled
+└─ ControlledExample</code></pre>
+    </section>
+</main>
+</body>
+</html>

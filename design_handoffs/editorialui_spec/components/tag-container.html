@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdTagContainer · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "E2",
+    "group": "Display",
+    "name": "EdTagContainer",
+    "lede": "Layout primitive that lays out a collection of tags with consistent gap and overflow rules. Wrap-by-default or single-row with collapse — both keep dense rows readable."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Modes</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">wrap (default) — flowing rows</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-tag-container"><span class="ed-tag">credit-risk</span><span class="ed-tag">retail</span><span class="ed-tag">PD</span><span class="ed-tag">PRA SS3/21</span><span class="ed-tag">CCAR 2025</span><span class="ed-tag">IFRS 9</span><span class="ed-tag">Basel IV</span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">single-row — collapse with overflow counter</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-tag-container ed-tag-container--single-row" style="max-width: 320px;"><span class="ed-tag">credit-risk</span><span class="ed-tag">retail</span><span class="ed-tag">PD</span><span class="ed-tag-container__overflow">+ 4 more</span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">single-row + tooltip overflow</span><div class="ed-cell__demo ed-cell__demo--block"><div style="display:flex; gap:8px; align-items:center;"><div class="ed-tag-container ed-tag-container--single-row" style="max-width: 240px;"><span class="ed-tag ed-tag--brand">PD-Retail</span><span class="ed-tag ed-tag--brand">retail</span></div><span class="ed-tag-container__overflow" style="cursor: pointer; border-bottom: 1px dotted var(--ed-color-hairline-bold);">+ 5 more</span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">empty state</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-tag-container"><span style="font-size: 13px; color: var(--ed-color-text-faint);">No tags assigned</span></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Wrap mode in side panels, detail views, drawer bodies — anywhere height is cheap.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Single-row in table cells. Collapse to "+ N more" with a tooltip showing the rest.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Inventing a separate API per consumer. The container handles all gap/overflow logic.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Wrapper is a <code>&lt;div&gt;</code> (no role). Each tag is its own readable unit.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Overflow counter is keyboard-reachable when it opens a popover; otherwise decorative.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Display/EdTagContainer
+├─ Wrap, SingleRow, SingleRowWithTooltip
+├─ Empty
+└─ MaxCount (display first N + counter)</code></pre>
+    </section>
+</main>
+</body>
+</html>

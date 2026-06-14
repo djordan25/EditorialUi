@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditorialUI · Foundations bundle</title>
+    <link rel="stylesheet" href="../design_system_v2/shared/fonts.css">
+    <link rel="stylesheet" href="../design_system_v2/shared/tokens.css">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            background: var(--ed-color-surface-0);
+            color: var(--ed-color-text-primary);
+            font-family: var(--ed-font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 48px 40px 96px;
+        }
+        .eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 8px;
+        }
+        h1 {
+            font-family: var(--ed-font-sans);
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin: 0 0 8px;
+        }
+        .lede {
+            font-size: 16px;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 32px;
+            max-width: 64ch;
+        }
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 56px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        h2 .h2-eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--ed-color-text-muted);
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+        }
+        .pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 8px;
+            border-radius: var(--ed-radius-sm);
+            background: var(--ed-color-brand-bg);
+            color: var(--ed-color-brand);
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .pill--neutral {
+            background: var(--ed-color-status-neutral-bg);
+            color: var(--ed-color-status-neutral);
+        }
+
+        /* ---- The Claude Code prompt callout ---- */
+        .cc-callout {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 26px;
+            margin: 32px 0;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-left: 3px solid var(--ed-color-brand);
+            border-radius: var(--ed-radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: border-color var(--ed-transition-base);
+        }
+        .cc-callout:hover {
+            border-color: var(--ed-color-brand);
+        }
+        .cc-callout__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--ed-radius-md);
+            background: var(--ed-color-brand);
+            color: var(--ed-color-brand-contrast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--ed-font-mono);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .cc-callout__body { display: flex; flex-direction: column; gap: 2px; }
+        .cc-callout__eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+        }
+        .cc-callout__title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--ed-color-text-primary);
+        }
+        .cc-callout__sub {
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+            margin-top: 2px;
+        }
+        .cc-callout__arrow {
+            font-family: var(--ed-font-mono);
+            font-size: 13px;
+            color: var(--ed-color-brand);
+            letter-spacing: 0.04em;
+        }
+
+        /* ---- Component screenshot blocks ---- */
+        .component {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            align-items: flex-start;
+        }
+        .component:last-child { border-bottom: none; }
+        .component__head {
+            position: sticky;
+            top: 0;
+            padding-top: 4px;
+        }
+        .component__meta {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            margin: 0 0 6px;
+        }
+        .component__title {
+            font-family: var(--ed-font-mono);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ed-color-text-primary);
+            margin: 0 0 12px;
+        }
+        .component__lede {
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 12px;
+            line-height: 1.55;
+        }
+        .component__files {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            color: var(--ed-color-text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--ed-color-hairline);
+        }
+        .component__files b {
+            color: var(--ed-color-text-secondary);
+            font-weight: 400;
+        }
+        .component__shots {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .shot {
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            overflow: hidden;
+            background: var(--ed-color-surface-1);
+        }
+        .shot img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .tree {
+            font-family: var(--ed-font-mono);
+            font-size: 12.5px;
+            line-height: 1.75;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            padding: 18px 22px;
+            color: var(--ed-color-text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .tree b { color: var(--ed-color-text-primary); font-weight: 500; }
+        .tree em { color: var(--ed-color-text-muted); font-style: normal; }
+
+        .ship-list {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 0;
+            display: grid;
+            gap: 0;
+        }
+        .ship-list li {
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+        }
+        .ship-list code {
+            font-family: var(--ed-font-mono);
+            font-size: 12px;
+            color: var(--ed-color-text-primary);
+            min-width: 28ch;
+        }
+        .ship-list span {
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+
+        .footnote {
+            margin-top: 48px;
+            padding: 20px 24px;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .footnote strong { color: var(--ed-color-text-primary); font-weight: 500; }
+
+        code {
+            font-family: var(--ed-font-mono);
+            font-size: 12.5px;
+        }
+
+        @media (max-width: 760px) {
+            .component { grid-template-columns: 1fr; gap: 16px; }
+            .component__head { position: static; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <p class="eyebrow">EditorialUI · Implementation</p>
+    <h1>Bundle 1 — Foundations</h1>
+    <p class="lede">
+        Tokens plus three primitives that everything else builds on:
+        <code>EdIcon</code>, <code>EdButton</code>, <code>EdIconButton</code>. Ready to
+        drop into <code>Prodicus.Api/ClientApp/src/</code>.
+    </p>
+
+    <div class="pills">
+        <span class="pill">Bundle 1 · Foundations</span>
+        <span class="pill pill--neutral">3 components · 17 files</span>
+        <span class="pill pill--neutral">React 19 · Radix Slot · lucide-react</span>
+    </div>
+
+    <a class="cc-callout" href="CLAUDE_CODE_PROMPT.md">
+        <span class="cc-callout__icon">cc</span>
+        <span class="cc-callout__body">
+            <span class="cc-callout__eyebrow">Hand-off prompt</span>
+            <span class="cc-callout__title">CLAUDE_CODE_PROMPT.md</span>
+            <span class="cc-callout__sub">Paste this into Claude Code (with the bundle attached) to land it in <code>apostlerisk</code> cleanly. Includes drop locations, deps, conventions, and the success checklist.</span>
+        </span>
+        <span class="cc-callout__arrow">open ↗</span>
+    </a>
+
+    <h2><span class="h2-eyebrow">01</span> Components</h2>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">A1 · Inputs</p>
+            <h3 class="component__title">EdButton</h3>
+            <p class="component__lede">Primary action target. Five variants × four sizes, with <code>loading</code>, <code>leadingIcon</code>/<code>trailingIcon</code>, and <code>asChild</code> (Radix Slot) for styled anchors.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdButton.tsx</span>
+                <span><b>scss</b> EdButton.module.scss</span>
+                <span><b>stories</b> EdButton.stories.tsx</span>
+                <span><b>tests</b> EdButton.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdButton.png" alt="EdButton — anatomy and variants (primary, secondary, ghost, danger, link)"></div>
+            <div class="shot"><img src="screenshots/02-EdButton.png" alt="EdButton — states (default, hover, active, focus, loading, disabled) and sizes (sm, md, lg, xl)"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">A2 · Inputs</p>
+            <h3 class="component__title">EdIconButton</h3>
+            <p class="component__lede">Icon-only action target. Three variants (<code>default</code>, <code>bordered</code>, <code>filled</code>) × three sizes. <code>aria-label</code> is a required prop at the type level. Optional <code>pressed</code> for toggle behaviour with <code>aria-pressed</code>.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdIconButton.tsx</span>
+                <span><b>scss</b> EdIconButton.module.scss</span>
+                <span><b>stories</b> EdIconButton.stories.tsx</span>
+                <span><b>tests</b> EdIconButton.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdIconButton.png" alt="EdIconButton — variants (default, bordered, filled)"></div>
+            <div class="shot"><img src="screenshots/02-EdIconButton.png" alt="EdIconButton — states, sizes, toggle (pressed)"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">D1 · Display</p>
+            <h3 class="component__title">EdIcon</h3>
+            <p class="component__lede"><code>lucide-react</code> wrapper. Six token-driven sizes, nine semantic colors. Decorative by default; pass <code>label</code> to make it meaningful (<code>role="img"</code>). The only sanctioned icon component in EditorialUI — ESLint should block <code>react-icons</code> from this folder.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdIcon.tsx</span>
+                <span><b>scss</b> EdIcon.module.scss</span>
+                <span><b>stories</b> EdIcon.stories.tsx</span>
+                <span><b>tests</b> EdIcon.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdIcon.png" alt="EdIcon — sizes from xs to 2xl"></div>
+            <div class="shot"><img src="screenshots/02-EdIcon.png" alt="EdIcon — semantic colors (muted, faint, brand, success, warning, danger)"></div>
+        </div>
+    </div>
+
+    <h2><span class="h2-eyebrow">02</span> Drop locations</h2>
+    <div class="tree">design_handoff_editorialui_foundations/
+└── src/
+    ├── theme/
+    │   ├── <b>tokens-v2.scss</b>            <em>NEW · ~250 tokens, --ed-* prefixed</em>
+    │   └── <b>tokens-v2.ts</b>              <em>NEW · typed cssVar/token helpers</em>
+    └── components/
+        └── EditorialUI/
+            ├── <b>index.ts</b>               <em>NEW · public barrel</em>
+            ├── EdIcon/
+            ├── EdButton/
+            └── EdIconButton/</div>
+
+    <h2><span class="h2-eyebrow">03</span> Runtime dependencies</h2>
+    <ul class="ship-list">
+        <li><code>lucide-react</code><span>The single sanctioned icon family. Behind <code>EdIcon</code>.</span></li>
+        <li><code>@radix-ui/react-slot</code><span><code>EdButton.asChild</code> for rendering <code>&lt;a&gt;</code> as a styled button.</span></li>
+    </ul>
+
+    <h2><span class="h2-eyebrow">04</span> Hard conventions</h2>
+    <ul class="ship-list">
+        <li><code>Ed*</code> prefix<span>Coexistence with ProdicusUI. Prefix is how each call site signals which library it's on.</span></li>
+        <li>Folder <code>src/components/EditorialUI/&lt;Component&gt;/</code><span>Mirror of <code>ProdicusUI/</code>. One folder per public component.</span></li>
+        <li>Storybook <code>EditorialUI/&lt;Group&gt;/&lt;Component&gt;</code><span>Group names match the 7 spec groups: Inputs, Selection, Display, Feedback, Containers, Navigation, Data.</span></li>
+        <li>Tokens only — no hex literals<span>All values reference <code>--ed-*</code> properties from <code>tokens-v2.scss</code>. Stylelint enforces.</span></li>
+        <li>Light default, dark via <code>[data-theme="dark"]</code><span>Every <code>--ed-*</code> token has a dark counterpart. Don't invert.</span></li>
+    </ul>
+
+    <div class="footnote">
+        <strong>Next up — Bundle 2 (Forms):</strong>
+        <code>EdTextField</code>, <code>EdPasswordInput</code>, <code>EdCheckbox</code>,
+        <code>EdRadioGroup</code>, <code>EdSwitch</code>, <code>EdFormControlLabel</code>.
+        Same shape, same conventions, builds on the tokens + <code>EdIcon</code> + <code>EdIconButton</code> from this bundle.
+    </div>
+</div>
+</body>
+</html>

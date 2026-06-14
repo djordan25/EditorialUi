@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditorialUI · Selection bundle</title>
+    <link rel="stylesheet" href="../design_system_v2/shared/fonts.css">
+    <link rel="stylesheet" href="../design_system_v2/shared/tokens.css">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            background: var(--ed-color-surface-0);
+            color: var(--ed-color-text-primary);
+            font-family: var(--ed-font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 40px 96px; }
+        .eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 8px;
+        }
+        h1 {
+            font-family: var(--ed-font-sans);
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin: 0 0 8px;
+        }
+        .lede { font-size: 16px; color: var(--ed-color-text-secondary); margin: 0 0 32px; max-width: 64ch; }
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 56px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        h2 .h2-eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--ed-color-text-muted);
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+        }
+        .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 8px;
+            border-radius: var(--ed-radius-sm);
+            background: var(--ed-color-brand-bg);
+            color: var(--ed-color-brand);
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .pill--neutral { background: var(--ed-color-status-neutral-bg); color: var(--ed-color-status-neutral); }
+
+        .cc-callout {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 26px;
+            margin: 32px 0;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-left: 3px solid var(--ed-color-brand);
+            border-radius: var(--ed-radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: border-color var(--ed-transition-base);
+        }
+        .cc-callout:hover { border-color: var(--ed-color-brand); }
+        .cc-callout__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--ed-radius-md);
+            background: var(--ed-color-brand);
+            color: var(--ed-color-brand-contrast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--ed-font-mono);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .cc-callout__body { display: flex; flex-direction: column; gap: 2px; }
+        .cc-callout__eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+        }
+        .cc-callout__title { font-size: 16px; font-weight: 600; color: var(--ed-color-text-primary); }
+        .cc-callout__sub { font-size: 13px; color: var(--ed-color-text-secondary); margin-top: 2px; }
+        .cc-callout__arrow { font-family: var(--ed-font-mono); font-size: 13px; color: var(--ed-color-brand); letter-spacing: 0.04em; }
+
+        .component {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            align-items: flex-start;
+        }
+        .component:last-child { border-bottom: none; }
+        .component__head { position: sticky; top: 0; padding-top: 4px; }
+        .component__meta {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            margin: 0 0 6px;
+        }
+        .component__title {
+            font-family: var(--ed-font-mono);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ed-color-text-primary);
+            margin: 0 0 12px;
+        }
+        .component__lede { font-size: 13px; color: var(--ed-color-text-secondary); margin: 0 0 12px; line-height: 1.55; }
+        .component__files {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            color: var(--ed-color-text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--ed-color-hairline);
+        }
+        .component__files b { color: var(--ed-color-text-secondary); font-weight: 400; }
+        .component__shots { display: flex; flex-direction: column; gap: 12px; }
+        .shot {
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            overflow: hidden;
+            background: var(--ed-color-surface-1);
+        }
+        .shot img { display: block; width: 100%; height: auto; }
+
+        .tree {
+            font-family: var(--ed-font-mono);
+            font-size: 12.5px;
+            line-height: 1.75;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            padding: 18px 22px;
+            color: var(--ed-color-text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .tree b { color: var(--ed-color-text-primary); font-weight: 500; }
+        .tree em { color: var(--ed-color-text-muted); font-style: normal; }
+
+        .matrix { width: 100%; border-collapse: collapse; margin-top: 8px; }
+        .matrix th, .matrix td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            font-size: 13px;
+        }
+        .matrix th {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            font-weight: 500;
+            background: var(--ed-color-surface-2);
+        }
+        .matrix code { font-family: var(--ed-font-mono); font-size: 12px; color: var(--ed-color-brand); }
+
+        .ship-list { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 0; }
+        .ship-list li {
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+        }
+        .ship-list code {
+            font-family: var(--ed-font-mono);
+            font-size: 12px;
+            color: var(--ed-color-text-primary);
+            min-width: 28ch;
+        }
+        .ship-list span { font-size: 13px; color: var(--ed-color-text-secondary); }
+
+        .footnote {
+            margin-top: 48px;
+            padding: 20px 24px;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .footnote strong { color: var(--ed-color-text-primary); font-weight: 500; }
+        code { font-family: var(--ed-font-mono); font-size: 12.5px; }
+
+        @media (max-width: 760px) {
+            .component { grid-template-columns: 1fr; gap: 16px; }
+            .component__head { position: static; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <p class="eyebrow">EditorialUI · Implementation</p>
+    <h1>Bundle 3 — Selection</h1>
+    <p class="lede">
+        Three components for picking from a list: <code>EdSelect</code> (compact, fixed
+        options), <code>EdComboBox</code> (searchable single / multi, with async), and
+        <code>EdAutocomplete</code> (free text + suggestions). Plus a private
+        <code>_internal/</code> module that the two combobox-shaped components share.
+    </p>
+
+    <div class="pills">
+        <span class="pill">Bundle 3 · Selection</span>
+        <span class="pill pill--neutral">3 components · 14 files</span>
+        <span class="pill pill--neutral">Radix Select · Radix Popover</span>
+    </div>
+
+    <a class="cc-callout" href="CLAUDE_CODE_PROMPT.md">
+        <span class="cc-callout__icon">cc</span>
+        <span class="cc-callout__body">
+            <span class="cc-callout__eyebrow">Hand-off prompt</span>
+            <span class="cc-callout__title">CLAUDE_CODE_PROMPT.md</span>
+            <span class="cc-callout__sub">Paste into Claude Code (with this bundle attached) to land it in <code>apostlerisk</code>. Assumes Bundles 1+2 already merged; covers the <code>_internal/</code> module, async-loader patterns, and migration off react-select.</span>
+        </span>
+        <span class="cc-callout__arrow">open ↗</span>
+    </a>
+
+    <h2><span class="h2-eyebrow">01</span> Components</h2>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">B1 · Selection · Radix Select</p>
+            <h3 class="component__title">EdSelect</h3>
+            <p class="component__lede">Compact dropdown for ≤7 fixed options. Sizes sm/md/lg, groups + separators, item metadata, full ARIA from Radix Select (type-ahead, arrow nav, item indicators).</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdSelect.tsx</span>
+                <span><b>scss</b> EdSelect.module.scss</span>
+                <span><b>stories</b> EdSelect.stories.tsx</span>
+                <span><b>tests</b> EdSelect.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdSelect.png" alt="EdSelect — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdSelect.png" alt="EdSelect — states matrix"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">B2 · Selection · Radix Popover</p>
+            <h3 class="component__title">EdComboBox</h3>
+            <p class="component__lede">Searchable single / multi-select. Sync, async with debouncing + in-flight cancellation, recents shown when query is empty, tag-style multi with removable chips. Built on Radix Popover + a hand-rolled listbox.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdComboBox.tsx</span>
+                <span><b>scss</b> EdComboBox.module.scss</span>
+                <span><b>stories</b> EdComboBox.stories.tsx</span>
+                <span><b>tests</b> EdComboBox.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdComboBox.png" alt="EdComboBox — anatomy with filtering open"></div>
+            <div class="shot"><img src="screenshots/02-EdComboBox.png" alt="EdComboBox — state matrix and multi-select mode"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">B3 · Selection · Radix Popover</p>
+            <h3 class="component__title">EdAutocomplete</h3>
+            <p class="component__lede">Free-text input with suggestions. Free text always valid — Enter without a highlighted option commits the typed string. Optional "Create new" action when no exact match. Substring highlighting, async + debouncing.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdAutocomplete.tsx</span>
+                <span><b>scss</b> EdAutocomplete.module.scss</span>
+                <span><b>stories</b> EdAutocomplete.stories.tsx</span>
+                <span><b>tests</b> EdAutocomplete.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdAutocomplete.png" alt="EdAutocomplete — find or create"></div>
+            <div class="shot"><img src="screenshots/02-EdAutocomplete.png" alt="EdAutocomplete — use cases (cell edit, tags input, async)"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">Internal · private</p>
+            <h3 class="component__title">_internal/</h3>
+            <p class="component__lede">Shared keyboard-nav hook (<code>useListboxNav</code>), filter + highlight + debounce utilities, and the <code>:global()</code> menu chrome styles. Not re-exported from the public barrel — ESLint should block consumer imports.</p>
+            <div class="component__files">
+                <span><b>ts</b> listbox.ts</span>
+                <span><b>scss</b> menu.module.scss</span>
+            </div>
+        </div>
+        <div class="component__shots" style="justify-content: center;">
+            <div style="padding: 28px 24px; border: 1px dashed var(--ed-color-hairline); border-radius: var(--ed-radius-md); background: var(--ed-color-surface-1); font-family: var(--ed-font-mono); font-size: 12px; color: var(--ed-color-text-muted); line-height: 1.7;">
+<b style="color:var(--ed-color-text-primary); font-weight:500;">useListboxNav</b>(optionCount, onSelect, onDismiss, open, …)
+<b style="color:var(--ed-color-text-primary); font-weight:500;">highlightMatch</b>(text, query) → { text, matched }[]
+<b style="color:var(--ed-color-text-primary); font-weight:500;">filterByLabel</b>(items, query) → items[]
+<b style="color:var(--ed-color-text-primary); font-weight:500;">useDebouncedValue</b>(value, delayMs) → value
+<b style="color:var(--ed-color-text-primary); font-weight:500;">useScrollHighlightedIntoView</b>(ref, activeOptionId)</div>
+        </div>
+    </div>
+
+    <h2><span class="h2-eyebrow">02</span> Decision matrix — which component to use</h2>
+    <table class="matrix">
+        <thead>
+            <tr><th>Situation</th><th>Reach for</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>2 known options</td><td><code>EdRadioGroup</code> or <code>EdSwitch</code> (Bundle 2)</td></tr>
+            <tr><td>≤7 fixed options, no need to type</td><td><code>EdSelect</code></td></tr>
+            <tr><td>Larger known list — value MUST be from the list</td><td><code>EdComboBox</code></td></tr>
+            <tr><td>Tag-style multi-select from a known list</td><td><code>EdComboBox multiple</code></td></tr>
+            <tr><td>Free text with hints (value can be anything)</td><td><code>EdAutocomplete</code></td></tr>
+            <tr><td>Find existing OR create new</td><td><code>EdAutocomplete</code> with <code>allowCreate</code></td></tr>
+        </tbody>
+    </table>
+
+    <h2><span class="h2-eyebrow">03</span> Drop locations</h2>
+    <div class="tree">design_handoff_editorialui_selection/
+└── src/
+    └── components/
+        └── EditorialUI/
+            ├── <b>index.ts</b>                  <em>UPDATED · barrel adds 3 exports</em>
+            ├── _internal/
+            │   ├── listbox.ts            <em>shared keyboard-nav + utils</em>
+            │   └── menu.module.scss      <em>shared :global() menu styles</em>
+            ├── EdSelect/
+            ├── EdComboBox/
+            └── EdAutocomplete/</div>
+
+    <h2><span class="h2-eyebrow">04</span> New runtime dependencies</h2>
+    <ul class="ship-list">
+        <li><code>@radix-ui/react-select</code><span>EdSelect</span></li>
+        <li><code>@radix-ui/react-popover</code><span>EdComboBox, EdAutocomplete (positioning only — listbox + ARIA hand-rolled)</span></li>
+    </ul>
+
+    <h2><span class="h2-eyebrow">05</span> What this bundle codifies</h2>
+    <ul class="ship-list">
+        <li><code>useListboxNav</code> is the single source<span>Every combobox-shaped component reuses it. Future date pickers + mention menus must too.</span></li>
+        <li>Options are plain objects<span><code>{ value, label, meta?, group?, disabled? }</code>. No <code>&lt;Option&gt;</code> children. No <code>loadOptions</code> / <code>cacheOptions</code> zoo.</span></li>
+        <li>Multi emits arrays<span><code>EdComboBox multiple</code> emits <code>string[]</code>. The trigger renders selected values as removable, focusable tag chips.</span></li>
+        <li>Free text is a different component<span><code>EdComboBox</code> constrains values to its list. <code>EdAutocomplete</code> doesn't — suggestions are hints, not constraints.</span></li>
+        <li>Highlight is decorative<span>Brand-bg substring highlight via <code>.edmenu__hi</code>. Screen readers read the full label, not the wrapped markup.</span></li>
+    </ul>
+
+    <div class="footnote">
+        <strong>Next up — Bundle 4 (Display):</strong>
+        <code>EdTag</code>, <code>EdStatusBadge</code>, <code>EdChip</code>,
+        <code>EdDivider</code>, <code>EdProgressMeter</code>, <code>EdCircularProgress</code>.
+        Once <code>EdTag</code> lands, the multi-mode trigger chips in <code>EdComboBox</code>
+        should be replaced with it — see the <code>// TODO(bundle-4)</code> note in the
+        Claude Code prompt.
+    </div>
+</div>
+</body>
+</html>

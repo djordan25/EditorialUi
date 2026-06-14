@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditorialUI · Navigation bundle</title>
+    <link rel="stylesheet" href="../design_system_v2/shared/fonts.css">
+    <link rel="stylesheet" href="../design_system_v2/shared/tokens.css">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            background: var(--ed-color-surface-0);
+            color: var(--ed-color-text-primary);
+            font-family: var(--ed-font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 40px 96px; }
+        .eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 8px;
+        }
+        h1 {
+            font-family: var(--ed-font-sans);
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin: 0 0 8px;
+        }
+        .lede {
+            font-size: 16px;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 32px;
+            max-width: 64ch;
+        }
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 56px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        h2 .h2-eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--ed-color-text-muted);
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+        }
+        .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 8px;
+            border-radius: var(--ed-radius-sm);
+            background: var(--ed-color-brand-bg);
+            color: var(--ed-color-brand);
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .pill--neutral { background: var(--ed-color-status-neutral-bg); color: var(--ed-color-status-neutral); }
+
+        .cc-callout {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 26px;
+            margin: 32px 0;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-left: 3px solid var(--ed-color-brand);
+            border-radius: var(--ed-radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: border-color var(--ed-transition-base);
+        }
+        .cc-callout:hover { border-color: var(--ed-color-brand); }
+        .cc-callout__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--ed-radius-md);
+            background: var(--ed-color-brand);
+            color: var(--ed-color-brand-contrast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--ed-font-mono);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .cc-callout__body { display: flex; flex-direction: column; gap: 2px; }
+        .cc-callout__eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+        }
+        .cc-callout__title { font-size: 16px; font-weight: 600; color: var(--ed-color-text-primary); }
+        .cc-callout__sub { font-size: 13px; color: var(--ed-color-text-secondary); margin-top: 2px; }
+        .cc-callout__arrow { font-family: var(--ed-font-mono); font-size: 13px; color: var(--ed-color-brand); letter-spacing: 0.04em; }
+
+        .component {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            align-items: flex-start;
+        }
+        .component:last-child { border-bottom: none; }
+        .component__head { position: sticky; top: 0; padding-top: 4px; }
+        .component__meta {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            margin: 0 0 6px;
+        }
+        .component__title {
+            font-family: var(--ed-font-mono);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ed-color-text-primary);
+            margin: 0 0 12px;
+        }
+        .component__lede { font-size: 13px; color: var(--ed-color-text-secondary); margin: 0 0 12px; line-height: 1.55; }
+        .component__files {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            color: var(--ed-color-text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--ed-color-hairline);
+        }
+        .component__files b { color: var(--ed-color-text-secondary); font-weight: 400; }
+        .component__shots { display: flex; flex-direction: column; gap: 12px; }
+        .shot {
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            overflow: hidden;
+            background: var(--ed-color-surface-1);
+        }
+        .shot img { display: block; width: 100%; height: auto; }
+
+        .tree {
+            font-family: var(--ed-font-mono);
+            font-size: 12.5px;
+            line-height: 1.75;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            padding: 18px 22px;
+            color: var(--ed-color-text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .tree b { color: var(--ed-color-text-primary); font-weight: 500; }
+        .tree em { color: var(--ed-color-text-muted); font-style: normal; }
+
+        .ship-list { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 0; }
+        .ship-list li {
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+        }
+        .ship-list code {
+            font-family: var(--ed-font-mono);
+            font-size: 12px;
+            color: var(--ed-color-text-primary);
+            min-width: 26ch;
+        }
+        .ship-list span { font-size: 13px; color: var(--ed-color-text-secondary); }
+
+        .footnote {
+            margin-top: 48px;
+            padding: 20px 24px;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .footnote strong { color: var(--ed-color-text-primary); font-weight: 500; }
+        .note {
+            margin: 0 0 24px;
+            padding: 14px 18px;
+            background: var(--ed-color-brand-bg);
+            border-radius: var(--ed-radius-sm);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .note strong { color: var(--ed-color-brand); font-weight: 600; }
+        code { font-family: var(--ed-font-mono); font-size: 12.5px; }
+
+        @media (max-width: 760px) {
+            .component { grid-template-columns: 1fr; gap: 16px; }
+            .component__head { position: static; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <p class="eyebrow">EditorialUI · Implementation</p>
+    <h1>Bundle 7 — Navigation</h1>
+    <p class="lede">
+        Moving between views and invoking commands: tabs, the breadcrumb trail,
+        and the two menus (button-triggered dropdown + right-click). The two menus
+        share one item model.
+    </p>
+
+    <div class="pills">
+        <span class="pill">Bundle 7 · Navigation</span>
+        <span class="pill pill--neutral">4 components · 16 files</span>
+        <span class="pill pill--neutral">Radix Tabs · Dropdown · ContextMenu</span>
+    </div>
+
+    <a class="cc-callout" href="CLAUDE_CODE_PROMPT.md">
+        <span class="cc-callout__icon">cc</span>
+        <span class="cc-callout__body">
+            <span class="cc-callout__eyebrow">Hand-off prompt</span>
+            <span class="cc-callout__title">CLAUDE_CODE_PROMPT.md</span>
+            <span class="cc-callout__sub">Paste into Claude Code (with this bundle attached) to land it in <code>apostlerisk</code>. Assumes Bundles 1–6 merged; covers the shared EdMenu item model, the EdContextMenu→EdMenu import order, and the data-array (not children) migration.</span>
+        </span>
+        <span class="cc-callout__arrow">open ↗</span>
+    </a>
+
+    <p class="note">
+        <strong>Shared model:</strong> <code>EdMenu</code> and <code>EdContextMenu</code>
+        use one <code>EdMenuEntry</code> item model and the same stylesheet —
+        <code>EdContextMenu</code> imports from <code>../EdMenu</code>. Build the
+        <code>items</code> array once; drive both a row's overflow button and its
+        right-click menu from it.
+    </p>
+
+    <h2><span class="h2-eyebrow">01</span> Components</h2>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">F1 · Navigation · Radix Tabs</p>
+            <h3 class="component__title">EdTabs</h3>
+            <p class="component__lede">Mutually-exclusive sibling views. Underline (page-level) or segmented (inline toolbar). Count pills fold into the accessible name; optional icons + status dots. Automatic or manual activation (manual for async panels). Encode the active tab in the URL.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdTabs.tsx</span>
+                <span><b>scss</b> EdTabs.module.scss</span>
+                <span><b>stories</b> EdTabs.stories.tsx</span>
+                <span><b>tests</b> EdTabs.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdTabs.png" alt="EdTabs — anatomy (underline)"></div>
+            <div class="shot"><img src="screenshots/02-EdTabs.png" alt="EdTabs — variants"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">F2 · Navigation</p>
+            <h3 class="component__title">EdBreadcrumb</h3>
+            <p class="component__lede">Path-back trail. Final crumb is the current page (plain text, aria-current); the rest are links (native or a router adapter via <code>renderLink</code>). Semantic <code>nav</code> + <code>ol</code>. Collapses the middle behind "…" past <code>maxItems</code>. Slash or chevron separators.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdBreadcrumb.tsx</span>
+                <span><b>scss</b> EdBreadcrumb.module.scss</span>
+                <span><b>stories</b> EdBreadcrumb.stories.tsx</span>
+                <span><b>tests</b> EdBreadcrumb.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdBreadcrumb.png" alt="EdBreadcrumb — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdBreadcrumb.png" alt="EdBreadcrumb — variants"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">D4 · Navigation · Radix Dropdown</p>
+            <h3 class="component__title">EdMenu</h3>
+            <p class="component__lede">Anchored dropdown of command targets (actions, not selections). One <code>EdMenuEntry</code> model covers action items (icon + shortcut + meta), checkbox items, group labels, separators, submenus. Destructive items take danger tone + a required entity-naming <code>ariaLabel</code>.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdMenu.tsx <em>(+ EdMenuEntry model)</em></span>
+                <span><b>scss</b> EdMenu.module.scss</span>
+                <span><b>stories</b> EdMenu.stories.tsx</span>
+                <span><b>tests</b> EdMenu.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdMenu.png" alt="EdMenu — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdMenu.png" alt="EdMenu — item types"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">D5 · Navigation · Radix ContextMenu</p>
+            <h3 class="component__title">EdContextMenu</h3>
+            <p class="component__lede">Right-click menu for direct manipulation. Same item model + visuals as EdMenu (imports its type + stylesheet), different trigger. Keyboard equivalent (Shift+F10 / Menu key) + touch long-press from Radix. Every action must also be in the visible UI — never destructive-only-here.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdContextMenu.tsx</span>
+                <span><b>scss</b> <em>(reuses EdMenu.module.scss)</em></span>
+                <span><b>stories</b> EdContextMenu.stories.tsx</span>
+                <span><b>tests</b> EdContextMenu.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdContextMenu.png" alt="EdContextMenu — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdContextMenu.png" alt="EdContextMenu — triggers"></div>
+        </div>
+    </div>
+
+    <h2><span class="h2-eyebrow">02</span> Drop locations</h2>
+    <div class="tree">design_handoff_editorialui_navigation/
+└── src/
+    └── components/
+        └── EditorialUI/
+            ├── <b>index.ts</b>                  <em>UPDATED · barrel adds the 4 + item-model types</em>
+            ├── EdTabs/
+            ├── EdBreadcrumb/
+            ├── EdMenu/                   <em>EdMenu + EdMenuEntry model</em>
+            └── EdContextMenu/            <em>imports ../EdMenu — copy both</em></div>
+
+    <h2><span class="h2-eyebrow">03</span> New runtime dependencies</h2>
+    <ul class="ship-list">
+        <li><code>@radix-ui/react-tabs</code><span>EdTabs</span></li>
+        <li><code>@radix-ui/react-dropdown-menu</code><span>EdMenu</span></li>
+        <li><code>@radix-ui/react-context-menu</code><span>EdContextMenu</span></li>
+    </ul>
+    <p style="font-size: 13px; color: var(--ed-color-text-muted); margin-top: 12px;">
+        <code>EdBreadcrumb</code> is plain semantic HTML — no dependency.
+    </p>
+
+    <h2><span class="h2-eyebrow">04</span> What this codifies</h2>
+    <ul class="ship-list">
+        <li>Tabs vs filters vs accordion<span>Tabs = different content (sibling views). Filters = narrow the same content. Accordion = independently expandable.</span></li>
+        <li>Menu = verb, Select = noun<span>EdMenu invokes actions; EdSelect/EdComboBox pick values. Don't use a menu to set a field.</span></li>
+        <li>One menu item model<span><code>EdMenuEntry</code> drives both the dropdown and the right-click menu identically.</span></li>
+        <li>Destructive items name the entity<span>Danger items require <code>ariaLabel</code> ("Delete finding F-2438") and never live only in a context menu.</span></li>
+    </ul>
+
+    <div class="footnote">
+        <strong>Next up — Bundle 8 (Data):</strong>
+        <code>EdDataTable</code>, <code>EdNativeTable</code>, <code>EdList</code>.
+        <code>EdContextMenu</code> will wrap table rows; <code>EdMenu</code> powers
+        the row overflow and column-header menus. The data table is the largest
+        single component in the system — it ties together selection, status badges,
+        menus, and empty states from earlier bundles.
+    </div>
+</div>
+</body>
+</html>

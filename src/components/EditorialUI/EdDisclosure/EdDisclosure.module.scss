@@ -1,0 +1,56 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    border-top: 1px solid var(--ed-color-hairline);
+    border-bottom: 1px solid var(--ed-color-hairline);
+}
+
+/* Collapse adjacent borders when disclosures stack. */
+.root + .root {
+    border-top: none;
+}
+
+.trigger {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: var(--ed-space-2);
+    width: 100%;
+    padding: var(--ed-space-3) 0;
+    font-family: var(--ed-font-mono);
+    font-size: 11px;
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-secondary);
+    cursor: pointer;
+    transition: color var(--ed-transition-base);
+
+    &:hover { color: var(--ed-color-text-primary); }
+    &:focus-visible {
+        outline: 2px solid var(--ed-color-focus-ring);
+        outline-offset: 2px;
+        border-radius: var(--ed-radius-sm);
+    }
+}
+
+.chev {
+    flex-shrink: 0;
+    color: var(--ed-color-text-muted);
+    transition: transform var(--ed-transition-base);
+}
+
+.chevOpen {
+    transform: rotate(90deg);
+}
+
+.panel {
+    padding: 0 0 var(--ed-space-3) calc(12px + var(--ed-space-2));
+    font-size: var(--ed-font-size-sm);
+    color: var(--ed-color-text-secondary);
+    line-height: var(--ed-line-height-base);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .chev { transition: none; }
+}

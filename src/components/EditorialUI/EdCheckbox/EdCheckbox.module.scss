@@ -1,0 +1,141 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.row {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--ed-space-2);
+    cursor: pointer;
+    user-select: none;
+    color: var(--ed-color-text-primary);
+    line-height: var(--ed-line-height-snug);
+}
+
+.rowDisabled {
+    cursor: not-allowed;
+    color: var(--ed-color-text-disabled);
+}
+
+/* ---- The visible box (Radix Root) ---- */
+.box {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 1px; /* optical alignment to the first line of text */
+    background: var(--ed-color-surface-input);
+    border: 1.5px solid var(--ed-color-hairline-bold);
+    border-radius: var(--ed-radius-sm);
+    color: var(--ed-color-brand-contrast);
+    cursor: pointer;
+    transition:
+        background var(--ed-transition-base),
+        border-color var(--ed-transition-base),
+        box-shadow var(--ed-transition-base);
+
+    /* Hover (only when interactive) */
+    .row:hover & {
+        border-color: var(--ed-color-brand);
+    }
+
+    /* Focus */
+    &:focus-visible {
+        outline: 2px solid var(--ed-color-focus-ring);
+        outline-offset: 2px;
+    }
+
+    /* Checked / indeterminate */
+    &[data-state='checked'],
+    &[data-state='indeterminate'] {
+        background: var(--ed-color-brand);
+        border-color: var(--ed-color-brand);
+    }
+    .row:hover &[data-state='checked'],
+    .row:hover &[data-state='indeterminate'] {
+        background: var(--ed-color-brand-hover);
+        border-color: var(--ed-color-brand-hover);
+    }
+
+    /* Disabled */
+    &[data-disabled] {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+    .row:hover &[data-disabled] {
+        border-color: var(--ed-color-hairline-bold);
+    }
+}
+
+.boxError {
+    border-color: var(--ed-color-status-danger);
+
+    .row:hover & {
+        border-color: var(--ed-color-status-danger);
+    }
+    &[data-state='checked'],
+    &[data-state='indeterminate'] {
+        background: var(--ed-color-status-danger);
+        border-color: var(--ed-color-status-danger);
+    }
+}
+
+/* ---- Indicator (the tick / dash) ---- */
+.indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ed-color-brand-contrast);
+}
+
+.indicatorIcon {
+    width: 12px;
+    height: 12px;
+}
+
+/* ---- Label / description block ---- */
+.text {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.label {
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-md);
+    font-weight: var(--ed-font-weight-medium);
+    color: inherit;
+}
+
+.description {
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-sm);
+    color: var(--ed-color-text-secondary);
+
+    .rowDisabled & {
+        color: var(--ed-color-text-disabled);
+    }
+}
+
+/* ---- Hint / error ---- */
+.hint {
+    margin: 0;
+    padding-left: calc(16px + var(--ed-space-2)); /* align to text */
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-xs);
+    line-height: var(--ed-line-height-snug);
+    color: var(--ed-color-text-muted);
+}
+
+.hintError {
+    color: var(--ed-color-status-danger);
+}

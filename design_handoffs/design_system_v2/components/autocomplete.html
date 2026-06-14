@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdAutocomplete · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .hi { background: var(--ed-color-brand-bg); color: var(--ed-color-brand); padding: 0 1px; font-weight: 600; }
+        .auto-row { display: flex; flex-direction: column; gap: 2px; }
+        .auto-row__primary { font-size: 14px; }
+        .auto-row__secondary { font-size: 11px; color: var(--ed-color-text-muted); font-family: var(--ed-font-mono); }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "B3",
+    "group": "Selection",
+    "name": "EdAutocomplete",
+    "lede": "Free-text input with suggestions. The user can type anything; suggestions are hints, not constraints. Use EdComboBox when the value MUST be from the list."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding:32px;">
+            <div style="display:flex; gap:48px; align-items:flex-start;">
+                <div style="width:340px;">
+                    <p class="ed-field__label" style="margin-bottom:6px;">Finding title</p>
+                    <input class="ed-input ed-input--focused" value="Stale model docu" placeholder="Type to search…">
+                </div>
+                <div class="ed-menu" style="position:static; width:380px; max-height:none;">
+                    <div class="ed-menu__group-label">Existing findings (3)</div>
+                    <div class="ed-menu__item ed-menu__item--active">
+                        <div class="auto-row">
+                            <span class="auto-row__primary"><span class="hi">Stale model docu</span>mentation — PD model</span>
+                            <span class="auto-row__secondary">F-2438 · OPEN · MEDIUM</span>
+                        </div>
+                    </div>
+                    <div class="ed-menu__item">
+                        <div class="auto-row">
+                            <span class="auto-row__primary"><span class="hi">Stale model docu</span>ments missing v2.3 update</span>
+                            <span class="auto-row__secondary">F-2199 · CLOSED · LOW</span>
+                        </div>
+                    </div>
+                    <div class="ed-menu__item">
+                        <div class="auto-row">
+                            <span class="auto-row__primary">Documents reference <span class="hi">stale model</span> outputs</span>
+                            <span class="auto-row__secondary">F-1872 · OPEN · HIGH</span>
+                        </div>
+                    </div>
+                    <div class="ed-menu__separator"></div>
+                    <div class="ed-menu__item" style="color: var(--ed-color-brand);">
+                        <svg class="icn" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Create finding "Stale model docu"
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Use cases</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">find or create — finding title</span><div class="ed-cell__demo ed-cell__demo--block">
+                <p style="margin: 0 0 8px; font-size: 12px; color: var(--ed-color-text-muted);">Suggest existing findings. Always offer "Create new" as an escape hatch.</p>
+                <input class="ed-input" value="Stale model docs" placeholder="Type to search…">
+            </div></div>
+            <div class="ed-cell"><span class="ed-cell__label">command-style — quick add</span><div class="ed-cell__demo ed-cell__demo--block">
+                <p style="margin: 0 0 8px; font-size: 12px; color: var(--ed-color-text-muted);">Recent + suggested entities. Free text always valid.</p>
+                <input class="ed-input" placeholder="@owner, #regulation, model:…">
+            </div></div>
+            <div class="ed-cell"><span class="ed-cell__label">cell — type-or-pick value</span><div class="ed-cell__demo ed-cell__demo--block">
+                <p style="margin: 0 0 8px; font-size: 12px; color: var(--ed-color-text-muted);">Inside a table cell. Click to edit, type any value, suggestions appear.</p>
+                <input class="ed-input" value="Operational Risk" style="height:30px; font-size:13px;">
+            </div></div>
+            <div class="ed-cell"><span class="ed-cell__label">tags input — free + suggested</span><div class="ed-cell__demo ed-cell__demo--block">
+                <p style="margin: 0 0 8px; font-size: 12px; color: var(--ed-color-text-muted);">Type new tags or pick from existing. Enter commits.</p>
+                <div class="ed-input" style="height: auto; min-height: 36px; padding: 6px 10px; display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+                    <span class="ed-tag ed-tag--brand">credit-risk<svg class="icn ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span>
+                    <span class="ed-tag ed-tag--brand">retail<svg class="icn ed-tag__close" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span>
+                    <input style="border:none; outline:none; background:none; flex:1; min-width:80px; font-size:13px;" placeholder="Add tag…">
+                </div>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Suggestion behavior</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Show suggestions only when query length ≥ 2 chars (configurable per use).</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Highlight matched substring with <code>&lt;span class="hi"&gt;</code>. Use brand bg, not yellow.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Free text always valid — pressing Enter without selecting commits the typed value.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>"Create new" item appears when no exact match exists. Style as a divider-separated action row.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Forcing users into existing values. That's <code>EdComboBox</code>.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Finding titles, tag names, ad-hoc business unit, custom finding category. The value can be anything.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdComboBox</code> when value must be from a known list (owner, severity).</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdInput</code> alone when there's nothing useful to suggest.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Same Radix Combobox base as <code>EdComboBox</code>, with <code>aria-autocomplete="both"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Live region: "{n} suggestions, use arrows to browse" on first character.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Highlighted substring is decorative — screen readers read full label, not the highlight markup.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Selection/EdAutocomplete
+├─ FindOrCreate (finding title)
+├─ TagsInput (multi free + suggested)
+├─ CellEdit (table cell)
+├─ NoMatch (only "Create new" item)
+└─ AsyncSuggestions (debounced fetch)</code></pre>
+    </section>
+</main>
+</body>
+</html>

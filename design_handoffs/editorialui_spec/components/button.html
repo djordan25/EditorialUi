@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdButton · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+</head>
+<body>
+<main class="ed-spec">
+    <header class="ed-spec__topbar">
+        <nav class="ed-spec__crumbs"><a href="../00-index.html">EditorialUI</a> <span>/</span> Inputs <span>/</span> EdButton</nav>
+        <div class="ed-spec__topbar-actions">
+            <span>A1 · v0.1.0</span>
+            <button type="button" class="ed-theme-toggle" data-ed-theme-toggle>Dark</button>
+        </div>
+    </header>
+
+    <p class="ed-spec__eyebrow">Inputs · A1</p>
+    <h1 class="ed-spec__title">EdButton</h1>
+    <p class="ed-spec__lede">
+        Primary action target. Six variants for six intents — the variant is a semantic choice, not a styling one.
+        Resting height aligns with all other controls so toolbars read as a single line.
+    </p>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">01</span><h2 class="ed-section__title">Variants</h2></div>
+        <p class="ed-section__sub">One primary per surface. Secondary for paired actions. Ghost for tertiary / inline. Danger for destructive. Link for inline text actions.</p>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">primary</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary">Save changes</button></div><span class="ed-cell__note">Default action. One per surface.</span></div>
+            <div class="ed-cell"><span class="ed-cell__label">secondary</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--secondary">Cancel</button></div><span class="ed-cell__note">Paired w/ primary.</span></div>
+            <div class="ed-cell"><span class="ed-cell__label">ghost</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--ghost">View details</button></div><span class="ed-cell__note">Tertiary / inline.</span></div>
+            <div class="ed-cell"><span class="ed-cell__label">danger</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--danger">Delete model</button></div><span class="ed-cell__note">Destructive only.</span></div>
+            <div class="ed-cell"><span class="ed-cell__label">link</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--link">Reset password</button></div><span class="ed-cell__note">Inline w/ text.</span></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">02</span><h2 class="ed-section__title">States</h2></div>
+        <p class="ed-section__sub">Every variant honors the same six states. Loading replaces the label with a spinner; the button keeps its width and disables interaction.</p>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">default</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary">Run validation</button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">hover</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary" style="background: var(--ed-color-button-bg-primary-hover);">Run validation</button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">active / pressed</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary" style="background: var(--ed-color-button-bg-primary-pressed);">Run validation</button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">focus</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary" style="outline: 2px solid var(--ed-color-focus-ring); outline-offset: 2px;">Run validation</button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">loading</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary ed-btn--loading">Run validation</button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">disabled</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary" disabled>Run validation</button></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">03</span><h2 class="ed-section__title">Sizes</h2></div>
+        <p class="ed-section__sub">md is the default. sm in dense toolbars, command bars, table inline actions. lg for prominent CTAs in dialogs and empty states. xl reserved for auth/marketing.</p>
+        <div class="ed-grid ed-grid--narrow">
+            <div class="ed-cell"><span class="ed-cell__label">sm — 28px</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary ed-btn--sm">Save</button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">md — 36px (default)</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary">Save</button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">lg — 44px</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary ed-btn--lg">Save</button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">xl — 56px</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--primary ed-btn--xl">Sign in</button></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">04</span><h2 class="ed-section__title">With icons</h2></div>
+        <p class="ed-section__sub">Icon precedes label by 8px (6px at sm). Trailing icon for menu/expand affordance. Never icon-only — use <code>EdIconButton</code>.</p>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">leading icon</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--secondary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add model</button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">trailing icon</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--secondary">Export <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="6,9 12,15 18,9"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">danger w/ icon</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--danger"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3,6 5,6 21,6"/><path d="M19,6L17.5,20a2,2 0 01-2,2H8.5a2,2 0 01-2-2L5,6"/></svg> Delete</button></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">05</span><h2 class="ed-section__title">Twin — light + dark</h2></div>
+        <div class="ed-twin">
+            <div class="ed-twin__pane ed-twin__pane--light" data-theme="light" style="display:flex; gap:12px; flex-wrap:wrap;">
+                <button class="ed-btn ed-btn--primary">Primary</button>
+                <button class="ed-btn ed-btn--secondary">Secondary</button>
+                <button class="ed-btn ed-btn--ghost">Ghost</button>
+                <button class="ed-btn ed-btn--danger">Danger</button>
+            </div>
+            <div class="ed-twin__pane ed-twin__pane--dark" data-theme="dark" style="display:flex; gap:12px; flex-wrap:wrap;">
+                <button class="ed-btn ed-btn--primary">Primary</button>
+                <button class="ed-btn ed-btn--secondary">Secondary</button>
+                <button class="ed-btn ed-btn--ghost">Ghost</button>
+                <button class="ed-btn ed-btn--danger">Danger</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">06</span><h2 class="ed-section__title">Tokens</h2></div>
+        <table class="ed-tokens">
+            <thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead>
+            <tbody>
+                <tr><td>--ed-control-h-md</td><td>36px</td><td>Default height. All sizes (sm/md/lg/xl) use control-h tokens.</td></tr>
+                <tr><td>--ed-radius-sm</td><td>2px</td><td>Border radius for all variants.</td></tr>
+                <tr><td>--ed-color-button-bg-primary</td><td>cobalt</td><td>Primary background.</td></tr>
+                <tr><td>--ed-color-button-bg-primary-hover</td><td>cobalt -4L</td><td>Primary hover.</td></tr>
+                <tr><td>--ed-color-button-bg-primary-pressed</td><td>cobalt -8L</td><td>Primary active.</td></tr>
+                <tr><td>--ed-color-status-danger</td><td>red</td><td>Danger background.</td></tr>
+                <tr><td>--ed-color-focus-ring</td><td>brand</td><td>Focus outline; 2px outline + 2px offset.</td></tr>
+                <tr><td>--ed-transition-base</td><td>120ms ease</td><td>Background/border/color transitions.</td></tr>
+                <tr><td>--ed-font-weight-medium</td><td>500</td><td>Label weight.</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">07</span><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use primary</span><span>For the single most-likely action on a surface. One per dialog footer; one per command bar.</span></li>
+            <li><span class="verdict verdict--use">Use secondary</span><span>Paired with primary (e.g. Cancel + Save). Toolbar buttons that aren't the primary action.</span></li>
+            <li><span class="verdict verdict--use">Use ghost</span><span>Tertiary actions that should fade until hovered (table row inline actions, breadcrumb back, header utilities).</span></li>
+            <li><span class="verdict verdict--use">Use danger</span><span>Only for destructive, non-reversible actions. Always confirm in modal first.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Stacking 3+ primary buttons on one surface. If the page has many actions, use one primary + an EdMenu for the rest.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Using danger as a primary just to make it pop. Color is for meaning, not emphasis.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">08</span><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Native <code>&lt;button type="button"&gt;</code>. Submit-style buttons inside forms use <code>type="submit"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Loading state sets <code>aria-busy="true"</code> + <code>aria-disabled="true"</code>. Don't strip the label — keep it for screen readers; visually hide via opacity 0.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Focus ring visible at all times when focused (focus-visible). Never <code>outline: none</code> without a visible replacement.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Icon-only buttons go through <code>EdIconButton</code> (which forces aria-label). Never strip the label from EdButton to make it icon-only.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><span class="ed-section__num">09</span><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Inputs/EdButton
+├─ Primary
+├─ Secondary
+├─ Ghost
+├─ Danger
+├─ Link
+├─ Sizes (sm, md, lg, xl)
+├─ WithLeadingIcon
+├─ WithTrailingIcon
+├─ Loading
+├─ Disabled
+└─ AllVariants (matrix)</code></pre>
+    </section>
+
+    <footer class="ed-spec__foot">
+        <span>EditorialUI · EdButton · v0.1.0</span>
+        <span><a href="../00-index.html">Back to index</a></span>
+    </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdDateRangePicker · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; font-family: var(--ed-font-mono); font-size: 11px; }
+        .cal__header { padding: 6px 4px; text-align: center; color: var(--ed-color-text-muted); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
+        .cal__day { padding: 6px 4px; text-align: center; cursor: pointer; border-radius: 4px; min-height: 26px; line-height: 14px; }
+        .cal__day:hover { background: var(--ed-color-surface-2); }
+        .cal__day--muted { color: var(--ed-color-text-faint); }
+        .cal__day--in-range { background: var(--ed-color-brand-bg); border-radius: 0; }
+        .cal__day--start, .cal__day--end { background: var(--ed-color-brand); color: var(--ed-color-brand-contrast); border-radius: 4px; font-weight: 600; }
+        .cal__day--today { box-shadow: inset 0 0 0 1px var(--ed-color-text-muted); }
+        .cal__panel { padding: 12px; border-right: 1px solid var(--ed-color-hairline); }
+        .cal__panel:last-child { border-right: 0; }
+        .cal__title { font-family: var(--ed-font-sans); font-size: 13px; font-weight: 600; padding: 0 4px 8px; display: flex; justify-content: space-between; align-items: center; }
+        .preset-list { display: flex; flex-direction: column; gap: 2px; padding: 12px 0; min-width: 140px; border-right: 1px solid var(--ed-color-hairline); }
+        .preset-list__item { padding: 6px 16px; font-size: 13px; color: var(--ed-color-text-primary); cursor: pointer; text-align: left; background: none; border: 0; font-family: var(--ed-font-sans); }
+        .preset-list__item:hover { background: var(--ed-color-surface-2); }
+        .preset-list__item--active { background: var(--ed-color-brand-bg); color: var(--ed-color-brand); font-weight: 500; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "B4",
+    "group": "Selection",
+    "name": "EdDateRangePicker",
+    "lede": "Two-month calendar with preset shortcuts. Used for finding age filters, exam date windows, audit periods. Single-date variant exists but is rarer in this product."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding:32px; overflow-x:auto;">
+            <div style="display:flex; gap:24px; align-items:flex-start; min-width: max-content;">
+                <div style="width:280px;">
+                    <p class="ed-field__label" style="margin-bottom:6px;">Created between</p>
+                    <button class="ed-select__trigger ed-select__trigger--open" style="font-family: var(--ed-font-mono); font-size: 13px;">
+                        <svg class="icn" viewBox="0 0 24 24" style="color: var(--ed-color-text-muted);"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+                        <span class="ed-select__value">2026-03-01 → 2026-03-15</span>
+                        <svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+                    </button>
+                </div>
+                <div style="display:flex; background: var(--ed-color-surface-1); border: 1px solid var(--ed-color-hairline-strong); border-radius: var(--ed-radius-md); box-shadow: var(--ed-elevation-2);">
+                    <div class="preset-list">
+                        <button class="preset-list__item">Today</button>
+                        <button class="preset-list__item">Yesterday</button>
+                        <button class="preset-list__item">Last 7 days</button>
+                        <button class="preset-list__item preset-list__item--active">Last 14 days</button>
+                        <button class="preset-list__item">Last 30 days</button>
+                        <button class="preset-list__item">This quarter</button>
+                        <button class="preset-list__item">Custom…</button>
+                    </div>
+                    <div class="cal__panel">
+                        <div class="cal__title">
+                            <svg class="icn" viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
+                            <span>March 2026</span>
+                            <span></span>
+                        </div>
+                        <div class="cal">
+                            <div class="cal__header">M</div><div class="cal__header">T</div><div class="cal__header">W</div><div class="cal__header">T</div><div class="cal__header">F</div><div class="cal__header">S</div><div class="cal__header">S</div>
+                            <div class="cal__day cal__day--muted">23</div><div class="cal__day cal__day--muted">24</div><div class="cal__day cal__day--muted">25</div><div class="cal__day cal__day--muted">26</div><div class="cal__day cal__day--muted">27</div><div class="cal__day cal__day--muted">28</div><div class="cal__day">1</div>
+                            <div class="cal__day cal__day--start">2</div><div class="cal__day cal__day--in-range">3</div><div class="cal__day cal__day--in-range">4</div><div class="cal__day cal__day--in-range">5</div><div class="cal__day cal__day--in-range">6</div><div class="cal__day cal__day--in-range">7</div><div class="cal__day cal__day--in-range">8</div>
+                            <div class="cal__day cal__day--in-range">9</div><div class="cal__day cal__day--in-range">10</div><div class="cal__day cal__day--in-range">11</div><div class="cal__day cal__day--in-range">12</div><div class="cal__day cal__day--in-range">13</div><div class="cal__day cal__day--in-range">14</div><div class="cal__day cal__day--end">15</div>
+                            <div class="cal__day">16</div><div class="cal__day">17</div><div class="cal__day">18</div><div class="cal__day">19</div><div class="cal__day">20</div><div class="cal__day">21</div><div class="cal__day">22</div>
+                            <div class="cal__day">23</div><div class="cal__day">24</div><div class="cal__day">25</div><div class="cal__day">26</div><div class="cal__day">27</div><div class="cal__day">28</div><div class="cal__day">29</div>
+                            <div class="cal__day">30</div><div class="cal__day">31</div><div class="cal__day cal__day--muted">1</div><div class="cal__day cal__day--muted">2</div><div class="cal__day cal__day--muted">3</div><div class="cal__day cal__day--muted">4</div><div class="cal__day cal__day--muted">5</div>
+                        </div>
+                    </div>
+                    <div class="cal__panel">
+                        <div class="cal__title">
+                            <span></span>
+                            <span>April 2026</span>
+                            <svg class="icn" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+                        </div>
+                        <div class="cal">
+                            <div class="cal__header">M</div><div class="cal__header">T</div><div class="cal__header">W</div><div class="cal__header">T</div><div class="cal__header">F</div><div class="cal__header">S</div><div class="cal__header">S</div>
+                            <div class="cal__day cal__day--muted">30</div><div class="cal__day cal__day--muted">31</div><div class="cal__day">1</div><div class="cal__day">2</div><div class="cal__day">3</div><div class="cal__day">4</div><div class="cal__day cal__day--today">5</div>
+                            <div class="cal__day">6</div><div class="cal__day">7</div><div class="cal__day">8</div><div class="cal__day">9</div><div class="cal__day">10</div><div class="cal__day">11</div><div class="cal__day">12</div>
+                            <div class="cal__day">13</div><div class="cal__day">14</div><div class="cal__day">15</div><div class="cal__day">16</div><div class="cal__day">17</div><div class="cal__day">18</div><div class="cal__day">19</div>
+                            <div class="cal__day">20</div><div class="cal__day">21</div><div class="cal__day">22</div><div class="cal__day">23</div><div class="cal__day">24</div><div class="cal__day">25</div><div class="cal__day">26</div>
+                            <div class="cal__day">27</div><div class="cal__day">28</div><div class="cal__day">29</div><div class="cal__day">30</div><div class="cal__day cal__day--muted">1</div><div class="cal__day cal__day--muted">2</div><div class="cal__day cal__day--muted">3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Trigger</strong> — date-formatted text; calendar icon prefix; chevron suffix.</div>
+                <div class="ed-anatomy__callout"><strong>Presets</strong> — vertical list at left. Active state when matching range is selected.</div>
+                <div class="ed-anatomy__callout"><strong>Two months</strong> — current and next-month, side by side. Range spans across.</div>
+                <div class="ed-anatomy__callout"><strong>Range fill</strong> — start &amp; end pill, in-range cells use brand-bg with no radius.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Trigger states</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><span class="ed-cell__label">empty</span><div class="ed-cell__demo ed-cell__demo--block"><button class="ed-select__trigger" style="font-family: var(--ed-font-mono); font-size:13px;"><svg class="icn" viewBox="0 0 24 24" style="color: var(--ed-color-text-muted);"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="ed-select__value ed-select__value--placeholder">Select date range…</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">preset selected</span><div class="ed-cell__demo ed-cell__demo--block"><button class="ed-select__trigger" style="font-family: var(--ed-font-mono); font-size:13px;"><svg class="icn" viewBox="0 0 24 24" style="color: var(--ed-color-text-muted);"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="ed-select__value">Last 14 days</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">custom range</span><div class="ed-cell__demo ed-cell__demo--block"><button class="ed-select__trigger" style="font-family: var(--ed-font-mono); font-size:13px;"><svg class="icn" viewBox="0 0 24 24" style="color: var(--ed-color-text-muted);"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="ed-select__value">2026-03-01 → 2026-03-15</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">single date variant</span><div class="ed-cell__demo ed-cell__demo--block"><button class="ed-select__trigger" style="font-family: var(--ed-font-mono); font-size:13px;"><svg class="icn" viewBox="0 0 24 24" style="color: var(--ed-color-text-muted);"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="ed-select__value">2026-04-15</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Date formatting</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>ISO format <code>YYYY-MM-DD</code> in trigger and inputs. Mono font.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Range separator is <code>→</code> (rightwards arrow) with one space each side. Never a hyphen.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>When a preset matches exactly, show preset name in trigger ("Last 14 days") instead of literal dates.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Locale-formatted dates in this product. Audit/regulatory work demands unambiguous ISO.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Presets — recommended set</h2></div>
+        <pre><code>const RANGE_PRESETS = [
+  { label: 'Today',          range: () => [today(), today()] },
+  { label: 'Yesterday',      range: () => [yesterday(), yesterday()] },
+  { label: 'Last 7 days',    range: () => [subDays(today(), 6), today()] },
+  { label: 'Last 14 days',   range: () => [subDays(today(), 13), today()] },
+  { label: 'Last 30 days',   range: () => [subDays(today(), 29), today()] },
+  { label: 'This quarter',   range: () => [startOfQuarter(today()), today()] },
+  { label: 'Last quarter',   range: () => [startOfQuarter(subQuarters(today(), 1)), endOfQuarter(subQuarters(today(), 1))] },
+  { label: 'Year to date',   range: () => [startOfYear(today()), today()] },
+];</code></pre>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Date-range filters in tables, audit period selection, finding age windows, exam date pickers.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Single-date variant for "Due date" or "Effective date" inputs (one calendar, no presets).</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>Presets-only (no calendar) when the choice is always a relative window — use <code>EdSelect</code>.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Time-of-day in this product. We don't model hours/minutes for findings or exams.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Build on react-aria DateRangePicker or Radix Popover + custom calendar grid. <code>role="grid"</code> on calendar.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Arrow keys move focus by day; PageUp/Down by month; Home/End to row edges.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Range announcement: "Selected March 2 to March 15, 2026 — 14 days."</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Presets are buttons in a list; selected preset has <code>aria-pressed="true"</code>.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Selection/EdDateRangePicker
+├─ Default (last 14 days preset)
+├─ CustomRange (mid-range hover)
+├─ EmptyState
+├─ SingleDate variant
+├─ MinMax (constrained by exam window)
+└─ Disabled</code></pre>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,97 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--ed-space-3);
+    font-size: var(--ed-font-size-xs);
+}
+
+.label {
+    color: var(--ed-color-text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.value {
+    font-family: var(--ed-font-mono);
+    color: var(--ed-color-text-primary);
+    flex-shrink: 0;
+}
+
+/* ---- Track ---- */
+.track {
+    position: relative;
+    width: 100%;
+    background: var(--ed-color-surface-3);
+    border-radius: var(--ed-radius-pill);
+    overflow: hidden;
+}
+
+.sizeMd { height: 6px; }
+.sizeLg { height: 10px; }
+
+/* ---- Fill ---- */
+.fill {
+    height: 100%;
+    border-radius: var(--ed-radius-pill);
+    transition: width 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.fillBrand   { background: var(--ed-color-brand); }
+.fillSuccess { background: var(--ed-color-status-success); }
+.fillWarning { background: var(--ed-color-status-warning); }
+.fillDanger  { background: var(--ed-color-status-danger); }
+.fillMuted   { background: var(--ed-color-text-muted); }
+
+/* ---- Indeterminate ---- */
+.indeterminate .fill {
+    position: absolute;
+    inset: 0;
+    width: 40%;
+    transform: translateX(-100%);
+    animation: edMeterSweep 1.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    transition: none;
+}
+
+@keyframes edMeterSweep {
+    0%   { transform: translateX(-100%); }
+    50%  { transform: translateX(100%);  }
+    100% { transform: translateX(250%);  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .indeterminate .fill {
+        animation: none;
+        transform: none;
+        width: 100%;
+        opacity: 0.4;
+    }
+}
+
+/* ---- Segmented ---- */
+.seg {
+    display: flex;
+    gap: 4px;
+}
+
+.segBar {
+    flex: 1;
+    height: 4px;
+    background: var(--ed-color-hairline);
+    border-radius: 2px;
+    transition: background var(--ed-transition-base);
+}
+
+.segBarOn {
+    /* color set by the tone class on the same element */
+}

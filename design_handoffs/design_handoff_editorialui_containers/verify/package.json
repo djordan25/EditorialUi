@@ -1,0 +1,20 @@
+{
+  "name": "editorialui-verify-containers",
+  "private": true,
+  "type": "module",
+  "description": "Visual verification harness for EditorialUI Bundle 6 (Containers). Diffs Storybook stories against the design spec HTML.",
+  "scripts": {
+    "verify": "node visual-verify.mjs",
+    "verify:list": "node visual-verify.mjs --list-spec",
+    "verify:card": "node visual-verify.mjs EdCard",
+    "verify:modal": "node visual-verify.mjs EdModal",
+    "verify:drawer": "node visual-verify.mjs EdDrawer",
+    "verify:disclosure": "node visual-verify.mjs EdDisclosure",
+    "verify:accordion": "node visual-verify.mjs EdAccordion"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0",
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0"
+  }
+}

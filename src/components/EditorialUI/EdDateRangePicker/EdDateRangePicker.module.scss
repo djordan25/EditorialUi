@@ -1,0 +1,217 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.fullWidth { display: flex; width: 100%; }
+
+.label {
+    font-family: var(--ed-font-mono);
+    font-size: var(--ed-font-size-2xs);
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-secondary);
+    line-height: 1;
+}
+
+/* ---- Trigger ---- */
+.trigger {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ed-space-2);
+    height: var(--ed-control-h-md);
+    padding: 0 var(--ed-space-3);
+    background: var(--ed-color-surface-input);
+    border: 1px solid var(--ed-color-hairline-strong);
+    border-radius: var(--ed-radius-sm);
+    color: var(--ed-color-text-primary);
+    font-family: var(--ed-font-mono);
+    font-size: var(--ed-font-size-sm);
+    line-height: normal;
+    cursor: pointer;
+
+    &:hover:not(:disabled) { border-color: var(--ed-color-hairline-bold); }
+    &:focus-visible, &[data-state='open'] {
+        border-color: var(--ed-color-border-focus);
+        box-shadow: 0 0 0 3px var(--ed-color-brand-bg);
+        outline: none;
+    }
+    &:disabled { background: var(--ed-color-surface-2); color: var(--ed-color-text-disabled); cursor: not-allowed; }
+}
+
+.triggerError {
+    border-color: var(--ed-color-status-danger);
+    &:focus-visible, &[data-state='open'] {
+        border-color: var(--ed-color-status-danger);
+        box-shadow: 0 0 0 3px var(--ed-color-status-danger-bg);
+    }
+}
+
+.calIcon { color: var(--ed-color-text-muted); flex-shrink: 0; }
+.value { flex: 1; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.placeholder { color: var(--ed-color-text-faint); }
+.chev { color: var(--ed-color-text-muted); flex-shrink: 0; }
+
+/* ---- Panel ---- */
+.panel {
+    z-index: var(--ed-z-popover);
+    display: flex;
+    background: var(--ed-color-surface-1);
+    border: 1px solid var(--ed-color-hairline-strong);
+    border-radius: var(--ed-radius-md);
+    box-shadow: var(--ed-elevation-3);
+    overflow: hidden;
+    animation: edDrpIn var(--ed-transition-base) ease-out;
+}
+
+.presets {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--ed-space-3) 0;
+    min-width: 150px;
+    border-right: 1px solid var(--ed-color-hairline);
+}
+
+.presetItem {
+    all: unset;
+    padding: 6px var(--ed-space-4);
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-sm);
+    color: var(--ed-color-text-primary);
+    cursor: pointer;
+
+    &:hover { background: var(--ed-color-surface-2); }
+    &:focus-visible { outline: 2px solid var(--ed-color-focus-ring); outline-offset: -2px; }
+}
+
+.presetActive {
+    background: var(--ed-color-brand-bg);
+    color: var(--ed-color-brand);
+    font-weight: var(--ed-font-weight-medium);
+}
+
+.calendars { display: flex; }
+
+.calPanel {
+    padding: var(--ed-space-3);
+    border-right: 1px solid var(--ed-color-hairline);
+
+    &:last-child { border-right: none; }
+}
+
+.calTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--ed-space-1) var(--ed-space-2);
+}
+
+.calNav { display: inline-flex; width: 24px; }
+
+.calMonthLabel {
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-sm);
+    font-weight: var(--ed-font-weight-semibold);
+    color: var(--ed-color-text-primary);
+}
+
+.navBtn {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--ed-radius-sm);
+    color: var(--ed-color-text-secondary);
+    cursor: pointer;
+
+    &:hover { background: var(--ed-color-surface-2); color: var(--ed-color-text-primary); }
+    &:focus-visible { outline: 2px solid var(--ed-color-focus-ring); outline-offset: 1px; }
+}
+
+/* ---- Grid ---- */
+.grid { display: flex; flex-direction: column; }
+
+.weekHeader, .week { display: grid; grid-template-columns: repeat(7, 1fr); }
+
+.weekday {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ed-color-text-muted);
+}
+
+.day {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    font-family: var(--ed-font-mono);
+    font-size: 12px;
+    color: var(--ed-color-text-primary);
+    cursor: pointer;
+    border-radius: var(--ed-radius-sm);
+
+    &:hover:not(:disabled) { background: var(--ed-color-surface-2); }
+    &:focus-visible { outline: 2px solid var(--ed-color-focus-ring); outline-offset: -2px; }
+    &:disabled { color: var(--ed-color-text-disabled); cursor: not-allowed; }
+}
+
+.dayMuted { color: var(--ed-color-text-faint); }
+
+.dayInRange {
+    background: var(--ed-color-brand-bg);
+    border-radius: 0;
+
+    &:hover:not(:disabled) { background: var(--ed-color-brand-bg-strong); }
+}
+
+.dayEndpoint {
+    background: var(--ed-color-brand);
+    color: var(--ed-color-brand-contrast);
+    font-weight: var(--ed-font-weight-semibold);
+
+    &:hover:not(:disabled) { background: var(--ed-color-brand-hover); }
+}
+
+.dayStart { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.dayEnd { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+
+.dayToday:not(.dayEndpoint) {
+    box-shadow: inset 0 0 0 1px var(--ed-color-text-muted);
+}
+
+/* ---- Hint ---- */
+.hint {
+    margin: 0;
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-xs);
+    line-height: var(--ed-line-height-snug);
+    color: var(--ed-color-text-muted);
+}
+
+.hintError { color: var(--ed-color-status-danger); }
+
+@keyframes edDrpIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .panel { animation: none; }
+}

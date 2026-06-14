@@ -1,0 +1,8 @@
+node_modules/
+dist/
+storybook-static/
+verify/__diff__/
+*.log
+.DS_Store
+*.tsbuildinfo
+*.tgz

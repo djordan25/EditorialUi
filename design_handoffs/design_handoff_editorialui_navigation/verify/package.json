@@ -1,0 +1,19 @@
+{
+  "name": "editorialui-verify-navigation",
+  "private": true,
+  "type": "module",
+  "description": "Visual verification harness for EditorialUI Bundle 7 (Navigation). Diffs Storybook stories against the design spec HTML.",
+  "scripts": {
+    "verify": "node visual-verify.mjs",
+    "verify:list": "node visual-verify.mjs --list-spec",
+    "verify:tabs": "node visual-verify.mjs EdTabs",
+    "verify:breadcrumb": "node visual-verify.mjs EdBreadcrumb",
+    "verify:menu": "node visual-verify.mjs EdMenu",
+    "verify:contextmenu": "node visual-verify.mjs EdContextMenu"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0",
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0"
+  }
+}

@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditorialUI · Late composites bundle</title>
+    <link rel="stylesheet" href="../design_system_v2/shared/fonts.css">
+    <link rel="stylesheet" href="../design_system_v2/shared/tokens.css">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            background: var(--ed-color-surface-0);
+            color: var(--ed-color-text-primary);
+            font-family: var(--ed-font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 40px 96px; }
+        .eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 8px;
+        }
+        h1 {
+            font-family: var(--ed-font-sans);
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin: 0 0 8px;
+        }
+        .lede {
+            font-size: 16px;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 32px;
+            max-width: 64ch;
+        }
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 56px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        h2 .h2-eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--ed-color-text-muted);
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+        }
+        .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 8px;
+            border-radius: var(--ed-radius-sm);
+            background: var(--ed-color-brand-bg);
+            color: var(--ed-color-brand);
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .pill--neutral { background: var(--ed-color-status-neutral-bg); color: var(--ed-color-status-neutral); }
+        .pill--success { background: var(--ed-color-status-success-bg); color: var(--ed-color-status-success); }
+
+        .cc-callout {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 26px;
+            margin: 32px 0;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-left: 3px solid var(--ed-color-brand);
+            border-radius: var(--ed-radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: border-color var(--ed-transition-base);
+        }
+        .cc-callout:hover { border-color: var(--ed-color-brand); }
+        .cc-callout__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--ed-radius-md);
+            background: var(--ed-color-brand);
+            color: var(--ed-color-brand-contrast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--ed-font-mono);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .cc-callout__body { display: flex; flex-direction: column; gap: 2px; }
+        .cc-callout__eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+        }
+        .cc-callout__title { font-size: 16px; font-weight: 600; color: var(--ed-color-text-primary); }
+        .cc-callout__sub { font-size: 13px; color: var(--ed-color-text-secondary); margin-top: 2px; }
+        .cc-callout__arrow { font-family: var(--ed-font-mono); font-size: 13px; color: var(--ed-color-brand); letter-spacing: 0.04em; }
+
+        .component {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            align-items: flex-start;
+        }
+        .component:last-child { border-bottom: none; }
+        .component__head { position: sticky; top: 0; padding-top: 4px; }
+        .component__meta {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            margin: 0 0 6px;
+        }
+        .component__title {
+            font-family: var(--ed-font-mono);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ed-color-text-primary);
+            margin: 0 0 12px;
+        }
+        .component__lede { font-size: 13px; color: var(--ed-color-text-secondary); margin: 0 0 12px; line-height: 1.55; }
+        .component__files {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            color: var(--ed-color-text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--ed-color-hairline);
+        }
+        .component__files b { color: var(--ed-color-text-secondary); font-weight: 400; }
+        .component__shots { display: flex; flex-direction: column; gap: 12px; }
+        .shot {
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            overflow: hidden;
+            background: var(--ed-color-surface-1);
+        }
+        .shot img { display: block; width: 100%; height: auto; }
+
+        .tree {
+            font-family: var(--ed-font-mono);
+            font-size: 12.5px;
+            line-height: 1.75;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            padding: 18px 22px;
+            color: var(--ed-color-text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .tree b { color: var(--ed-color-text-primary); font-weight: 500; }
+        .tree em { color: var(--ed-color-text-muted); font-style: normal; }
+
+        .matrix { width: 100%; border-collapse: collapse; margin-top: 8px; }
+        .matrix th, .matrix td {
+            text-align: left;
+            padding: 9px 12px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            font-size: 13px;
+            vertical-align: top;
+        }
+        .matrix th {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            font-weight: 500;
+            background: var(--ed-color-surface-2);
+        }
+        .matrix td:first-child {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            color: var(--ed-color-brand);
+            white-space: nowrap;
+        }
+        .matrix td:nth-child(2) { color: var(--ed-color-text-secondary); }
+
+        .ship-list { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 0; }
+        .ship-list li {
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+        }
+        .ship-list code {
+            font-family: var(--ed-font-mono);
+            font-size: 12px;
+            color: var(--ed-color-text-primary);
+            min-width: 26ch;
+        }
+        .ship-list span { font-size: 13px; color: var(--ed-color-text-secondary); }
+
+        .footnote {
+            margin-top: 48px;
+            padding: 20px 24px;
+            background: var(--ed-color-status-success-bg);
+            border: 1px solid var(--ed-color-status-success);
+            border-radius: var(--ed-radius-md);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .footnote strong { color: var(--ed-color-status-success); font-weight: 600; }
+        .note {
+            margin: 0 0 24px;
+            padding: 14px 18px;
+            background: var(--ed-color-brand-bg);
+            border-radius: var(--ed-radius-sm);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .note strong { color: var(--ed-color-brand); font-weight: 600; }
+        code { font-family: var(--ed-font-mono); font-size: 12.5px; }
+
+        @media (max-width: 760px) {
+            .component { grid-template-columns: 1fr; gap: 16px; }
+            .component__head { position: static; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <p class="eyebrow">EditorialUI · Implementation</p>
+    <h1>Bundle 9 — Late composites</h1>
+    <p class="lede">
+        The final bundle. Higher-order components that stitch together primitives
+        from the earlier bundles: the tag layout container, the multi-tag select,
+        the table filter chip row, and the date-range picker. With this, all 37
+        primitives are implemented.
+    </p>
+
+    <div class="pills">
+        <span class="pill">Bundle 9 · Late composites</span>
+        <span class="pill pill--neutral">4 components · 16 files</span>
+        <span class="pill pill--success">System complete · 37/37</span>
+    </div>
+
+    <a class="cc-callout" href="CLAUDE_CODE_PROMPT.md">
+        <span class="cc-callout__icon">cc</span>
+        <span class="cc-callout__body">
+            <span class="cc-callout__eyebrow">Hand-off prompt</span>
+            <span class="cc-callout__title">CLAUDE_CODE_PROMPT.md</span>
+            <span class="cc-callout__sub">Paste into Claude Code (with this bundle attached) to land it in <code>apostlerisk</code>. Assumes Bundles 1–8 merged; covers the ISO-only date contract, the no-date-library rule, and the post-completion follow-ups now that the surface is frozen.</span>
+        </span>
+        <span class="cc-callout__arrow">open ↗</span>
+    </a>
+
+    <p class="note">
+        <strong>Last mile:</strong> <code>EdFilterChipRow</code> + <code>EdDateRangePicker</code>
+        sit in the toolbar above <code>EdDataTable</code> (B8); <code>EdTagContainer</code>
+        renders <code>EdTag</code> collections in drawers/cards/cells; <code>EdTagSelect</code>
+        is the multi-tag form field. All composed at the call site — no hard deps.
+    </p>
+
+    <h2><span class="h2-eyebrow">01</span> Components</h2>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">E2 · Display</p>
+            <h3 class="component__title">EdTagContainer</h3>
+            <p class="component__lede">Layout primitive for a collection of tags — consistent gap + overflow. Wrap (flowing rows) or single-row (collapses past <code>maxVisible</code> into "+N more", with optional <code>renderOverflow</code> for a tooltip). Owns gap/overflow so consumers don't reinvent it.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdTagContainer.tsx</span>
+                <span><b>scss</b> EdTagContainer.module.scss</span>
+                <span><b>stories</b> EdTagContainer.stories.tsx</span>
+                <span><b>tests</b> EdTagContainer.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdTagContainer.png" alt="EdTagContainer — modes"></div>
+            <div class="shot"><img src="screenshots/02-EdTagContainer.png" alt="EdTagContainer — decision rules"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">E3 · Display · Radix Popover</p>
+            <h3 class="component__title">EdTagSelect</h3>
+            <p class="component__lede">Multi-select input rendering selected values as removable tags, with a combobox dropdown. Picks from a known list; optional <code>allowCreate</code> for free text. Backspace removes last; each remove button labelled. Compact-trigger alternative: EdComboBox multi (B3).</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdTagSelect.tsx</span>
+                <span><b>scss</b> EdTagSelect.module.scss</span>
+                <span><b>stories</b> EdTagSelect.stories.tsx</span>
+                <span><b>tests</b> EdTagSelect.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdTagSelect.png" alt="EdTagSelect — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdTagSelect.png" alt="EdTagSelect — states"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">B5 · Selection</p>
+            <h3 class="component__title">EdFilterChipRow</h3>
+            <p class="component__lede">Horizontal pill toggles for fast filtering above a table. Multi (additive checkboxes) or single (radiogroup). Count badges fold into the accessible name; status dots, group dividers, overflow slot. Selected = bg + border + text (never color alone).</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdFilterChipRow.tsx</span>
+                <span><b>scss</b> EdFilterChipRow.module.scss</span>
+                <span><b>stories</b> EdFilterChipRow.stories.tsx</span>
+                <span><b>tests</b> EdFilterChipRow.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdFilterChipRow.png" alt="EdFilterChipRow — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdFilterChipRow.png" alt="EdFilterChipRow — modes"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">B4 · Selection · Radix Popover</p>
+            <h3 class="component__title">EdDateRangePicker</h3>
+            <p class="component__lede">Two-month calendar with preset shortcuts. ISO-only (<code>YYYY-MM-DD</code>, mono, <code>→</code> separator), no time, no locale. Shows the preset name on exact match. <code>min</code>/<code>max</code> constrain days; <code>defaultPresets()</code> returns the recommended set. Native Date math — no date library.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdDateRangePicker.tsx <em>(+ defaultPresets)</em></span>
+                <span><b>scss</b> EdDateRangePicker.module.scss</span>
+                <span><b>stories</b> EdDateRangePicker.stories.tsx</span>
+                <span><b>tests</b> EdDateRangePicker.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdDateRangePicker.png" alt="EdDateRangePicker — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdDateRangePicker.png" alt="EdDateRangePicker — trigger states and formatting"></div>
+        </div>
+    </div>
+
+    <h2><span class="h2-eyebrow">02</span> Drop locations</h2>
+    <div class="tree">design_handoff_editorialui_composites/
+└── src/
+    └── components/
+        └── EditorialUI/
+            ├── <b>index.ts</b>                  <em>FINAL barrel — all of Bundles 1–9</em>
+            ├── EdTagContainer/
+            ├── EdTagSelect/
+            ├── EdFilterChipRow/
+            └── EdDateRangePicker/        <em>EdDateRangePicker + defaultPresets</em></div>
+
+    <h2><span class="h2-eyebrow">03</span> Dependencies</h2>
+    <ul class="ship-list">
+        <li><code>@radix-ui/react-popover</code><span>EdTagSelect, EdDateRangePicker — already present from Bundle 3.</span></li>
+        <li><em style="color: var(--ed-color-text-muted); font-style: normal;">native Date</em><span>EdDateRangePicker does its own date math — no date-fns / dayjs.</span></li>
+    </ul>
+
+    <h2><span class="h2-eyebrow">04</span> The system — 37 primitives, 9 bundles</h2>
+    <table class="matrix">
+        <thead><tr><th>Bundle</th><th>Group</th><th>Components</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Foundations</td><td>EdIcon · EdButton · EdIconButton</td></tr>
+            <tr><td>2</td><td>Forms</td><td>EdTextField · EdPasswordInput · EdCheckbox · EdRadioGroup · EdSwitch · EdFormControlLabel</td></tr>
+            <tr><td>3</td><td>Selection</td><td>EdSelect · EdComboBox · EdAutocomplete</td></tr>
+            <tr><td>4</td><td>Display</td><td>EdTag · EdStatusBadge · EdChip · EdDivider · EdProgressMeter · EdCircularProgress</td></tr>
+            <tr><td>5</td><td>Feedback</td><td>EdTooltip · EdNotification · EdDialog · EdEmptyState</td></tr>
+            <tr><td>6</td><td>Containers</td><td>EdCard · EdModal · EdDrawer · EdDisclosure · EdAccordion</td></tr>
+            <tr><td>7</td><td>Navigation</td><td>EdTabs · EdBreadcrumb · EdMenu · EdContextMenu</td></tr>
+            <tr><td>8</td><td>Data</td><td>EdNativeTable · EdDataTable · EdList</td></tr>
+            <tr><td>9</td><td>Late composites</td><td>EdTagContainer · EdTagSelect · EdFilterChipRow · EdDateRangePicker</td></tr>
+        </tbody>
+    </table>
+
+    <h2><span class="h2-eyebrow">05</span> Recommended follow-ups (separate PRs)</h2>
+    <ul class="ship-list">
+        <li>Backlink swaps<span>EdComboBox multi tags → EdTag; EdPasswordInput strength → EdProgressSegmented.</span></li>
+        <li>EdIconButton + EdTooltip<span>Wrap label-less icon buttons (promised in Bundle 1).</span></li>
+        <li>EdEmptyState migration<span>Replace ad-hoc "no data" divs in tables/panels.</span></li>
+        <li>Codemod<span>Trivial ProdicusUI → EditorialUI import/prop swaps, now that the API is frozen.</span></li>
+        <li>Visual regression<span>Chromatic / Playwright snapshots over the full Storybook to guard the parallel rollout.</span></li>
+    </ul>
+
+    <div class="footnote">
+        <strong>EditorialUI is complete.</strong> All nine bundles are implemented and ready to drop into
+        <code>Prodicus.Api/ClientApp/src/components/EditorialUI/</code>. Each ships TSX + SCSS modules +
+        Storybook stories + Vitest tests, a README, a Claude Code hand-off prompt, and a screenshot grid.
+        The barrel in this bundle is the complete public surface. Migrate ProdicusUI consumers screen by
+        screen; the two libraries coexist until the last screen flips.
+    </div>
+</div>
+</body>
+</html>

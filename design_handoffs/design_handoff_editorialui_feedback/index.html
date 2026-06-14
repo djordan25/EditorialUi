@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EditorialUI · Feedback bundle</title>
+    <link rel="stylesheet" href="../design_system_v2/shared/fonts.css">
+    <link rel="stylesheet" href="../design_system_v2/shared/tokens.css">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            background: var(--ed-color-surface-0);
+            color: var(--ed-color-text-primary);
+            font-family: var(--ed-font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 40px 96px; }
+        .eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 8px;
+        }
+        h1 {
+            font-family: var(--ed-font-sans);
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin: 0 0 8px;
+        }
+        .lede {
+            font-size: 16px;
+            color: var(--ed-color-text-secondary);
+            margin: 0 0 32px;
+            max-width: 64ch;
+        }
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 56px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        h2 .h2-eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--ed-color-text-muted);
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+        }
+        .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 8px;
+            border-radius: var(--ed-radius-sm);
+            background: var(--ed-color-brand-bg);
+            color: var(--ed-color-brand);
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .pill--neutral { background: var(--ed-color-status-neutral-bg); color: var(--ed-color-status-neutral); }
+
+        .cc-callout {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 26px;
+            margin: 32px 0;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-left: 3px solid var(--ed-color-brand);
+            border-radius: var(--ed-radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: border-color var(--ed-transition-base);
+        }
+        .cc-callout:hover { border-color: var(--ed-color-brand); }
+        .cc-callout__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--ed-radius-md);
+            background: var(--ed-color-brand);
+            color: var(--ed-color-brand-contrast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--ed-font-mono);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .cc-callout__body { display: flex; flex-direction: column; gap: 2px; }
+        .cc-callout__eyebrow {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+        }
+        .cc-callout__title { font-size: 16px; font-weight: 600; color: var(--ed-color-text-primary); }
+        .cc-callout__sub { font-size: 13px; color: var(--ed-color-text-secondary); margin-top: 2px; }
+        .cc-callout__arrow { font-family: var(--ed-font-mono); font-size: 13px; color: var(--ed-color-brand); letter-spacing: 0.04em; }
+
+        .component {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+            align-items: flex-start;
+        }
+        .component:last-child { border-bottom: none; }
+        .component__head { position: sticky; top: 0; padding-top: 4px; }
+        .component__meta {
+            font-family: var(--ed-font-mono);
+            font-size: 10px;
+            letter-spacing: var(--ed-tracking-eyebrow);
+            text-transform: uppercase;
+            color: var(--ed-color-text-muted);
+            margin: 0 0 6px;
+        }
+        .component__title {
+            font-family: var(--ed-font-mono);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ed-color-text-primary);
+            margin: 0 0 12px;
+        }
+        .component__lede { font-size: 13px; color: var(--ed-color-text-secondary); margin: 0 0 12px; line-height: 1.55; }
+        .component__files {
+            font-family: var(--ed-font-mono);
+            font-size: 11px;
+            color: var(--ed-color-text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--ed-color-hairline);
+        }
+        .component__files b { color: var(--ed-color-text-secondary); font-weight: 400; }
+        .component__shots { display: flex; flex-direction: column; gap: 12px; }
+        .shot {
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            overflow: hidden;
+            background: var(--ed-color-surface-1);
+        }
+        .shot img { display: block; width: 100%; height: auto; }
+
+        .tree {
+            font-family: var(--ed-font-mono);
+            font-size: 12.5px;
+            line-height: 1.75;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            padding: 18px 22px;
+            color: var(--ed-color-text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        .tree b { color: var(--ed-color-text-primary); font-weight: 500; }
+        .tree em { color: var(--ed-color-text-muted); font-style: normal; }
+
+        .ship-list { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 0; }
+        .ship-list li {
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--ed-color-hairline);
+        }
+        .ship-list code {
+            font-family: var(--ed-font-mono);
+            font-size: 12px;
+            color: var(--ed-color-text-primary);
+            min-width: 26ch;
+        }
+        .ship-list span { font-size: 13px; color: var(--ed-color-text-secondary); }
+
+        .footnote {
+            margin-top: 48px;
+            padding: 20px 24px;
+            background: var(--ed-color-surface-1);
+            border: 1px solid var(--ed-color-hairline);
+            border-radius: var(--ed-radius-md);
+            font-size: 13px;
+            color: var(--ed-color-text-secondary);
+        }
+        .footnote strong { color: var(--ed-color-text-primary); font-weight: 500; }
+        code { font-family: var(--ed-font-mono); font-size: 12.5px; }
+
+        @media (max-width: 760px) {
+            .component { grid-template-columns: 1fr; gap: 16px; }
+            .component__head { position: static; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <p class="eyebrow">EditorialUI · Implementation</p>
+    <h1>Bundle 5 — Feedback</h1>
+    <p class="lede">
+        The components that talk back to the user: hover labels, persistent
+        banners, modal surfaces, and empty regions. Two build on Radix
+        (Tooltip, Dialog); two are plain React + CSS.
+    </p>
+
+    <div class="pills">
+        <span class="pill">Bundle 5 · Feedback</span>
+        <span class="pill pill--neutral">4 components · 6 exports · 16 files</span>
+        <span class="pill pill--neutral">Radix Tooltip · Radix Dialog</span>
+    </div>
+
+    <a class="cc-callout" href="CLAUDE_CODE_PROMPT.md">
+        <span class="cc-callout__icon">cc</span>
+        <span class="cc-callout__body">
+            <span class="cc-callout__eyebrow">Hand-off prompt</span>
+            <span class="cc-callout__title">CLAUDE_CODE_PROMPT.md</span>
+            <span class="cc-callout__sub">Paste into Claude Code (with this bundle attached) to land it in <code>apostlerisk</code>. Assumes Bundles 1–4 merged; covers the app-root <code>EdTooltipProvider</code> wiring, a jsdom/portal testing note, and the <code>window.confirm → EdConfirmation</code> migration.</span>
+        </span>
+        <span class="cc-callout__arrow">open ↗</span>
+    </a>
+
+    <h2><span class="h2-eyebrow">01</span> Components</h2>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">C5 · Feedback · Radix Tooltip</p>
+            <h3 class="component__title">EdTooltip</h3>
+            <p class="component__lede">Anchored, transient label on hover / focus. Simple (with optional <code>kbd</code> chip) or rich (title + body). Dark-on-light, auto-flips, honors reduced-motion. Wrap the app once in <code>EdTooltipProvider</code> for instant grouped hovers. Read-only hints only.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdTooltip.tsx <em>(+ EdTooltipProvider)</em></span>
+                <span><b>scss</b> EdTooltip.module.scss</span>
+                <span><b>stories</b> EdTooltip.stories.tsx</span>
+                <span><b>tests</b> EdTooltip.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdTooltip.png" alt="EdTooltip — anatomy (simple, rich, kbd)"></div>
+            <div class="shot"><img src="screenshots/02-EdTooltip.png" alt="EdTooltip — use cases and placements"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">C1 · Feedback</p>
+            <h3 class="component__title">EdNotification</h3>
+            <p class="component__lede">Inline banner for persistent page / section state. Four severities (each with a required icon — never color-only), three variants (rail / subtle / compact). ARIA role derived from severity. Actions are ghost/secondary, never primary. Not a toast; not a replacement for content.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdNotification.tsx</span>
+                <span><b>scss</b> EdNotification.module.scss</span>
+                <span><b>stories</b> EdNotification.stories.tsx</span>
+                <span><b>tests</b> EdNotification.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdNotification.png" alt="EdNotification — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdNotification.png" alt="EdNotification — four severities"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">D1 · Containers · Radix Dialog</p>
+            <h3 class="component__title">EdDialog + EdConfirmation</h3>
+            <p class="component__lede">Radix modal surface — overlay, focus trap, header / body / footer. Four sizes, danger styling, <code>preventOutsideClose</code> for unsaved-form guards, scrolling body. <code>EdConfirmation</code> is the preset for the destructive / confirm case — pass <code>renderActions</code> with your EdButtons.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdDialog.tsx <em>(+ EdConfirmation)</em></span>
+                <span><b>scss</b> EdDialog.module.scss</span>
+                <span><b>stories</b> EdDialog.stories.tsx</span>
+                <span><b>tests</b> EdDialog.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdDialog.png" alt="EdDialog — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdDialog.png" alt="EdDialog — sizes"></div>
+        </div>
+    </div>
+
+    <div class="component">
+        <div class="component__head">
+            <p class="component__meta">C2 · Feedback</p>
+            <h3 class="component__title">EdEmptyState</h3>
+            <p class="component__lede">Centered title + body + actions for a region with no data. Tones (neutral / danger / success), restrained single-glyph visual in a dashed ring — no illustrations. <code>compact</code> for small panels, <code>headingLevel</code> matches the document outline. Institutional copy tone.</p>
+            <div class="component__files">
+                <span><b>tsx</b> EdEmptyState.tsx</span>
+                <span><b>scss</b> EdEmptyState.module.scss</span>
+                <span><b>stories</b> EdEmptyState.stories.tsx</span>
+                <span><b>tests</b> EdEmptyState.test.tsx</span>
+            </div>
+        </div>
+        <div class="component__shots">
+            <div class="shot"><img src="screenshots/01-EdEmptyState.png" alt="EdEmptyState — anatomy"></div>
+            <div class="shot"><img src="screenshots/02-EdEmptyState.png" alt="EdEmptyState — variants by reason"></div>
+        </div>
+    </div>
+
+    <h2><span class="h2-eyebrow">02</span> Drop locations</h2>
+    <div class="tree">design_handoff_editorialui_feedback/
+└── src/
+    └── components/
+        └── EditorialUI/
+            ├── <b>index.ts</b>                  <em>UPDATED · barrel adds 6 exports</em>
+            ├── EdTooltip/                <em>EdTooltip + EdTooltipProvider</em>
+            ├── EdNotification/
+            ├── EdDialog/                 <em>EdDialog + EdConfirmation</em>
+            └── EdEmptyState/</div>
+
+    <h2><span class="h2-eyebrow">03</span> New runtime dependencies</h2>
+    <ul class="ship-list">
+        <li><code>@radix-ui/react-tooltip</code><span>EdTooltip</span></li>
+        <li><code>@radix-ui/react-dialog</code><span>EdDialog, EdConfirmation</span></li>
+    </ul>
+    <p style="font-size: 13px; color: var(--ed-color-text-muted); margin-top: 12px;">
+        <code>EdNotification</code> and <code>EdEmptyState</code> are plain React + CSS + lucide icons — no new deps.
+    </p>
+
+    <h2><span class="h2-eyebrow">04</span> App-root wiring</h2>
+    <div class="tree">// once, inside the theme provider:
+import { EdTooltipProvider } from '@/components/EditorialUI';
+
+&lt;<b>EdTooltipProvider</b> delayDuration=&#123;500&#125; skipDelayDuration=&#123;300&#125;&gt;
+  &lt;App /&gt;
+&lt;/EdTooltipProvider&gt;</div>
+
+    <h2><span class="h2-eyebrow">05</span> What this codifies</h2>
+    <ul class="ship-list">
+        <li>Color is never the only signal<span><code>EdNotification</code> requires an icon per severity; empty-state tones carry icon + text. No color-only differentiation.</span></li>
+        <li>ARIA role is derived<span><code>EdNotification</code> picks <code>status</code> vs <code>alert</code> from severity. <code>role="none"</code> opts out for load-present banners.</span></li>
+        <li>Banner ≠ CTA<span>Notification actions are ghost / secondary only. A primary button in a banner is a smell — it's probably an empty state or a dialog.</span></li>
+        <li>Confirm is state-driven<span><code>EdConfirmation</code> replaces <code>window.confirm</code> — non-blocking, wire <code>onConfirm</code> rather than awaiting a boolean.</span></li>
+        <li>Empty state has institutional tone<span>Plain title, cause + unblock body, primary-verb actions. No mascots, no "Oops!", no animated illustrations.</span></li>
+    </ul>
+
+    <div class="footnote">
+        <strong>Next up — Bundle 6 (Containers):</strong>
+        <code>EdCard</code>, <code>EdModal</code>, <code>EdSidePanel</code>,
+        <code>EdDisclosure</code>, <code>EdAccordion</code>. <code>EdModal</code> and
+        <code>EdSidePanel</code> build directly on <code>EdDialog</code> from this
+        bundle — the modal surface, focus trap, and overlay are already solved here.
+    </div>
+</div>
+</body>
+</html>

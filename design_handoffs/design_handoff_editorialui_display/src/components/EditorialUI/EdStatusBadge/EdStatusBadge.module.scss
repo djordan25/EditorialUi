@@ -1,0 +1,64 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: var(--ed-radius-sm);
+    border: 1px solid transparent;
+    font-family: var(--ed-font-mono);
+    font-size: 11px;
+    font-weight: var(--ed-font-weight-medium);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: var(--ed-radius-pill);
+    background: currentColor;
+    flex-shrink: 0;
+}
+
+/* ---- Style: soft (default) ---- */
+.styleSoft.toneNeutral { background: var(--ed-color-status-neutral-bg); color: var(--ed-color-status-neutral); }
+.styleSoft.toneInfo    { background: var(--ed-color-brand-bg);          color: var(--ed-color-status-info); }
+.styleSoft.toneSuccess { background: var(--ed-color-status-success-bg); color: var(--ed-color-status-success); }
+.styleSoft.toneWarning { background: var(--ed-color-status-warning-bg); color: var(--ed-color-status-warning); }
+.styleSoft.toneDanger  { background: var(--ed-color-status-danger-bg);  color: var(--ed-color-status-danger); }
+.styleSoft.toneBrand   { background: var(--ed-color-brand-bg);          color: var(--ed-color-brand); }
+
+/* ---- Style: solid ---- */
+.styleSolid {
+    color: var(--ed-color-brand-contrast);
+}
+.styleSolid.toneNeutral { background: var(--ed-color-text-muted); }
+.styleSolid.toneInfo    { background: var(--ed-color-status-info); }
+.styleSolid.toneSuccess { background: var(--ed-color-status-success); }
+.styleSolid.toneWarning { background: var(--ed-color-status-warning); }
+.styleSolid.toneDanger  { background: var(--ed-color-status-danger); }
+.styleSolid.toneBrand   { background: var(--ed-color-brand); }
+
+/* The dot inside solid badges sits on its own light background for contrast */
+.styleSolid .dot { background: currentColor; opacity: 0.85; }
+
+/* ---- Style: outline ---- */
+.styleOutline { background: transparent; }
+.styleOutline.toneNeutral { color: var(--ed-color-status-neutral); border-color: var(--ed-color-hairline-bold); }
+.styleOutline.toneInfo    { color: var(--ed-color-status-info);    border-color: var(--ed-color-status-info); }
+.styleOutline.toneSuccess { color: var(--ed-color-status-success); border-color: var(--ed-color-status-success); }
+.styleOutline.toneWarning { color: var(--ed-color-status-warning); border-color: var(--ed-color-status-warning); }
+.styleOutline.toneDanger  { color: var(--ed-color-status-danger);  border-color: var(--ed-color-status-danger); }
+.styleOutline.toneBrand   { color: var(--ed-color-brand);          border-color: var(--ed-color-brand); }

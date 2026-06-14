@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdNotification · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:18px; height:18px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .x { width:14px; height:14px; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "C1",
+    "group": "Feedback",
+    "name": "EdNotification",
+    "lede": "Inline banner for page-level or section-level state. Persists until acknowledged or condition resolves. Not for transient confirmations — use a toast (out of scope) for those."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div class="ed-notif ed-notif--warning" style="max-width: 720px;">
+                <svg class="icn ed-notif__icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                <div class="ed-notif__body">
+                    <p class="ed-notif__title">Validation evidence is overdue for 4 findings</p>
+                    <p class="ed-notif__desc">Closure won't finalize until evidence is attached. Reviewers were notified at 09:14 UTC.</p>
+                    <div class="ed-notif__actions">
+                        <button class="ed-btn ed-btn--secondary ed-btn--sm">Review findings</button>
+                        <button class="ed-btn ed-btn--ghost ed-btn--sm">Snooze 24h</button>
+                    </div>
+                </div>
+                <button class="ed-notif__close" aria-label="Dismiss"><svg class="icn x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+            </div>
+            <div style="margin-top:24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Left rail</strong> — 3px solid color stripe is the only color cue. No gradients.</div>
+                <div class="ed-anatomy__callout"><strong>Icon</strong> — required. Matches semantic color, 18px, top-aligned to title.</div>
+                <div class="ed-anatomy__callout"><strong>Title + description</strong> — title sentence-case, no period. Description optional.</div>
+                <div class="ed-anatomy__callout"><strong>Actions</strong> — 0–2 buttons. Use ghost / secondary, never primary (banner ≠ CTA).</div>
+                <div class="ed-anatomy__callout"><strong>Dismiss</strong> — only when banner is informational AND user-dismissable.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Severities</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">info</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-notif ed-notif--info"><svg class="icn ed-notif__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><div class="ed-notif__body"><p class="ed-notif__title">Audit period preview is read-only</p><p class="ed-notif__desc">Findings created here will not appear in production until the period is opened.</p></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">success</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-notif ed-notif--success"><svg class="icn ed-notif__icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><div class="ed-notif__body"><p class="ed-notif__title">Finding F-2438 closed with evidence</p><p class="ed-notif__desc">Marcus Chen approved closure on 2026-04-04. Audit log updated.</p></div><button class="ed-notif__close" aria-label="Dismiss"><svg class="icn x" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">warning</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-notif ed-notif--warning"><svg class="icn ed-notif__icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg><div class="ed-notif__body"><p class="ed-notif__title">Evidence required within 14 days</p><p class="ed-notif__desc">Findings without evidence by April 18 will reopen automatically.</p><div class="ed-notif__actions"><button class="ed-btn ed-btn--secondary ed-btn--sm">Upload evidence</button></div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">danger</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-notif ed-notif--danger"><svg class="icn ed-notif__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><div class="ed-notif__body"><p class="ed-notif__title">Sync with the model registry failed</p><p class="ed-notif__desc">Last successful pull: 2 hours ago. Data shown may be stale.</p><div class="ed-notif__actions"><button class="ed-btn ed-btn--secondary ed-btn--sm">Retry</button><button class="ed-btn ed-btn--ghost ed-btn--sm">View error log</button></div></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Variants</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">title only — compact</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-notif ed-notif--info" style="padding: 8px 12px;"><svg class="icn ed-notif__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><div class="ed-notif__body" style="display:flex; align-items:center; min-height: 18px;"><p class="ed-notif__title" style="margin: 0;">Sync completed at 11:42 UTC</p></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">no left rail (subtle, used inside cards)</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-notif" style="border-left-width: 1px; background: var(--ed-color-surface-2);"><svg class="icn ed-notif__icon" viewBox="0 0 24 24" style="color: var(--ed-color-text-muted);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><div class="ed-notif__body"><p class="ed-notif__title">No prior closures referenced this finding</p><p class="ed-notif__desc">First-time issue type. Reviewer should consider escalation criteria.</p></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">stacked — most recent on top</span><div class="ed-cell__demo ed-cell__demo--block"><div style="display: flex; flex-direction: column; gap: 8px;"><div class="ed-notif ed-notif--danger"><svg class="icn ed-notif__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><div class="ed-notif__body"><p class="ed-notif__title">2 findings missed SLA</p><p class="ed-notif__desc">F-2438, F-2401 — overdue 5 and 3 days.</p></div></div><div class="ed-notif ed-notif--warning"><svg class="icn ed-notif__icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg><div class="ed-notif__body"><p class="ed-notif__title">14 findings approaching SLA in 7 days</p></div></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Twin — light + dark</h2></div>
+        <div class="ed-twin">
+            <div class="ed-twin__pane ed-twin__pane--light" data-theme="light" style="display:flex; flex-direction: column; gap: 8px;">
+                <div class="ed-notif ed-notif--info"><svg class="icn ed-notif__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><div class="ed-notif__body"><p class="ed-notif__title">Audit period preview is read-only</p></div></div>
+                <div class="ed-notif ed-notif--danger"><svg class="icn ed-notif__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><div class="ed-notif__body"><p class="ed-notif__title">Sync with the model registry failed</p></div></div>
+            </div>
+            <div class="ed-twin__pane ed-twin__pane--dark" data-theme="dark" style="display:flex; flex-direction: column; gap: 8px;">
+                <div class="ed-notif ed-notif--info"><svg class="icn ed-notif__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><div class="ed-notif__body"><p class="ed-notif__title">Audit period preview is read-only</p></div></div>
+                <div class="ed-notif ed-notif--danger"><svg class="icn ed-notif__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><div class="ed-notif__body"><p class="ed-notif__title">Sync with the model registry failed</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Page-level state that persists across renders — sync errors, mode banners (read-only, preview), SLA warnings, audit log notes.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>Toast (out of scope here) for transient confirmations like "Saved". Notification is for state, not action receipts.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdEmptyState</code> when the entire region has no data. <code>EdNotification</code> sits above content, not in place of it.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>More than 2 banners stacked. Group into a single banner that links to a list.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Color-only differentiation. Always include the icon.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span><code>role="status"</code> for info/success; <code>role="alert"</code> for warning/danger when the banner appears asynchronously. <code>aria-live="polite"</code> on info/success, <code>"assertive"</code> on danger.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Dismiss button has <code>aria-label="Dismiss notification"</code>. Esc dismisses when banner has focus-within.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Color contrast ≥ 4.5:1 in both themes. Severity icon is required because color isn't a sole cue.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Feedback/EdNotification
+├─ Info, Success, Warning, Danger
+├─ TitleOnly, WithActions, WithDismiss
+├─ Subtle (no rail, inside cards)
+├─ Stacked (multiple)
+└─ AsyncAppears (live region demo)</code></pre>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdFilterChipRow · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .chip-row { display:flex; flex-wrap:wrap; gap: 8px; align-items: center; }
+        .chip-row__divider { width: 1px; height: 20px; background: var(--ed-color-hairline); }
+        .chip-row__more { font-size: 13px; color: var(--ed-color-text-muted); padding-left: 4px; cursor: pointer; }
+        .chip-row__more:hover { color: var(--ed-color-text-primary); }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "B5",
+    "group": "Selection",
+    "name": "EdFilterChipRow",
+    "lede": "Horizontal row of pill toggles for fast filtering. Each chip is a discrete value with optional count. Multi-select by default; single-select for mutually exclusive views (segmented control)."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding:32px;">
+            <div class="chip-row">
+                <span class="ed-chip ed-chip--input ed-chip--selected">All<span class="ed-chip__count">312</span></span>
+                <span class="ed-chip ed-chip--input">Open<span class="ed-chip__count">87</span></span>
+                <span class="ed-chip ed-chip--input">In review<span class="ed-chip__count">14</span></span>
+                <span class="ed-chip ed-chip--input">Closed<span class="ed-chip__count">211</span></span>
+                <div class="chip-row__divider"></div>
+                <span class="ed-chip ed-chip--input">High severity<span class="ed-chip__count">23</span></span>
+                <span class="ed-chip ed-chip--input">Overdue<span class="ed-chip__count">9</span></span>
+                <span class="chip-row__more">+ 2 more</span>
+            </div>
+            <div style="margin-top: 24px; display: flex; gap: 24px; flex-wrap: wrap;">
+                <div class="ed-anatomy__callout"><strong>Chip</strong> — pill, 28px tall. Selected = brand bg + border + text.</div>
+                <div class="ed-anatomy__callout"><strong>Count</strong> — secondary pill at right of label. Mono. Inverts in selected chip.</div>
+                <div class="ed-anatomy__callout"><strong>Divider</strong> — 1px hairline between filter groups. Optional.</div>
+                <div class="ed-anatomy__callout"><strong>Overflow</strong> — "+ N more" opens a popover with remaining filters when row would wrap.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Modes</h2></div>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">multi-select — count badges, additive filters</span><div class="ed-cell__demo ed-cell__demo--block">
+                <div class="chip-row">
+                    <span class="ed-chip ed-chip--input ed-chip--selected">Credit<span class="ed-chip__count">142</span></span>
+                    <span class="ed-chip ed-chip--input">Market<span class="ed-chip__count">87</span></span>
+                    <span class="ed-chip ed-chip--input ed-chip--selected">Operational<span class="ed-chip__count">45</span></span>
+                    <span class="ed-chip ed-chip--input">Liquidity<span class="ed-chip__count">23</span></span>
+                    <span class="ed-chip ed-chip--input">Compliance<span class="ed-chip__count">15</span></span>
+                </div>
+            </div></div>
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">single-select — segmented control, mutually exclusive views</span><div class="ed-cell__demo ed-cell__demo--block">
+                <div class="chip-row">
+                    <span class="ed-chip ed-chip--input">My findings</span>
+                    <span class="ed-chip ed-chip--input ed-chip--selected">My team</span>
+                    <span class="ed-chip ed-chip--input">All</span>
+                </div>
+            </div></div>
+            <div class="ed-cell"><span class="ed-cell__label">no counts</span><div class="ed-cell__demo ed-cell__demo--block"><div class="chip-row"><span class="ed-chip ed-chip--input ed-chip--selected">Active</span><span class="ed-chip ed-chip--input">Archived</span><span class="ed-chip ed-chip--input">Drafts</span></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with status colors (read-only)</span><div class="ed-cell__demo ed-cell__demo--block"><div class="chip-row"><span class="ed-chip ed-chip--input"><span style="width:6px; height:6px; border-radius:50%; background:#22A06B;"></span>On track<span class="ed-chip__count">120</span></span><span class="ed-chip ed-chip--input"><span style="width:6px; height:6px; border-radius:50%; background:#C76C00;"></span>At risk<span class="ed-chip__count">14</span></span><span class="ed-chip ed-chip--input"><span style="width:6px; height:6px; border-radius:50%; background:#C9342B;"></span>Overdue<span class="ed-chip__count">9</span></span></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Overflow behavior</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">narrow viewport — collapse to popover</span><div class="ed-cell__demo ed-cell__demo--block" style="display:flex; gap:32px; align-items:flex-start;">
+                <div style="width: 360px; padding: 12px; border: 1px dashed var(--ed-color-hairline-strong); border-radius: 6px;">
+                    <div class="chip-row">
+                        <span class="ed-chip ed-chip--input ed-chip--selected">All<span class="ed-chip__count">312</span></span>
+                        <span class="ed-chip ed-chip--input">Open<span class="ed-chip__count">87</span></span>
+                        <span class="ed-chip ed-chip--input">Closed<span class="ed-chip__count">211</span></span>
+                        <span class="ed-chip ed-chip--input">+ 4 more</span>
+                    </div>
+                </div>
+                <div class="ed-menu" style="position:static; max-height:none; width: 220px;">
+                    <div class="ed-menu__group-label">More filters</div>
+                    <div class="ed-menu__item">In review <span class="ed-menu__item-meta">14</span></div>
+                    <div class="ed-menu__item">High severity <span class="ed-menu__item-meta">23</span></div>
+                    <div class="ed-menu__item">Overdue <span class="ed-menu__item-meta">9</span></div>
+                    <div class="ed-menu__item">Recently added <span class="ed-menu__item-meta">31</span></div>
+                </div>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Top-of-table fast filters, faceted lists, status filters where users want a one-click toggle.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>3–8 chips visible. Beyond that, collapse extras into "+N more".</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdComboBox</code> (multi mode) when the value space is large or unfamiliar.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdSegmentedControl</code> when there are exactly 2–4 mutually-exclusive view modes (canonical control).</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>More than one ChipRow stacked. Use a divider in a single row, or restructure into a filter drawer.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Counts that change without user-visible feedback (e.g. cross-filter math). If counts will mislead, omit them.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Multi-select: each chip is a <code>&lt;button role="checkbox" aria-checked&gt;</code>. Group has <code>role="group" aria-label="Filters"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Single-select: <code>role="radiogroup"</code>; chips are <code>role="radio" aria-checked</code>. Arrow keys move focus.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Counts read as "Open, 87 items". Use <code>aria-label</code> on chip to combine label + count.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Don't rely on color alone — selected state has both bg AND border change vs default.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Selection/EdFilterChipRow
+├─ Multi (counts)
+├─ Single (segmented)
+├─ NoCounts
+├─ WithStatusDots
+├─ Overflow (+N more)
+└─ KeyboardNavigation</code></pre>
+    </section>
+</main>
+</body>
+</html>

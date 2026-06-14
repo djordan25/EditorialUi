@@ -1,0 +1,70 @@
+@use '../../../theme/tokens-v2';
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-sm);
+    color: var(--ed-color-text-primary);
+}
+
+.cell {
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--ed-color-hairline);
+    line-height: var(--ed-line-height-snug);
+}
+
+.default .cell { height: 40px; padding: var(--ed-space-2) var(--ed-space-3); }
+.compact .cell { height: 32px; padding: var(--ed-space-1) var(--ed-space-3); }
+
+/* First column flush-left, last flush-right */
+.cell:first-child { padding-left: 0; }
+.cell:last-child { padding-right: 0; }
+
+.headCell {
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    font-weight: var(--ed-font-weight-medium);
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-muted);
+    white-space: nowrap;
+}
+
+.cellMono {
+    font-family: var(--ed-font-mono);
+    font-size: var(--ed-font-size-sm);
+}
+
+.alignRight {
+    text-align: right;
+}
+
+/* ---- Key-value ---- */
+.keyValue .cell { border-bottom: 1px solid var(--ed-color-hairline); }
+.keyValue tr:last-child .cell { border-bottom: none; }
+
+.kvLabel {
+    font-weight: var(--ed-font-weight-regular);
+    color: var(--ed-color-text-muted);
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    font-size: 10px;
+    vertical-align: top;
+    padding-top: calc(var(--ed-space-1) + 2px);
+}
+
+/* ---- Zebra ---- */
+.zebra tbody tr:nth-child(odd) {
+    background: var(--ed-color-surface-2);
+}
+
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}

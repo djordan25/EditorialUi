@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdIconButton · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn-x { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "A2",
+    "group": "Inputs",
+    "name": "EdIconButton",
+    "lede": "Icon-only action target. Same height tokens as EdButton so rows of mixed buttons align. Always carries an aria-label — there is no fallback to the icon name."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Variants</h2></div>
+        <p class="ed-section__sub">Three skins for three contexts. Default for toolbar utilities; bordered for table-row inline actions; filled when the icon button is the primary action (rare).</p>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">default</span><div class="ed-cell__demo"><button class="ed-icon-btn" aria-label="Search"><svg class="icn-x" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16" y2="16"/></svg></button><button class="ed-icon-btn" aria-label="Filter"><svg class="icn-x" viewBox="0 0 24 24"><polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/></svg></button><button class="ed-icon-btn" aria-label="More"><svg class="icn-x" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div><span class="ed-cell__note">Toolbar utilities, header.</span></div>
+            <div class="ed-cell"><span class="ed-cell__label">bordered</span><div class="ed-cell__demo"><button class="ed-icon-btn ed-icon-btn--bordered" aria-label="Edit"><svg class="icn-x" viewBox="0 0 24 24"><path d="M11,4H4a2,2 0 00-2,2v14a2,2 0 002,2h14a2,2 0 002-2v-7"/><path d="M18.5,2.5a2.121,2.121 0 013,3L12,15l-4,1 1-4Z"/></svg></button><button class="ed-icon-btn ed-icon-btn--bordered" aria-label="Copy"><svg class="icn-x" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5,15H4a2,2 0 01-2-2V4a2,2 0 012-2h9a2,2 0 012,2v1"/></svg></button></div><span class="ed-cell__note">Table-row inline actions.</span></div>
+            <div class="ed-cell"><span class="ed-cell__label">filled</span><div class="ed-cell__demo"><button class="ed-icon-btn ed-icon-btn--filled" aria-label="Add"><svg class="icn-x" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div><span class="ed-cell__note">Primary FAB-like. Rare.</span></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">States</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">default</span><div class="ed-cell__demo"><button class="ed-icon-btn" aria-label="Refresh"><svg class="icn-x" viewBox="0 0 24 24"><polyline points="23,4 23,10 17,10"/><path d="M20.49,15a9,9 0 11-2.12-9.36L23,10"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">hover</span><div class="ed-cell__demo"><button class="ed-icon-btn" aria-label="Refresh" style="background: var(--ed-color-surface-2); color: var(--ed-color-text-primary);"><svg class="icn-x" viewBox="0 0 24 24"><polyline points="23,4 23,10 17,10"/><path d="M20.49,15a9,9 0 11-2.12-9.36L23,10"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">active</span><div class="ed-cell__demo"><button class="ed-icon-btn" aria-label="Refresh" style="background: var(--ed-color-surface-3);"><svg class="icn-x" viewBox="0 0 24 24"><polyline points="23,4 23,10 17,10"/><path d="M20.49,15a9,9 0 11-2.12-9.36L23,10"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">focus</span><div class="ed-cell__demo"><button class="ed-icon-btn" aria-label="Refresh" style="outline: 2px solid var(--ed-color-focus-ring); outline-offset: 2px;"><svg class="icn-x" viewBox="0 0 24 24"><polyline points="23,4 23,10 17,10"/><path d="M20.49,15a9,9 0 11-2.12-9.36L23,10"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">selected (toggle)</span><div class="ed-cell__demo"><button class="ed-icon-btn" aria-label="Pin" aria-pressed="true" style="background: var(--ed-color-brand-bg); color: var(--ed-color-brand);"><svg class="icn-x" viewBox="0 0 24 24"><path d="M12,17v5"/><path d="M9,10.76A2,2 0 018,9V3h8v6a2,2 0 01-1,1.76l4,3.24v3H5v-3Z"/></svg></button></div><span class="ed-cell__note">aria-pressed=true</span></div>
+            <div class="ed-cell"><span class="ed-cell__label">disabled</span><div class="ed-cell__demo"><button class="ed-icon-btn" aria-label="Refresh" disabled><svg class="icn-x" viewBox="0 0 24 24"><polyline points="23,4 23,10 17,10"/><path d="M20.49,15a9,9 0 11-2.12-9.36L23,10"/></svg></button></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Sizes</h2></div>
+        <div class="ed-grid ed-grid--narrow">
+            <div class="ed-cell"><span class="ed-cell__label">sm — 28px</span><div class="ed-cell__demo"><button class="ed-icon-btn ed-icon-btn--sm" aria-label="Close"><svg class="icn-x" viewBox="0 0 24 24" style="width:12px; height:12px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">md — 36px</span><div class="ed-cell__demo"><button class="ed-icon-btn" aria-label="Close"><svg class="icn-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">lg — 44px</span><div class="ed-cell__demo"><button class="ed-icon-btn ed-icon-btn--lg" aria-label="Close"><svg class="icn-x" viewBox="0 0 24 24" style="width:18px; height:18px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Twin — light + dark</h2></div>
+        <div class="ed-twin">
+            <div class="ed-twin__pane ed-twin__pane--light" data-theme="light" style="display:flex; gap:8px;">
+                <button class="ed-icon-btn" aria-label="Search"><svg class="icn-x" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16" y2="16"/></svg></button>
+                <button class="ed-icon-btn ed-icon-btn--bordered" aria-label="Edit"><svg class="icn-x" viewBox="0 0 24 24"><path d="M11,4H4a2,2 0 00-2,2v14a2,2 0 002,2h14a2,2 0 002-2v-7"/><path d="M18.5,2.5a2.121,2.121 0 013,3L12,15l-4,1 1-4Z"/></svg></button>
+                <button class="ed-icon-btn ed-icon-btn--filled" aria-label="Add"><svg class="icn-x" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            </div>
+            <div class="ed-twin__pane ed-twin__pane--dark" data-theme="dark" style="display:flex; gap:8px;">
+                <button class="ed-icon-btn" aria-label="Search"><svg class="icn-x" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16" y2="16"/></svg></button>
+                <button class="ed-icon-btn ed-icon-btn--bordered" aria-label="Edit"><svg class="icn-x" viewBox="0 0 24 24"><path d="M11,4H4a2,2 0 00-2,2v14a2,2 0 002,2h14a2,2 0 002-2v-7"/><path d="M18.5,2.5a2.121,2.121 0 013,3L12,15l-4,1 1-4Z"/></svg></button>
+                <button class="ed-icon-btn ed-icon-btn--filled" aria-label="Add"><svg class="icn-x" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Toolbar / TopBar utilities (search, filter, refresh, settings, more).</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Inline table-row actions (edit, copy, delete) — bordered variant.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Toggle behavior — set <code>aria-pressed</code> on the button. Selected state uses brand-bg tint.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Icon buttons in dialog footers — use labeled <code>EdButton</code>. Footer space is the most label-needy place in the UI.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Stacking 4+ icon buttons without grouping by type — overflow the rest into an EdMenu.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Every instance must pass <code>aria-label</code>. Component prop type makes this required.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Toggle behavior uses <code>aria-pressed="true|false"</code>, not <code>aria-checked</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Always wrap with <code>EdTooltip</code> when label isn't otherwise visible (which is most of the time).</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Inputs/EdIconButton
+├─ Default
+├─ Bordered
+├─ Filled
+├─ Sizes (sm, md, lg)
+├─ WithTooltip
+├─ Toggle (aria-pressed)
+└─ Disabled</code></pre>
+    </section>
+</main>
+</body>
+</html>

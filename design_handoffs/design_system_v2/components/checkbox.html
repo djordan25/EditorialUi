@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdCheckbox · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "A5",
+    "group": "Inputs",
+    "name": "EdCheckbox",
+    "lede": "Toggleable boolean. Use for multi-select within a group, table-row selection, and consent. Three visual states: unchecked, checked, indeterminate."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">States</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">unchecked</span><div class="ed-cell__demo"><label class="ed-checkbox"><span class="ed-checkbox__box"></span><span>Include superseded</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">hover</span><div class="ed-cell__demo"><label class="ed-checkbox"><span class="ed-checkbox__box" style="border-color: var(--ed-color-brand);"></span><span>Include superseded</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">focus</span><div class="ed-cell__demo"><label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--focus"></span><span>Include superseded</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">checked</span><div class="ed-cell__demo"><label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg class="ed-checkbox__check" viewBox="0 0 12 12"><polyline points="2,6.5 5,9 10,3"/></svg></span><span>Include superseded</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">indeterminate</span><div class="ed-cell__demo"><label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--indeterminate"><span class="ed-checkbox__indeterminate"></span></span><span>Select all (3 of 12)</span></label></div><span class="ed-cell__note">Header row when partial selection.</span></div>
+            <div class="ed-cell"><span class="ed-cell__label">checked + focus</span><div class="ed-cell__demo"><label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked ed-checkbox__box--focus"><svg class="ed-checkbox__check" viewBox="0 0 12 12"><polyline points="2,6.5 5,9 10,3"/></svg></span><span>Include superseded</span></label></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">error</span><div class="ed-cell__demo ed-cell__demo--block"><label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--error"></span><span>I accept the terms</span></label><p class="ed-field__hint ed-field__hint--error" style="margin-top:6px;">Required to continue.</p></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">disabled</span><div class="ed-cell__demo"><label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--disabled"></span><span style="color: var(--ed-color-text-disabled);">Locked by policy</span></label></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">With description</h2></div>
+        <p class="ed-section__sub">Two-line layout for consent and policy choices. Description sits below the label, secondary color, regular weight.</p>
+        <div class="ed-grid ed-grid--wide">
+            <div class="ed-cell"><div class="ed-cell__demo"><label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg class="ed-checkbox__check" viewBox="0 0 12 12"><polyline points="2,6.5 5,9 10,3"/></svg></span><span class="ed-checkbox__label-block"><strong style="font-weight:500;">Notify approvers on lock</strong><span class="ed-checkbox__desc">Sends an email when this graph version is locked for review.</span></span></label></div></div>
+            <div class="ed-cell"><div class="ed-cell__demo"><label class="ed-checkbox"><span class="ed-checkbox__box"></span><span class="ed-checkbox__label-block"><strong style="font-weight:500;">Include test environments</strong><span class="ed-checkbox__desc">Run validation against staging and dev replicas in addition to prod.</span></span></label></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Group — vertical</h2></div>
+        <div class="ed-anatomy" style="padding:32px;">
+            <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
+                <p class="ed-field__label" style="margin-bottom:4px;">Severity (any)</p>
+                <label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg class="ed-checkbox__check" viewBox="0 0 12 12"><polyline points="2,6.5 5,9 10,3"/></svg></span><span>Low</span></label>
+                <label class="ed-checkbox"><span class="ed-checkbox__box"></span><span>Medium</span></label>
+                <label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg class="ed-checkbox__check" viewBox="0 0 12 12"><polyline points="2,6.5 5,9 10,3"/></svg></span><span>High</span></label>
+                <label class="ed-checkbox"><span class="ed-checkbox__box"></span><span>MRA</span></label>
+                <label class="ed-checkbox"><span class="ed-checkbox__box"></span><span>MRIA</span></label>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Twin — light + dark</h2></div>
+        <div class="ed-twin">
+            <div class="ed-twin__pane ed-twin__pane--light" data-theme="light" style="display:flex; flex-direction:column; gap:12px;">
+                <label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg class="ed-checkbox__check" viewBox="0 0 12 12"><polyline points="2,6.5 5,9 10,3"/></svg></span><span>Show only my models</span></label>
+                <label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--indeterminate"><span class="ed-checkbox__indeterminate"></span></span><span>Select all</span></label>
+                <label class="ed-checkbox"><span class="ed-checkbox__box"></span><span>Include superseded versions</span></label>
+            </div>
+            <div class="ed-twin__pane ed-twin__pane--dark" data-theme="dark" style="display:flex; flex-direction:column; gap:12px;">
+                <label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg class="ed-checkbox__check" viewBox="0 0 12 12"><polyline points="2,6.5 5,9 10,3"/></svg></span><span>Show only my models</span></label>
+                <label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--indeterminate"><span class="ed-checkbox__indeterminate"></span></span><span>Select all</span></label>
+                <label class="ed-checkbox"><span class="ed-checkbox__box"></span><span>Include superseded versions</span></label>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Multi-select inside a group ("any of these"). Table-row selection. Consent / policy acknowledgement.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Indeterminate for "select all" header when subset is selected. Click toggles all-on; click again toggles all-off.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>For binary on/off settings — use <code>EdSwitch</code>. Checkbox implies "selected for an action"; switch implies "this is now on".</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>For mutually-exclusive choices — use <code>EdRadioGroup</code>.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Wrap real <code>&lt;input type="checkbox"&gt;</code> visually-hidden under the label. Click target is the entire label.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Indeterminate set via <code>ref.indeterminate = true</code> in JS, plus <code>aria-checked="mixed"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Group with shared label uses <code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code>; legend may be visually hidden.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Inputs/EdCheckbox
+├─ Unchecked, Checked, Indeterminate
+├─ WithDescription
+├─ Error
+├─ Disabled
+└─ Group (vertical, horizontal)</code></pre>
+    </section>
+</main>
+</body>
+</html>

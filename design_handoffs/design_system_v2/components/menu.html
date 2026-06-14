@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdMenu · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+        .stage { background: var(--ed-color-surface-2); border-radius: var(--ed-radius-sm); padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 12px; min-height: 280px; }
+        .kbd { font-family: var(--ed-font-mono); font-size: 10px; color: var(--ed-color-text-faint); margin-left: auto; padding-left: 12px; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "D4",
+    "group": "Containers",
+    "name": "EdMenu",
+    "lede": "Anchored dropdown of command targets — actions, not selections. Triggered by a button. Use EdSelect / EdComboBox when picking a value; use EdMenu when invoking a verb."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 0;">
+            <div class="stage">
+                <button class="ed-btn ed-btn--secondary ed-btn--sm" aria-expanded="true">Actions <svg class="icn" viewBox="0 0 24 24" style="margin-left: 6px;"><polyline points="6,9 12,15 18,9"/></svg></button>
+                <div class="ed-menu" style="width: 240px; max-height: none;">
+                    <div class="ed-menu__item ed-menu__item--active">
+                        <svg class="icn" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                        Close finding
+                        <span class="kbd">⌘↩</span>
+                    </div>
+                    <div class="ed-menu__item">
+                        <svg class="icn" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        Edit
+                        <span class="kbd">⌘E</span>
+                    </div>
+                    <div class="ed-menu__item">
+                        <svg class="icn" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Duplicate
+                    </div>
+                    <div class="ed-menu__item">
+                        <svg class="icn" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        Reassign owner
+                    </div>
+                    <div class="ed-menu__separator"></div>
+                    <div class="ed-menu__group-label">Export</div>
+                    <div class="ed-menu__item">Copy ID <span class="kbd">⌘⇧C</span></div>
+                    <div class="ed-menu__item">Download as PDF</div>
+                    <div class="ed-menu__separator"></div>
+                    <div class="ed-menu__item ed-menu__item--danger">
+                        <svg class="icn" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1.5 14a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2L5 6"/></svg>
+                        Delete finding
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Trigger</strong> — button with <code>aria-expanded</code>. Chevron is conventional.</div>
+                <div class="ed-anatomy__callout"><strong>Item</strong> — icon (optional) + label + shortcut (optional). Click invokes.</div>
+                <div class="ed-anatomy__callout"><strong>Group label</strong> — mono eyebrow. Optional grouping inside the menu.</div>
+                <div class="ed-anatomy__callout"><strong>Separator</strong> — thin hairline. Use to divide unrelated action clusters.</div>
+                <div class="ed-anatomy__callout"><strong>Destructive</strong> — danger tone for verbs like Delete. Always at bottom.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Item types</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">simple — label only</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="width: 200px; max-height: none;"><div class="ed-menu__item">Refresh</div><div class="ed-menu__item">Subscribe</div><div class="ed-menu__item">Unsubscribe</div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with icons</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="width: 220px; max-height: none;"><div class="ed-menu__item"><svg class="icn" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Close</div><div class="ed-menu__item"><svg class="icn" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit</div><div class="ed-menu__item ed-menu__item--danger"><svg class="icn" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1.5 14"/></svg>Delete</div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with shortcuts</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="width: 240px; max-height: none;"><div class="ed-menu__item">Close finding<span class="kbd">⌘↩</span></div><div class="ed-menu__item">Edit<span class="kbd">⌘E</span></div><div class="ed-menu__item">Duplicate<span class="kbd">⌘D</span></div><div class="ed-menu__item">Copy ID<span class="kbd">⌘⇧C</span></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">checkable — toggle state</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="width: 220px; max-height: none;"><div class="ed-menu__item ed-menu__item--selected"><svg class="icn" viewBox="0 0 16 16" style="width: 12px; height: 12px;"><polyline points="3,8.5 6.5,12 13,5" stroke-width="2"/></svg>Show closed findings</div><div class="ed-menu__item ed-menu__item--selected"><svg class="icn" viewBox="0 0 16 16" style="width: 12px; height: 12px;"><polyline points="3,8.5 6.5,12 13,5" stroke-width="2"/></svg>Show superseded</div><div class="ed-menu__item" style="padding-left: 30px;">Show drafts</div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with metadata — counts, status</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="width: 260px; max-height: none;"><div class="ed-menu__item">Risk Operations<span class="ed-menu__item-meta">14 members</span></div><div class="ed-menu__item">Validation<span class="ed-menu__item-meta">8 members</span></div><div class="ed-menu__item">Examiners<span class="ed-menu__item-meta">3 members</span></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">submenu — trailing chevron</span><div class="ed-cell__demo ed-cell__demo--block"><div style="display:flex; gap:4px;"><div class="ed-menu" style="width: 200px; max-height: none;"><div class="ed-menu__item">Open</div><div class="ed-menu__item ed-menu__item--active" style="display:flex;">Move to<span class="kbd" style="margin-left: auto; padding-left: 8px;">›</span></div><div class="ed-menu__item">Duplicate</div></div><div class="ed-menu__item" style="display:none;"></div><div class="ed-menu" style="width: 180px; max-height: none; margin-left: 4px; margin-top: 36px; height: max-content;"><div class="ed-menu__item">2026-Q2 audit</div><div class="ed-menu__item">2026-Q1 audit</div><div class="ed-menu__item">2025-Q4 audit</div></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">disabled item</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-menu" style="width: 200px; max-height: none;"><div class="ed-menu__item">Open finding</div><div class="ed-menu__item ed-menu__item--disabled">Reassign owner</div><div class="ed-menu__item">Duplicate</div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Triggers</h2></div>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">button with chevron — declared menu</span><div class="ed-cell__demo"><button class="ed-btn ed-btn--secondary ed-btn--sm">Actions <svg class="icn" viewBox="0 0 24 24" style="margin-left: 6px;"><polyline points="6,9 12,15 18,9"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">icon-only — overflow menu</span><div class="ed-cell__demo"><button class="ed-icon-btn" aria-label="More actions"><svg class="icn" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">split button — primary + menu</span><div class="ed-cell__demo"><div style="display: inline-flex; height: 28px;"><button class="ed-btn ed-btn--primary ed-btn--sm" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">Save</button><button class="ed-btn ed-btn--primary ed-btn--sm" aria-label="Save options" style="border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 0 6px; border-left: 1px solid rgba(255,255,255,0.2);"><svg class="icn" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">avatar — user menu</span><div class="ed-cell__demo"><button class="ed-icon-btn ed-icon-btn--lg" aria-label="User menu" style="border-radius: 50%; background: var(--ed-color-brand); color: white; font-family: var(--ed-font-mono); font-size: 11px;">MC</button></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Behavior</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Build on Radix DropdownMenu. Auto-flip placement; outside click and Esc dismiss.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Arrow keys navigate. Enter or Space invokes. Type-ahead matches first letter.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Submenus open on hover (200ms) or right-arrow / Enter.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Menu closes on item activation. Toggle items (checkable) keep menu open.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Menus with &gt; 12 items. Group into submenus or restructure as a popover with sections.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Overflow / contextual actions on a row. Page-level action menus. Split button menus.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdContextMenu</code> when triggered by right-click on an entity.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdSelect</code> for picking a value (not invoking an action).</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdPopover</code> when the content isn't a list of commands.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Trigger: <code>aria-haspopup="menu"</code> + <code>aria-expanded</code>. Menu has <code>role="menu"</code>; items <code>role="menuitem"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Checkable items use <code>role="menuitemcheckbox"</code> + <code>aria-checked</code>. Group labels use <code>role="group"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Destructive items get an explicit <code>aria-label</code> that includes the entity ("Delete finding F-2438").</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Containers/EdMenu
+├─ Simple, WithIcons, WithShortcuts
+├─ Checkable
+├─ Groups, Separators
+├─ Submenu
+├─ SplitButton, OverflowIcon, AvatarMenu
+└─ DisabledItem</code></pre>
+    </section>
+</main>
+</body>
+</html>

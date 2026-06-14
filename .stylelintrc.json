@@ -1,0 +1,12 @@
+{
+  "customSyntax": "postcss-scss",
+  "rules": {
+    "color-no-hex": true
+  },
+  "ignoreFiles": [
+    "src/theme/tokens-v2.scss",
+    "dist/**",
+    "storybook-static/**",
+    "design_handoffs/**"
+  ]
+}

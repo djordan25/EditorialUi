@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdForm · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "G3",
+    "group": "Data",
+    "name": "EdForm",
+    "lede": "Layout + state primitive for forms. Composes EdField / EdSelect / EdCheckbox etc. inside groups with shared error / submit / dirty handling. Built on react-hook-form + zod under the hood."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <form class="ed-form" style="max-width: 560px; width: 100%;">
+                <div class="ed-form__group">
+                    <h3 class="ed-form__group-title">Finding details</h3>
+                    <p class="ed-form__group-desc">Filed in the active audit period. Drafts auto-save.</p>
+                    <div class="ed-field"><label class="ed-field__label ed-field__label--required">Title</label><div class="ed-field__control"><input class="ed-field__input" value="Stale model documentation"></div></div>
+                    <div class="ed-form__row">
+                        <div class="ed-field"><label class="ed-field__label ed-field__label--required">Severity</label><button class="ed-select__trigger" type="button"><span class="ed-select__value">Medium</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div>
+                        <div class="ed-field"><label class="ed-field__label">Due date</label><div class="ed-field__control"><input class="ed-field__input ed-field__input--mono" value="2026-04-22"></div></div>
+                    </div>
+                    <div class="ed-field"><label class="ed-field__label">Description</label><div class="ed-field__control" style="height: auto; padding: 8px 12px;"><textarea class="ed-field__input" style="resize: vertical; min-height: 64px;" placeholder="What is the issue, evidence, and recommended action?"></textarea></div><p class="ed-field__hint">Markdown supported. References auto-link.</p></div>
+                </div>
+
+                <div class="ed-form__group">
+                    <h3 class="ed-form__group-title">Assignment</h3>
+                    <div class="ed-field"><label class="ed-field__label ed-field__label--required">Owner</label><button class="ed-select__trigger" type="button"><span class="ed-select__value">Marcus Chen</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button></div>
+                    <label class="ed-checkbox"><span class="ed-checkbox__box ed-checkbox__box--checked"><svg width="10" height="10" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9 10,3"/></svg></span><span>Notify validators on save</span></label>
+                </div>
+
+                <div class="ed-form__actions">
+                    <button class="ed-btn ed-btn--ghost" type="button">Discard draft</button>
+                    <button class="ed-btn ed-btn--secondary" type="button">Save draft</button>
+                    <button class="ed-btn ed-btn--primary" type="submit">Open finding</button>
+                </div>
+            </form>
+            <div style="margin-top: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Group</strong> — titled section. Title + optional description. Multiple groups stacked = long form.</div>
+                <div class="ed-anatomy__callout"><strong>Row</strong> — 2-column for paired inputs (severity + date). Single-column otherwise.</div>
+                <div class="ed-anatomy__callout"><strong>Field</strong> — composed of label + control + hint/error. See <code>EdField</code>.</div>
+                <div class="ed-anatomy__callout"><strong>Actions</strong> — separated by hairline; right-aligned by default.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">States</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">errors — inline + summary at top</span><div class="ed-cell__demo ed-cell__demo--block">
+                <form class="ed-form" style="max-width: 560px;">
+                    <div class="ed-notif ed-notif--danger"><svg class="ed-icon ed-icon--md ed-notif__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><div class="ed-notif__body"><p class="ed-notif__title">2 fields need attention</p><p class="ed-notif__desc">Title is required. Severity must be selected.</p></div></div>
+                    <div class="ed-field"><label class="ed-field__label ed-field__label--required">Title</label><div class="ed-field__control ed-field__control--error"><input class="ed-field__input" value=""></div><p class="ed-field__hint ed-field__hint--error">Title is required.</p></div>
+                    <div class="ed-field"><label class="ed-field__label ed-field__label--required">Severity</label><button class="ed-select__trigger ed-select__trigger--error" type="button"><span class="ed-select__value ed-select__value--placeholder">Select severity…</span><svg class="icn ed-select__chev" viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg></button><p class="ed-field__hint ed-field__hint--error">Required.</p></div>
+                </form>
+            </div></div>
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">submitting — disabled, spinner in primary action</span><div class="ed-cell__demo ed-cell__demo--block">
+                <form class="ed-form" style="max-width: 560px;">
+                    <div class="ed-field"><label class="ed-field__label">Title</label><div class="ed-field__control ed-field__control--disabled"><input class="ed-field__input" value="Stale model documentation" disabled></div></div>
+                    <div class="ed-form__actions">
+                        <button class="ed-btn ed-btn--ghost" disabled>Discard draft</button>
+                        <button class="ed-btn ed-btn--secondary" disabled>Save draft</button>
+                        <button class="ed-btn ed-btn--primary" disabled style="display: inline-flex; gap: 6px; align-items: center;"><span class="ed-spinner ed-spinner--sm" style="border-color: rgba(255,255,255,0.3); border-top-color: white;"></span>Opening…</button>
+                    </div>
+                </form>
+            </div></div>
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">unsaved-changes guard — sticky bar at bottom</span><div class="ed-cell__demo ed-cell__demo--block">
+                <div style="max-width: 560px; border: 1px solid var(--ed-color-hairline); border-radius: var(--ed-radius-md); overflow: hidden;">
+                    <form class="ed-form" style="padding: 16px;">
+                        <div class="ed-field"><label class="ed-field__label">Title</label><div class="ed-field__control"><input class="ed-field__input" value="Stale documentation (edited)"></div></div>
+                    </form>
+                    <div style="background: var(--ed-color-brand-bg); border-top: 1px solid var(--ed-color-brand); padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                        <span style="font-size: 13px; color: var(--ed-color-brand);">Unsaved changes</span>
+                        <div style="display: flex; gap: 8px;"><button class="ed-btn ed-btn--ghost ed-btn--sm">Discard</button><button class="ed-btn ed-btn--primary ed-btn--sm">Save</button></div>
+                    </div>
+                </div>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Patterns</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Layout</span><span>Single-column default. 2-column rows for paired inputs that read as a unit (severity + date, country + region).</span></li>
+            <li><span class="verdict verdict--use">Validation</span><span>Validate on blur after first interaction, then on every keystroke once a field has errored. Show inline error AND aggregate summary when more than one field fails.</span></li>
+            <li><span class="verdict verdict--use">Submit</span><span>Disable primary button only when validation has failed AND the user has tried to submit. Don't gate on initial state.</span></li>
+            <li><span class="verdict verdict--use">Autosave</span><span>For drafts, autosave every 5s on idle. Show "Saved 11:42" inline; reuse <code>aria-live="polite"</code>.</span></li>
+            <li><span class="verdict verdict--use">Guard</span><span>Unsaved changes trigger a sticky bar at the bottom AND a confirmation on route change.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Any form with 2+ fields. Wraps react-hook-form's <code>FormProvider</code> with our layout primitives.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdModal</code> wrapping <code>EdForm</code> for focused, ≤ 8-field forms.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>A full route for forms &gt; 12 fields or multi-step wizards. Forms-in-modals start to feel claustrophobic.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Inline-editable rows in tables for anything beyond a single field. Use a side-panel form.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Wrapping <code>&lt;form&gt;</code>. Submit button is type=submit. Cancel/discard are type=button.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Group titles use heading element appropriate to nesting (<code>h3</code> inside a modal, <code>h2</code> on a page).</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Error summary banner at top is <code>role="alert"</code>. Each inline error has <code>aria-describedby</code> wired from field.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Focus moves to first errored field on submit failure.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Data/EdForm
+├─ SingleColumn, TwoColumn
+├─ MultiGroup
+├─ WithErrors (inline + summary)
+├─ Submitting
+├─ Autosave (drafts)
+└─ UnsavedChangesGuard</code></pre>
+    </section>
+</main>
+</body>
+</html>

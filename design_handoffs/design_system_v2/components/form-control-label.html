@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdFormControlLabel · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "A8",
+    "group": "Inputs",
+    "name": "EdFormControlLabel",
+    "lede": "Composition primitive: label + control + hint + error. EdTextField bundles this internally; for arbitrary controls (custom inputs, third-party components) use EdFormControlLabel as a wrapper to keep form layout consistent."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <p class="ed-section__sub">A small layout primitive — not a control itself. Renders <em>any</em> child as the control slot, with consistent label/hint/error around it.</p>
+        <div class="ed-anatomy">
+            <div class="ed-anatomy__stage" style="width:360px;">
+                <div class="ed-field">
+                    <label class="ed-field__label ed-field__label--required">Owner</label>
+                    <div class="ed-field__control">
+                        <input class="ed-field__input" placeholder="Search users…">
+                    </div>
+                    <p class="ed-field__hint">Tier-1 models require a designated owner.</p>
+                </div>
+                <div class="ed-callout" style="top:-2px; left:-180px;"><span class="ed-callout__num">1</span><div class="ed-callout__line"></div><span>Label</span></div>
+                <div class="ed-callout" style="top:8px; right:-180px;"><span>Required *</span><div class="ed-callout__line"></div><span class="ed-callout__num">2</span></div>
+                <div class="ed-callout" style="top:32px; left:-180px;"><span class="ed-callout__num">3</span><div class="ed-callout__line"></div><span>Control slot</span></div>
+                <div class="ed-callout" style="top:74px; left:-180px;"><span class="ed-callout__num">4</span><div class="ed-callout__line"></div><span>Hint</span></div>
+            </div>
+        </div>
+        <ul class="ed-anatomy-key">
+            <li><b>1</b><span><strong>Label</strong> — eyebrow style, mono 10px uppercase. Sentence case.</span></li>
+            <li><b>2</b><span><strong>Required</strong> — trailing red asterisk. Decorative; aria-required handled on control.</span></li>
+            <li><b>3</b><span><strong>Control</strong> — any focusable child. Wrapper provides 6px gap to label, 6px gap to hint.</span></li>
+            <li><b>4</b><span><strong>Hint / error</strong> — 12px. Mutually exclusive: error replaces hint.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Composing arbitrary controls</h2></div>
+        <p class="ed-section__sub">Wrap any control to inherit the form layout. The control receives a stable ID for label + aria-describedby wiring.</p>
+        <div class="ed-grid">
+            <div class="ed-cell"><span class="ed-cell__label">EdSelect (placeholder)</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Severity</label><div class="ed-field__control"><span style="flex:1; color: var(--ed-color-text-faint);">Select severity…</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color: var(--ed-color-text-muted);"><polyline points="6,9 12,15 18,9"/></svg></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">Switch row</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Notify on completion</label><div style="display:flex; align-items:center; gap:12px;"><label class="ed-switch"><span class="ed-switch__track ed-switch__track--on"><span class="ed-switch__thumb"></span></span></label><span style="font-size: var(--ed-font-size-sm); color: var(--ed-color-text-secondary);">Email + Slack</span></div><p class="ed-field__hint">Goes to your default workspace channel.</p></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">Custom — segmented</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-field"><label class="ed-field__label">Theme</label><div style="display:flex; border:1px solid var(--ed-color-hairline-strong); border-radius: var(--ed-radius-sm); overflow:hidden; height:36px;">
+                <button class="ed-btn ed-btn--ghost" style="height:100%; border-radius:0; border-right:1px solid var(--ed-color-hairline); flex:1; background: var(--ed-color-brand-bg); color: var(--ed-color-brand);">Light</button>
+                <button class="ed-btn ed-btn--ghost" style="height:100%; border-radius:0; flex:1;">Dark</button>
+            </div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Layout</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Stack</span><span>Vertical: label → control → hint. Gaps are 6px (label→control) and 6px (control→hint).</span></li>
+            <li><span class="verdict verdict--use">Inline</span><span>For switches and checkboxes inside settings rows, label is on the left and switch is flush right. The component handles both modes via a <code>layout</code> prop.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span>EdTextField over EdFormControlLabel + raw input — the bundled version is what most forms want.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Component generates a stable <code>id</code> if the control doesn't have one; wires <code>htmlFor</code> on label + <code>aria-describedby</code> on control.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Error text gets <code>role="alert"</code> + <code>aria-live="polite"</code> when error transitions on.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Inputs/EdFormControlLabel
+├─ WithTextField
+├─ WithSelect
+├─ WithSwitch
+├─ WithCustomControl
+├─ Required
+├─ Error
+└─ HintAndError</code></pre>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,123 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+    padding: 0 10px;
+    background: var(--ed-color-surface-2);
+    border: 1px solid var(--ed-color-hairline);
+    border-radius: var(--ed-radius-pill);
+    color: var(--ed-color-text-primary);
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-sm);
+    font-weight: var(--ed-font-weight-medium);
+    line-height: var(--ed-line-height-base);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    transition:
+        background var(--ed-transition-base),
+        border-color var(--ed-transition-base),
+        color var(--ed-transition-base);
+
+    &:hover:not(:disabled) {
+        border-color: var(--ed-color-hairline-bold);
+        background: var(--ed-color-surface-2);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--ed-color-focus-ring);
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: -2px;
+}
+
+.dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: var(--ed-radius-pill);
+    flex-shrink: 0;
+    margin-left: -2px;
+}
+
+.count {
+    display: inline-flex;
+    align-items: center;
+    height: 18px;
+    padding: 0 6px;
+    border-radius: var(--ed-radius-pill);
+    background: var(--ed-color-surface-3);
+    color: var(--ed-color-text-secondary);
+    font-family: var(--ed-font-mono);
+    font-size: 11px;
+    line-height: 1;
+    margin-right: -4px;
+}
+
+/* ---- Selected state (toggle / radio) ---- */
+.selected {
+    background: var(--ed-color-brand-bg);
+    border-color: var(--ed-color-brand);
+    color: var(--ed-color-brand);
+
+    &:hover:not(:disabled) {
+        background: var(--ed-color-brand-bg-strong);
+        border-color: var(--ed-color-brand);
+    }
+
+    .count {
+        background: var(--ed-color-brand);
+        color: var(--ed-color-brand-contrast);
+    }
+}
+
+/* ---- Input variant (removable token) ---- */
+.input {
+    background: var(--ed-color-surface-1);
+    border-style: solid;
+
+    &:hover:not(:disabled) {
+        background: var(--ed-color-brand-bg-strong);
+    }
+}
+
+/* ---- Close button (input only) ---- */
+.close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: var(--ed-radius-pill);
+    cursor: pointer;
+    color: currentColor;
+    opacity: 0.75;
+    transition: background var(--ed-transition-base), opacity var(--ed-transition-base);
+
+    &:hover {
+        background: var(--ed-color-brand);
+        color: var(--ed-color-brand-contrast);
+        opacity: 1;
+    }
+}

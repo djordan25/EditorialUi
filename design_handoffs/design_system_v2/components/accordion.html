@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdAccordion · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "D6",
+    "group": "Containers",
+    "name": "EdAccordion",
+    "lede": "Vertically-stacked collapsible sections. Use to group related but optional detail when the page would otherwise be too long. Keep it bounded — accordions hide content, which hurts scanning."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div class="ed-accordion" style="max-width: 560px; width: 100%;">
+                <div class="ed-accordion__item">
+                    <button class="ed-accordion__trigger" aria-expanded="true">
+                        <svg class="icn ed-accordion__chev" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+                        <span class="ed-accordion__title">Closure evidence</span>
+                        <span class="ed-accordion__meta">3 documents</span>
+                    </button>
+                    <div class="ed-accordion__panel">
+                        Owner attestation, control evidence, and validator approval are required before closure. All three have been attached.
+                    </div>
+                </div>
+                <div class="ed-accordion__item">
+                    <button class="ed-accordion__trigger" aria-expanded="false">
+                        <svg class="icn ed-accordion__chev" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+                        <span class="ed-accordion__title">Audit trail</span>
+                        <span class="ed-accordion__meta">14 entries</span>
+                    </button>
+                </div>
+                <div class="ed-accordion__item">
+                    <button class="ed-accordion__trigger" aria-expanded="false">
+                        <svg class="icn ed-accordion__chev" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+                        <span class="ed-accordion__title">Related findings</span>
+                        <span class="ed-accordion__meta">2 in scope</span>
+                    </button>
+                </div>
+            </div>
+            <div style="margin-top: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Trigger</strong> — chevron + title + optional meta. Whole row is clickable.</div>
+                <div class="ed-anatomy__callout"><strong>Chevron</strong> — rotates 90° on expand. Animated 120ms.</div>
+                <div class="ed-anatomy__callout"><strong>Panel</strong> — indented to align with title. Dashed top hairline separates from trigger.</div>
+                <div class="ed-anatomy__callout"><strong>Meta</strong> — optional count/status. Mono, right-aligned.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Modes</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">single-open — one section at a time</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-accordion"><div class="ed-accordion__item"><button class="ed-accordion__trigger" aria-expanded="false"><svg class="icn ed-accordion__chev" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg><span class="ed-accordion__title">Closure evidence</span></button></div><div class="ed-accordion__item"><button class="ed-accordion__trigger" aria-expanded="true"><svg class="icn ed-accordion__chev" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg><span class="ed-accordion__title">Audit trail</span></button><div class="ed-accordion__panel">14 entries logged. Most recent: 2026-04-04 09:14 — closure attested by Marcus Chen.</div></div><div class="ed-accordion__item"><button class="ed-accordion__trigger" aria-expanded="false"><svg class="icn ed-accordion__chev" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg><span class="ed-accordion__title">Related findings</span></button></div></div></div></div>
+            <div class="ed-cell ed-cell--span-2"><span class="ed-cell__label">multi-open — independent sections</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-accordion"><div class="ed-accordion__item"><button class="ed-accordion__trigger" aria-expanded="true"><svg class="icn ed-accordion__chev" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg><span class="ed-accordion__title">Closure evidence</span><span class="ed-accordion__meta">3 documents</span></button><div class="ed-accordion__panel">Three documents attached.</div></div><div class="ed-accordion__item"><button class="ed-accordion__trigger" aria-expanded="true"><svg class="icn ed-accordion__chev" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg><span class="ed-accordion__title">Audit trail</span><span class="ed-accordion__meta">14 entries</span></button><div class="ed-accordion__panel">14 entries logged.</div></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Optional / secondary content on a detail page. FAQ patterns. Long-form configuration grouped by category.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Single-open by default. Multi-open when sections are unrelated and users may want to compare.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdTabs</code> when sections are siblings (same level, mutually exclusive views).</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Accordions inside dialogs. Modals should show full content.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Hiding critical information. If a user needs it to do their job, don't make them click.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Build on Radix Accordion. Trigger has <code>aria-expanded</code> + <code>aria-controls</code>. Panel has matching <code>id</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Title is the focusable, single-action element. Don't put nested buttons in the trigger row.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Up/Down arrows move between triggers; Home/End jump to first/last; Enter/Space toggles.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Containers/EdAccordion
+├─ SingleOpen, MultiOpen
+├─ WithMeta (counts, status)
+├─ DefaultExpanded
+└─ KeyboardNavigation</code></pre>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "editorialui-verify",
+  "private": true,
+  "type": "module",
+  "description": "Visual verification harness for EditorialUI Bundle 1 (and beyond). Diffs Storybook stories against the design spec HTML.",
+  "scripts": {
+    "verify": "node visual-verify.mjs",
+    "verify:button": "node visual-verify.mjs EdButton",
+    "verify:icon": "node visual-verify.mjs EdIcon",
+    "verify:iconbutton": "node visual-verify.mjs EdIconButton",
+    "verify:list": "node visual-verify.mjs --list-spec"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0",
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0"
+  }
+}

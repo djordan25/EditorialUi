@@ -1,0 +1,127 @@
+@use '../../../theme/tokens-v2';
+
+/* Shared menu chrome — used by EdMenu and EdContextMenu via :global so both
+   components' Radix content panels render identically. */
+
+:global(.edmenu-content),
+.content {
+    z-index: var(--ed-z-dropdown);
+    min-width: 200px;
+    max-height: var(--radix-dropdown-menu-content-available-height, 70vh);
+    padding: var(--ed-space-1);
+    background: var(--ed-color-surface-1);
+    border: 1px solid var(--ed-color-hairline);
+    border-radius: var(--ed-radius-md);
+    box-shadow: var(--ed-elevation-3);
+    overflow-y: auto;
+    animation: edMenuIn var(--ed-transition-base) ease-out;
+}
+
+@keyframes edMenuIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.item {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: var(--ed-space-2);
+    height: 32px;
+    padding: 0 var(--ed-space-2);
+    border-radius: var(--ed-radius-sm);
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-md);
+    color: var(--ed-color-text-primary);
+    cursor: pointer;
+    user-select: none;
+
+    &[data-highlighted] {
+        background: var(--ed-color-row-hover);
+        outline: none;
+    }
+    &[data-disabled] {
+        color: var(--ed-color-text-disabled);
+        cursor: not-allowed;
+    }
+    &[data-state='open'] {
+        background: var(--ed-color-row-hover);
+    }
+}
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--ed-color-text-secondary);
+}
+
+.check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    flex-shrink: 0;
+    color: var(--ed-color-brand);
+}
+
+.label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.meta {
+    flex-shrink: 0;
+    font-family: var(--ed-font-mono);
+    font-size: var(--ed-font-size-xs);
+    color: var(--ed-color-text-muted);
+}
+
+.shortcut {
+    flex-shrink: 0;
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    color: var(--ed-color-text-faint);
+    padding-left: var(--ed-space-3);
+}
+
+.subChevron {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: auto;
+    color: var(--ed-color-text-muted);
+}
+
+.danger {
+    color: var(--ed-color-status-danger);
+
+    .icon { color: var(--ed-color-status-danger); }
+    &[data-highlighted] {
+        background: var(--ed-color-status-danger-bg);
+        color: var(--ed-color-status-danger);
+    }
+}
+
+.groupLabel {
+    padding: var(--ed-space-2) var(--ed-space-2) var(--ed-space-1);
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-muted);
+}
+
+.separator {
+    height: 1px;
+    margin: var(--ed-space-1) var(--ed-space-1);
+    background: var(--ed-color-hairline);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .content { animation: none; }
+}

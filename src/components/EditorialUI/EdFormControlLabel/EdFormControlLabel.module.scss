@@ -1,0 +1,96 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: flex;
+    min-width: 0;
+}
+
+/* ---- Stack: label on top of control on top of hint ---- */
+.layoutStack {
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* ---- Row: label/hint left, control right ---- */
+.layoutRow {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ed-space-6);
+
+    .head {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .control {
+        flex-shrink: 0;
+    }
+}
+
+.head {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.control {
+    display: flex;
+    min-width: 0;
+    /* Match the spec's control-slot line-height (body inherits --ed-line-height-base). */
+    line-height: var(--ed-line-height-base);
+}
+
+/* ---- Label ---- */
+.label {
+    font-family: var(--ed-font-mono);
+    font-size: var(--ed-font-size-2xs);
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-secondary);
+    line-height: 1;
+    user-select: none;
+}
+
+.layoutRow .label {
+    /* In row layout the label reads as a setting name, not an eyebrow. */
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-md);
+    font-weight: var(--ed-font-weight-medium);
+    letter-spacing: var(--ed-tracking-normal);
+    text-transform: none;
+    color: var(--ed-color-text-primary);
+}
+
+.labelRequired::after {
+    content: ' *';
+    color: var(--ed-color-status-danger);
+}
+
+.visuallyHidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ---- Hint / error ---- */
+.hint {
+    margin: 0;
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-xs);
+    line-height: var(--ed-line-height-snug);
+    color: var(--ed-color-text-muted);
+}
+
+.hintError {
+    color: var(--ed-color-status-danger);
+}

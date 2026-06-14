@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EdTabs · EditorialUI</title>
+    <link rel="stylesheet" href="../shared/spec.css">
+    <link rel="stylesheet" href="../shared/components.css">
+    <script src="../shared/spec.js" defer></script>
+    <script src="../shared/spec-template.js" defer></script>
+    <style>
+        .icn { width:14px; height:14px; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+    </style>
+</head>
+<body>
+<script type="application/json" id="ed-spec-data">
+{
+    "id": "F1",
+    "group": "Navigation",
+    "name": "EdTabs",
+    "lede": "Mutually-exclusive sibling views under one heading. Underline by default (page-level), segmented for inline toolbars. Always pair with content — never tabs that just jump-scroll."
+}
+</script>
+<main class="ed-spec">
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Anatomy — underline (default)</h2></div>
+        <div class="ed-anatomy" style="padding: 32px;">
+            <div class="ed-tabs" style="width: 100%; max-width: 560px;">
+                <div class="ed-tabs__list" role="tablist">
+                    <button class="ed-tabs__trigger" role="tab" aria-selected="true">Overview</button>
+                    <button class="ed-tabs__trigger" role="tab" aria-selected="false">Findings<span class="ed-tabs__trigger-count">23</span></button>
+                    <button class="ed-tabs__trigger" role="tab" aria-selected="false">Audit log<span class="ed-tabs__trigger-count">147</span></button>
+                    <button class="ed-tabs__trigger" role="tab" aria-selected="false">Validators</button>
+                    <button class="ed-tabs__trigger" role="tab" aria-selected="false" disabled>Settings</button>
+                </div>
+                <div class="ed-tabs__panel" style="color: var(--ed-color-text-secondary); font-size: 13px;">Panel content for Overview goes here…</div>
+            </div>
+            <div style="margin-top: 24px; display:flex; gap:24px; flex-wrap:wrap;">
+                <div class="ed-anatomy__callout"><strong>Trigger</strong> — 36px tall. Active = 2px brand underline.</div>
+                <div class="ed-anatomy__callout"><strong>Count</strong> — optional mono pill. Inherits brand color when tab is active.</div>
+                <div class="ed-anatomy__callout"><strong>Disabled</strong> — opacity 0.4, no underline on hover.</div>
+                <div class="ed-anatomy__callout"><strong>Overflow</strong> — horizontal scroll. Don't wrap.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Variants</h2></div>
+        <div class="ed-grid ed-grid--wide" style="grid-template-columns: 1fr;">
+            <div class="ed-cell"><span class="ed-cell__label">underline — page-level navigation</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-tabs"><div class="ed-tabs__list"><button class="ed-tabs__trigger" aria-selected="true">All<span class="ed-tabs__trigger-count">312</span></button><button class="ed-tabs__trigger" aria-selected="false">Mine<span class="ed-tabs__trigger-count">14</span></button><button class="ed-tabs__trigger" aria-selected="false">Watched<span class="ed-tabs__trigger-count">8</span></button><button class="ed-tabs__trigger" aria-selected="false">Drafts<span class="ed-tabs__trigger-count">2</span></button></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">segmented — inline view toggle</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-tabs ed-tabs--segmented"><div class="ed-tabs__list"><button class="ed-tabs__trigger" aria-selected="true">Table</button><button class="ed-tabs__trigger" aria-selected="false">Inspector</button><button class="ed-tabs__trigger" aria-selected="false">Graph</button></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with icons</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-tabs"><div class="ed-tabs__list"><button class="ed-tabs__trigger" aria-selected="true"><svg class="icn" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Findings</button><button class="ed-tabs__trigger" aria-selected="false"><svg class="icn" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Audit log</button><button class="ed-tabs__trigger" aria-selected="false"><svg class="icn" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Validators</button></div></div></div></div>
+            <div class="ed-cell"><span class="ed-cell__label">with status dot</span><div class="ed-cell__demo ed-cell__demo--block"><div class="ed-tabs"><div class="ed-tabs__list"><button class="ed-tabs__trigger" aria-selected="true">Open<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--ed-color-status-warning); margin-left: 4px;"></span></button><button class="ed-tabs__trigger" aria-selected="false">Closed</button><button class="ed-tabs__trigger" aria-selected="false">Overdue<span style="width: 6px; height: 6px; border-radius: 50%; background: var(--ed-color-status-danger); margin-left: 4px;"></span></button></div></div></div></div>
+        </div>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Decision rules</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Use</span><span>Sibling views of the same entity (Overview / Findings / Audit log). Page-level navigation within a route.</span></li>
+            <li><span class="verdict verdict--use">Use</span><span>Segmented for inline view toggles (table/inspector/graph). 2–4 short labels only.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdFilterChipRow</code> for filters above a single dataset. Tabs imply different content; filters narrow the same content.</span></li>
+            <li><span class="verdict verdict--prefer">Prefer</span><span><code>EdAccordion</code> when sections are independently expandable rather than mutually exclusive.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>More than 7 tabs. Restructure as a sidebar nav or grouped tabs.</span></li>
+            <li><span class="verdict verdict--avoid">Avoid</span><span>Tabs that jump-scroll within one panel. That's a table of contents.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">A11y</h2></div>
+        <ul class="ed-rules">
+            <li><span class="verdict verdict--use">Required</span><span>Build on Radix Tabs. <code>role="tablist"</code> + <code>role="tab"</code> + <code>role="tabpanel"</code> wired automatically.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Left/Right arrows move focus between tabs. Home/End jump to first/last. Activation: manual (Enter) by default for async panels.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>Count badge included in accessible name: <code>aria-label="Findings, 23"</code>.</span></li>
+            <li><span class="verdict verdict--use">Required</span><span>URL state: active tab encoded in <code>?tab=findings</code> for shareability.</span></li>
+        </ul>
+    </section>
+
+    <section class="ed-section">
+        <div class="ed-section__head"><h2 class="ed-section__title">Storybook stories</h2></div>
+        <pre><code>EditorialUI/Navigation/EdTabs
+├─ Underline (default), Segmented
+├─ WithCounts, WithIcons, WithStatusDot
+├─ Disabled (single tab)
+├─ Overflow (8+ tabs, horizontal scroll)
+└─ AsyncPanels (Manual activation)</code></pre>
+    </section>
+</main>
+</body>
+</html>
