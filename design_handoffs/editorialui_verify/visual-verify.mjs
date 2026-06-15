@@ -113,43 +113,30 @@ function pairLabel(exportName, labels) {
 // Storybook's static build loads stories as ES modules + fetches index.json — both
 // flaky/blocked over file://. Serve it over http so loading is deterministic.
 let STORY_ORIGIN = null;
-
 const storyUrl = (id, theme) => {
-    const base = STORY_ORIGIN
-        ? `${STORY_ORIGIN}/iframe.html`
-        : pathToFileURL(join(STORYBOOK_DIR, 'iframe.html')).href;
+    const base = STORY_ORIGIN ? `${STORY_ORIGIN}/iframe.html` : pathToFileURL(join(STORYBOOK_DIR, 'iframe.html')).href;
     return `${base}?id=${id}&viewMode=story${theme === 'dark' ? '&globals=theme:dark' : ''}`;
 };
 const specFileUrl = (page) => pathToFileURL(join(SPEC_DIR, `${page}.html`)).href;
 
 const MIME = {
-    '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript',
-    '.json': 'application/json', '.css': 'text/css', '.png': 'image/png',
-    '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.gif': 'image/gif',
-    '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.woff': 'font/woff',
-    '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.map': 'application/json', '.txt': 'text/plain',
+    '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json',
+    '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.gif': 'image/gif',
+    '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.woff': 'font/woff', '.woff2': 'font/woff2', '.ttf': 'font/ttf',
+    '.map': 'application/json', '.txt': 'text/plain',
 };
 function startStaticServer(rootDir) {
     const root = resolve(rootDir);
-    return new Promise((resolveServer) => {
-        const server = createServer((req, res) => {
-            let urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
-            if (urlPath.endsWith('/')) urlPath += 'index.html';
-            const filePath = resolve(join(root, urlPath));
-            if (!filePath.startsWith(root)) { res.writeHead(403); res.end('forbidden'); return; }
-            try {
-                const data = readFileSync(filePath);
-                res.writeHead(200, {
-                    'content-type': MIME[extname(filePath).toLowerCase()] || 'application/octet-stream',
-                    'access-control-allow-origin': '*',
-                });
-                res.end(data);
-            } catch { res.writeHead(404); res.end('not found'); }
+    return new Promise((res) => {
+        const server = createServer((req, rs) => {
+            let u = decodeURIComponent((req.url || '/').split('?')[0]);
+            if (u.endsWith('/')) u += 'index.html';
+            const fp = resolve(join(root, u));
+            if (!fp.startsWith(root)) { rs.writeHead(403); rs.end(); return; }
+            try { rs.writeHead(200, { 'content-type': MIME[extname(fp).toLowerCase()] || 'application/octet-stream', 'access-control-allow-origin': '*' }); rs.end(readFileSync(fp)); }
+            catch { rs.writeHead(404); rs.end('not found'); }
         });
-        server.listen(0, '127.0.0.1', () => {
-            const { port } = server.address();
-            resolveServer({ origin: `http://127.0.0.1:${port}`, close: () => new Promise((r) => server.close(r)) });
-        });
+        server.listen(0, '127.0.0.1', () => res({ origin: `http://127.0.0.1:${server.address().port}`, close: () => new Promise((r) => server.close(r)) }));
     });
 }
 
@@ -187,9 +174,20 @@ async function readAnchorStyle(page, rootSel, anchorSel) {
     return page.evaluate(({ rootSel, anchorSel, props }) => {
         const root = document.querySelector(rootSel);
         if (!root) return { __err: `root not found: ${rootSel}` };
-        const el = anchorSel === ':scope > *'
+        let el = anchorSel === ':scope > *'
             ? root.firstElementChild
+            : anchorSel === ':self'
+            ? root
             : root.querySelector(anchorSel);
+        // Portal fallback: dialogs / menus / tooltips / drawers render into a
+        // portal OUTSIDE #storybook-root. If the anchor isn't under root, look it
+        // up document-wide (excluding Storybook's own chrome). Inline-open stories
+        // are still preferred so Tier-2 captures the panel — see portal-open-stories.
+        if (!el && anchorSel !== ':scope > *') {
+            const all = [...document.querySelectorAll(anchorSel)]
+                .filter((n) => !n.closest('.sb-show-main ~ *, #storybook-docs, .sidebar-container'));
+            el = all[0] || null;
+        }
         if (!el) return { __err: `anchor not found: ${anchorSel}` };
         const cs = getComputedStyle(el);
         const out = {};
@@ -211,9 +209,9 @@ function diffStyles(storyStyle, specStyle, opts = {}) {
     // those and rely on the fixed design tokens below (padding, border, radius,
     // colors, font, shadow) — which are what the spec actually pins. For fixed-
     // size controls (buttons, inputs, switches) geometry stays a hard check.
-    // WIDTH is content/layout-driven almost everywhere (a button sized by its label,
-    // a field by its container) — never a hard check. HEIGHT is the control-height
-    // contract for fixed-size controls; CONTENT_DRIVEN containers skip it too.
+    // WIDTH is content/layout-driven almost everywhere (a button sized by its label) —
+    // never a hard check; horizontal padding is compared directly below. HEIGHT is the
+    // control-height contract for fixed-size controls; CONTENT_DRIVEN containers skip it.
     if (!opts.contentDriven) {
         if (Math.abs(storyStyle.__h - specStyle.__h) > DIM_TOLERANCE_PX)
             diffs.push({ prop: 'height', story: storyStyle.__h + 'px', spec: specStyle.__h + 'px' });
@@ -350,7 +348,6 @@ async function main() {
         return;
     }
 
-    // Serve the static Storybook over http so story loading + index.json fetch are reliable.
     const sb = await startStaticServer(STORYBOOK_DIR);
     STORY_ORIGIN = sb.origin;
 

@@ -1,8 +1,3 @@
-// EditorialUI · standalone visual-verification — consolidated component map.
-// Reconciled anchors/labels + Storybook ids. CONTENT_DRIVEN preserved. Portal /
-// example-trigger components (EdDialog/EdModal/EdContextMenu/EdDrawer/EdTooltip/EdMenu)
-// and composite EdIcon are unmapped — they need inline-open stories to verify.
-
 export const DEFAULT_ANCHOR = {"story":":scope > *","spec":":scope > *"};
 
 export const STYLE_CONTRACT = [
@@ -366,6 +361,76 @@ export const CASES = {
                 "spec": ".ed-field__control"
             },
             "theme": "dark"
+        }
+    ],
+    "EdDialog": [
+        {
+            "id": "editorialui-containers-eddialog--verify-open",
+            "spec": {
+                "page": "dialog",
+                "label": "md — 520 — default"
+            },
+            "anchor": {
+                "story": "[role=\"dialog\"]",
+                "spec": ".ed-dialog"
+            },
+            "contentDriven": true
+        }
+    ],
+    "EdModal": [
+        {
+            "id": "editorialui-containers-edmodal--verify-open",
+            "spec": {
+                "page": "modal",
+                "label": "form — single-column, labels above inputs"
+            },
+            "anchor": {
+                "story": "[role=\"dialog\"]",
+                "spec": ".ed-dialog"
+            },
+            "contentDriven": true
+        }
+    ],
+    "EdDrawer": [
+        {
+            "id": "editorialui-containers-eddrawer--verify-open",
+            "spec": {
+                "page": "side-panel",
+                "label": "modal — focused edit, blocks page"
+            },
+            "anchor": {
+                "story": "[role=\"dialog\"]",
+                "spec": ".ed-drawer"
+            },
+            "contentDriven": true
+        }
+    ],
+    "EdTooltip": [
+        {
+            "id": "editorialui-feedback-edtooltip--verify-open",
+            "spec": {
+                "page": "tooltip",
+                "label": "show keyboard shortcut"
+            },
+            "anchor": {
+                "story": "[role=\"tooltip\"]",
+                "spec": ".ed-tooltip"
+            },
+            "contentDriven": true
+        }
+    ],
+    "EdMenu": [
+        {
+            "id": "editorialui-navigation-edmenu--verify-open",
+            "spec": {
+                "page": "menu",
+                "label": "with icons"
+            },
+            "anchor": {
+                "story": "[role=\"menu\"]",
+                "spec": ".ed-menu"
+            },
+            "contentDriven": true
         }
     ],
     "EdPasswordInput": [

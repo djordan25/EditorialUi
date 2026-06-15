@@ -10,9 +10,9 @@
     max-height: var(--radix-dropdown-menu-content-available-height, 70vh);
     padding: var(--ed-space-1);
     background: var(--ed-color-surface-1);
-    border: 1px solid var(--ed-color-hairline);
+    border: 1px solid var(--ed-color-hairline-strong); // spec .ed-menu
     border-radius: var(--ed-radius-md);
-    box-shadow: var(--ed-elevation-3);
+    box-shadow: var(--ed-elevation-2); // spec .ed-menu uses elevation-2
     overflow-y: auto;
     animation: edMenuIn var(--ed-transition-base) ease-out;
 }

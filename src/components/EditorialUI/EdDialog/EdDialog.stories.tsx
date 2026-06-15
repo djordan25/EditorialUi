@@ -189,3 +189,14 @@ export const Confirmation: Story = {
         );
     },
 };
+
+export const VerifyOpen: Story = {
+    render: () => (
+        <div style={{ minHeight: 280, minWidth: 380 }}>
+            <EdDialog open onOpenChange={() => {}} size="md" title="Reopen finding" subtitle="F-2438 · CLOSED 2026-03-22"
+                footer={<><Btn variant="ghost">Cancel</Btn><Btn>Reopen</Btn></>}>
+                This will reopen the finding and re-attach it to the active validation queue.
+            </EdDialog>
+        </div>
+    ),
+};

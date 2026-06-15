@@ -18,7 +18,9 @@
     width: 380px;
     max-width: 100vw;
     background: var(--ed-color-surface-1);
-    box-shadow: var(--ed-elevation-4);
+    // Spec .ed-drawer uses a directional edge shadow (no token matches this exact
+    // literal — the spec's components.css hardcodes it too).
+    box-shadow: -8px 0 24px -8px rgba(15, 17, 21, 0.12);
     outline: none;
 }
 

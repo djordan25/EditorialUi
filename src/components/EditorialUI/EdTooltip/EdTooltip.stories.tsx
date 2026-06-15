@@ -117,3 +117,11 @@ export const Disabled: Story = {
         </EdTooltip>
     ),
 };
+
+export const VerifyOpen: Story = {
+    render: () => (
+        <EdTooltip open onOpenChange={() => {}} label="Save draft" kbd="⌘S">
+            <button>Save draft</button>
+        </EdTooltip>
+    ),
+};

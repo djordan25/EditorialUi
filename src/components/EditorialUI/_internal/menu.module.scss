@@ -13,9 +13,9 @@
     min-width: var(--radix-popover-trigger-width, 240px);
     max-height: 320px;
     background: var(--ed-color-surface-1);
-    border: 1px solid var(--ed-color-hairline);
+    border: 1px solid var(--ed-color-hairline-strong); // spec .ed-menu
     border-radius: var(--ed-radius-md);
-    box-shadow: var(--ed-elevation-3);
+    box-shadow: var(--ed-elevation-2); // spec .ed-menu uses elevation-2
     overflow: hidden;
     display: flex;
     flex-direction: column;

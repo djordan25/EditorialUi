@@ -118,8 +118,13 @@ entries: pin the spec `label`s and the `anchor` selectors.
   *repeating styled unit* (a list row, a table cell, the padded card container)
   rather than the whole block. Add a component to the set, or set
   `contentDriven: true` on a single case.
-- Portal components (popovers, dialogs, menus, drawers) render their open state
-  outside `#storybook-root`. Add an inline-open story, or map the panel with a
-  spec `selector` + matching `anchor`; otherwise only the closed trigger is checked.
+- Portal components (popovers, dialogs, menus, drawers, tooltips) render their
+  open state into a portal outside `#storybook-root`. The six core ones
+  (EdDialog, EdModal, EdDrawer, EdTooltip, EdMenu, EdContextMenu) are hand-wired
+  in `component-map.mjs` to verify their **open panel**: add the dedicated
+  inline-open story per `portal-open-stories.example.tsx` (export `VerifyOpen`),
+  and the map anchors the story side on the ARIA role and the spec side on the
+  panel class. The harness also falls back to a document-wide anchor lookup, and
+  supports `anchor.spec: ':self'` to measure the matched element itself.
 - Tier 2 is advisory by design — raw pixel-% over two independent text renderers is
   noisy. Trust Tier 1 for tokens/geometry; use Tier 2's PNGs for human shape review.

@@ -139,3 +139,18 @@ export const DisabledItem: Story = {
         ],
     },
 };
+
+export const VerifyOpen: Story = {
+    args: {
+        open: true,
+        onOpenChange: () => {},
+        trigger: <Btn>Actions <ChevronDown size={14} strokeWidth={1.8} /></Btn>,
+        items: [
+            { kind: 'item', id: 'close', label: 'Close finding', icon: <CheckCheck size={14} />, shortcut: '⌘↩' },
+            { kind: 'item', id: 'edit', label: 'Edit', icon: <Pencil size={14} />, shortcut: '⌘E' },
+            { kind: 'item', id: 'dup', label: 'Duplicate', icon: <Copy size={14} /> },
+            { kind: 'separator', id: 's1' },
+            { kind: 'item', id: 'del', label: 'Delete finding', icon: <Trash2 size={14} />, danger: true, ariaLabel: 'Delete finding F-2438' },
+        ],
+    },
+};

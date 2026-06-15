@@ -163,3 +163,14 @@ export const LeftSide: Story = {
         );
     },
 };
+
+export const VerifyOpen: Story = {
+    render: () => (
+        <div style={{ minHeight: 280, minWidth: 380 }}>
+            <EdDrawer open onOpenChange={() => {}} modal size="md" crumb="FINDING · F-2438"
+                title="Stale model documentation" footer={<Btn>Save</Btn>}>
+                <EdDrawerSection label="Status">Open · awaiting validation</EdDrawerSection>
+            </EdDrawer>
+        </div>
+    ),
+};

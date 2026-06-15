@@ -175,3 +175,14 @@ export const DangerVariant: Story = {
         );
     },
 };
+
+export const VerifyOpen: Story = {
+    render: () => (
+        <div style={{ minHeight: 280, minWidth: 380 }}>
+            <EdModal open onOpenChange={() => {}} size="md" title="New finding" subtitle="PD-Wholesale-2026"
+                footer={<><Btn variant="ghost">Cancel</Btn><Btn>Create</Btn></>}>
+                Capture the issue, its owner, and a severity so the validation queue can route it.
+            </EdModal>
+        </div>
+    ),
+};

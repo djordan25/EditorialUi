@@ -22,7 +22,7 @@
     background: var(--ed-color-surface-1);
     border: 1px solid var(--ed-color-hairline);
     border-radius: var(--ed-radius-md);
-    box-shadow: var(--ed-elevation-4);
+    box-shadow: var(--ed-elevation-3); // spec .ed-dialog uses elevation-3, not -4
     animation: edDialogIn var(--ed-transition-spring);
     outline: none;
 }
