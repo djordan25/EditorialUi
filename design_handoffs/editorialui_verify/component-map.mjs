@@ -1,7 +1,7 @@
 // EditorialUI · standalone visual-verification — consolidated component map.
-// Bundle 1 + EdTextField hand-wired; bundles 2-9 reconciled (content-matched
-// labels + contract-element anchors). CONTENT_DRIVEN preserved from the harness
-// update. Portal-only EdDialog/EdModal/EdContextMenu + composite EdIcon are unmapped.
+// Reconciled anchors/labels + Storybook ids. CONTENT_DRIVEN preserved. Portal /
+// example-trigger components (EdDialog/EdModal/EdContextMenu/EdDrawer/EdTooltip/EdMenu)
+// and composite EdIcon are unmapped — they need inline-open stories to verify.
 
 export const DEFAULT_ANCHOR = {"story":":scope > *","spec":":scope > *"};
 
@@ -1224,42 +1224,6 @@ export const CASES = {
             }
         }
     ],
-    "EdTooltip": [
-        {
-            "id": "editorialui-feedback-edtooltip--with-kbd",
-            "spec": {
-                "page": "tooltip",
-                "label": "show keyboard shortcut"
-            },
-            "anchor": {
-                "story": "button",
-                "spec": ".ed-btn"
-            }
-        },
-        {
-            "id": "editorialui-feedback-edtooltip--truncated-text",
-            "spec": {
-                "page": "tooltip",
-                "label": "explain truncated text"
-            },
-            "anchor": {
-                "story": "button",
-                "spec": ".ed-btn"
-            }
-        },
-        {
-            "id": "editorialui-feedback-edtooltip--with-kbd",
-            "spec": {
-                "page": "tooltip",
-                "label": "show keyboard shortcut"
-            },
-            "anchor": {
-                "story": "button",
-                "spec": ".ed-btn"
-            },
-            "theme": "dark"
-        }
-    ],
     "EdNotification": [
         {
             "id": "editorialui-feedback-ednotification--info",
@@ -1489,42 +1453,6 @@ export const CASES = {
             }
         }
     ],
-    "EdDrawer": [
-        {
-            "id": "editorialui-containers-eddrawer--non-modal-inspect",
-            "spec": {
-                "page": "side-panel",
-                "label": "non-modal (default) — page stays interactive"
-            },
-            "anchor": {
-                "story": "div[role=dialog]",
-                "spec": ".ed-drawer"
-            }
-        },
-        {
-            "id": "editorialui-containers-eddrawer--modal-edit",
-            "spec": {
-                "page": "side-panel",
-                "label": "modal — focused edit, blocks page"
-            },
-            "anchor": {
-                "story": "div[role=dialog]",
-                "spec": ".ed-drawer"
-            }
-        },
-        {
-            "id": "editorialui-containers-eddrawer--non-modal-inspect",
-            "spec": {
-                "page": "side-panel",
-                "label": "non-modal (default) — page stays interactive"
-            },
-            "anchor": {
-                "story": "div[role=dialog]",
-                "spec": ".ed-drawer"
-            },
-            "theme": "dark"
-        }
-    ],
     "EdDisclosure": [
         {
             "id": "editorialui-containers-eddisclosure--advanced-options",
@@ -1699,42 +1627,6 @@ export const CASES = {
             "anchor": {
                 "story": "a",
                 "spec": ".ed-breadcrumb__item"
-            }
-        }
-    ],
-    "EdMenu": [
-        {
-            "id": "editorialui-navigation-edmenu--full",
-            "spec": {
-                "page": "menu",
-                "label": "button with chevron — declared menu"
-            },
-            "anchor": {
-                "story": "button",
-                "spec": ".ed-btn"
-            }
-        },
-        {
-            "id": "editorialui-navigation-edmenu--full",
-            "spec": {
-                "page": "menu",
-                "label": "button with chevron — declared menu"
-            },
-            "anchor": {
-                "story": "button",
-                "spec": ".ed-btn"
-            },
-            "theme": "dark"
-        },
-        {
-            "id": "editorialui-navigation-edmenu--overflow-icon",
-            "spec": {
-                "page": "menu",
-                "label": "icon-only — overflow menu"
-            },
-            "anchor": {
-                "story": "button[aria-label]",
-                "spec": ".ed-icon-btn"
             }
         }
     ],

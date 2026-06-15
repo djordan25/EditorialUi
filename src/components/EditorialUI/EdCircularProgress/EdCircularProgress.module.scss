@@ -5,7 +5,6 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    line-height: 0;
 }
 
 .srOnly {
@@ -37,11 +36,13 @@
 /* The track ring inside the indeterminate spinner is a plain hairline per spec
    (.ed-spinner: border: 2px solid var(--ed-color-hairline)); only the leading
    arc (border-top) carries the tone color. */
-.spinner.toneBrand    { border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-brand); }
-.spinner.toneSuccess  { border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-success); }
-.spinner.toneWarning  { border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-warning); }
-.spinner.toneDanger   { border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-danger); }
-.spinner.toneInverse  { border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-brand-contrast); }
+// color stays text (spec .ed-spinner has no color of its own); the tone shows only
+// on the leading arc via border-top-color.
+.spinner.toneBrand    { color: var(--ed-color-text-primary); border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-brand); }
+.spinner.toneSuccess  { color: var(--ed-color-text-primary); border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-success); }
+.spinner.toneWarning  { color: var(--ed-color-text-primary); border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-warning); }
+.spinner.toneDanger   { color: var(--ed-color-text-primary); border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-danger); }
+.spinner.toneInverse  { color: var(--ed-color-text-primary); border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-brand-contrast); }
 
 @keyframes edSpin {
     to { transform: rotate(360deg); }
