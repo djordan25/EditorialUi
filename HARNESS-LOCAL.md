@@ -25,6 +25,11 @@ not change what the gate measures.
    and height still carries the control-height contract. (Drop the `width` push in
    `diffStyles`; `CONTENT_DRIVEN` containers already skip height too.)
 
+   Height-only is the default because width is content-driven almost everywhere. The
+   one exception is fixed-width controls (the switch track), which opt back in via
+   checkWidth:true on their map case. This deliberately narrows what the gate checks —
+   it is not pure infra.
+
 4. **Derive story ids the way Storybook does — Start-Case the export first.**
    Storybook turns export `WithDot` into id `…--with-dot`; the stock
    `sanitize(export)` yields `…--withdot`, which 404s every multi-word story. Ids are

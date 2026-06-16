@@ -213,6 +213,8 @@ function diffStyles(storyStyle, specStyle, opts = {}) {
     // never a hard check; horizontal padding is compared directly below. HEIGHT is the
     // control-height contract for fixed-size controls; CONTENT_DRIVEN containers skip it.
     if (!opts.contentDriven) {
+        if (opts.checkWidth && Math.abs(storyStyle.__w - specStyle.__w) > DIM_TOLERANCE_PX)
+            diffs.push({ prop: 'width', story: storyStyle.__w + 'px', spec: specStyle.__w + 'px' });
         if (Math.abs(storyStyle.__h - specStyle.__h) > DIM_TOLERANCE_PX)
             diffs.push({ prop: 'height', story: storyStyle.__h + 'px', spec: specStyle.__h + 'px' });
     }
@@ -374,7 +376,7 @@ async function main() {
                 const contentDriven = c.contentDriven ?? CONTENT_DRIVEN.has(comp);
                 const storyStyle = await readAnchorStyle(story.p, story.rootSel, anchor.story);
                 const specStyle = await readAnchorStyle(spec.p, spec.demoSel, anchor.spec);
-                const styleDiffs = diffStyles(storyStyle, specStyle, { contentDriven });
+                const styleDiffs = diffStyles(storyStyle, specStyle, { contentDriven, checkWidth: c.checkWidth });
 
                 // Tier 2 — pixel (advisory)
                 const storyShot = readPng(await story.p.locator(story.rootSel).first().screenshot());

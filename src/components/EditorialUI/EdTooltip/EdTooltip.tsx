@@ -90,6 +90,7 @@ export const EdTooltip = forwardRef<HTMLButtonElement, EdTooltipProps>(function 
             <RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>
             <RadixTooltip.Portal>
                 <RadixTooltip.Content
+                    data-ed-tooltip-content
                     side={side}
                     sideOffset={sideOffset}
                     collisionPadding={8}
