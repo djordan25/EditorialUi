@@ -95,6 +95,7 @@ export const CellEdit: Story = {
         return (
             <EdAutocomplete
                 label="Risk category"
+                size="sm"
                 options={[
                     { value: 'credit', label: 'Credit Risk' },
                     { value: 'market', label: 'Market Risk' },

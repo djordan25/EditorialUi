@@ -36,13 +36,17 @@
 /* The track ring inside the indeterminate spinner is a plain hairline per spec
    (.ed-spinner: border: 2px solid var(--ed-color-hairline)); only the leading
    arc (border-top) carries the tone color. */
-// color stays text (spec .ed-spinner has no color of its own); the tone shows only
-// on the leading arc via border-top-color.
-.spinner.toneBrand    { color: var(--ed-color-text-primary); border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-brand); }
-.spinner.toneSuccess  { color: var(--ed-color-text-primary); border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-success); }
-.spinner.toneWarning  { color: var(--ed-color-text-primary); border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-warning); }
-.spinner.toneDanger   { color: var(--ed-color-text-primary); border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-danger); }
-.spinner.toneInverse  { color: var(--ed-color-text-primary); border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-brand-contrast); }
+// The spinner inherits its container's text color, so its computed `color` matches
+// the spec (which sets none) in every context — page default, a muted table row, or
+// a dark button. The tone shows only on the leading arc via explicit border-top-color.
+.spinner.toneBrand    { color: inherit; border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-brand); }
+.spinner.toneSuccess  { color: inherit; border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-success); }
+.spinner.toneWarning  { color: inherit; border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-warning); }
+.spinner.toneDanger   { color: inherit; border-color: var(--ed-color-hairline); border-top-color: var(--ed-color-status-danger); }
+// Inverse — on dark/colored surfaces (e.g. inside a primary button): a translucent
+// currentColor track + a solid currentColor leading arc, so the whole ring takes the
+// surface's text color (white on a brand button) with no per-surface override.
+.spinner.toneInverse  { color: inherit; border-color: color-mix(in srgb, currentColor 30%, transparent); border-top-color: currentColor; }
 
 @keyframes edSpin {
     to { transform: rotate(360deg); }

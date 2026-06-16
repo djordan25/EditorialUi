@@ -77,6 +77,8 @@ export interface EdAutocompleteProps
     error?: ReactNode;
     required?: boolean;
     fullWidth?: boolean;
+    /** Control size. `sm` is a compact ~30px shell with 13px text for inline cell editing. */
+    size?: 'sm' | 'md';
     /** className on the outer wrapper. */
     wrapperClassName?: string;
 }
@@ -122,6 +124,7 @@ export const EdAutocomplete = forwardRef<HTMLInputElement, EdAutocompleteProps>(
             required,
             disabled,
             fullWidth = false,
+            size = 'md',
             wrapperClassName,
             id,
             className,
@@ -357,6 +360,7 @@ export const EdAutocomplete = forwardRef<HTMLInputElement, EdAutocompleteProps>(
                         <div
                             className={[
                                 styles.control,
+                                size === 'sm' && styles.controlSm,
                                 error && styles.controlError,
                                 disabled && styles.controlDisabled,
                             ]
@@ -383,7 +387,7 @@ export const EdAutocomplete = forwardRef<HTMLInputElement, EdAutocompleteProps>(
                                 onFocus={handleFocus}
                                 onBlur={onBlur}
                                 onKeyDown={handleKeyDown}
-                                className={[styles.input, className].filter(Boolean).join(' ')}
+                                className={[styles.input, size === 'sm' && styles.inputSm, className].filter(Boolean).join(' ')}
                                 autoComplete="off"
                             />
                         </div>

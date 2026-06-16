@@ -712,7 +712,7 @@ export const CASES = {
                 "label": "EdSelect (placeholder)"
             },
             "anchor": {
-                "story": "select",
+                "story": "button",
                 "spec": ".ed-field__control"
             }
         },
@@ -723,7 +723,7 @@ export const CASES = {
                 "label": "EdSelect (placeholder)"
             },
             "anchor": {
-                "story": "select",
+                "story": "button",
                 "spec": ".ed-field__control"
             },
             "theme": "dark"
@@ -1097,7 +1097,7 @@ export const CASES = {
                 "label": "vertical — inline separator"
             },
             "anchor": {
-                "story": "div:has(> span) > div:empty",
+                "story": "[aria-orientation=\"vertical\"]",
                 "spec": ".ed-divider--v"
             }
         },
@@ -1685,7 +1685,7 @@ export const CASES = {
                 "label": "single back link (compact)"
             },
             "anchor": {
-                "story": "a",
+                "story": "[aria-current=\"page\"]",
                 "spec": ".ed-breadcrumb__item"
             }
         },

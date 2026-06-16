@@ -192,8 +192,14 @@ async function readAnchorStyle(page, rootSel, anchorSel) {
         const cs = getComputedStyle(el);
         const out = {};
         for (const prop of props) out[prop] = cs.getPropertyValue(prop).trim();
+        // Geometry from offsetWidth/offsetHeight (the untransformed layout box,
+        // already integer) — NOT getBoundingClientRect, whose width/height report
+        // the CSS-transformed box and so inflate a rotating element (e.g. a spinner
+        // mid-animation) to its diagonal. Fall back to the rect for non-HTML (SVG)
+        // anchors, which have no offset* properties.
         const r = el.getBoundingClientRect();
-        out.__w = Math.round(r.width); out.__h = Math.round(r.height);
+        out.__w = el.offsetWidth ?? Math.round(r.width);
+        out.__h = el.offsetHeight ?? Math.round(r.height);
         return out;
     }, { rootSel, anchorSel, props: STYLE_CONTRACT });
 }
@@ -236,7 +242,23 @@ const geometryDup = (p) => p === 'height' || p === 'min-height';
 // Normalize whitespace + 'px' rounding so 6px vs 6.0001px don't trip.
 function normalize(v) {
     if (v == null) return '';
-    return v.replace(/(\d+\.\d+)px/g, (_, n) => Math.round(parseFloat(n)) + 'px').replace(/\s+/g, ' ').trim();
+    return v
+        // color-mix() / relative-color results serialize as `color(srgb r g b / a)`
+        // with 0..1 channels; the spec writes the same colors as rgb()/rgba().
+        // Canonicalize srgb color() → rgb/rgba so equal colors compare equal
+        // regardless of the form the engine emitted (nothing else uses color(srgb …)).
+        .replace(/color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)(?:\s*\/\s*([\d.]+))?\)/g, (_, r, g, b, a) => {
+            const c = (x) => Math.round(parseFloat(x) * 255);
+            // Canonicalize alpha numerically too (not verbatim): Chromium serializes the
+            // srgb color() form at higher precision than the equivalent rgba(), so a raw
+            // pass-through would false-fail an identical translucent colour (0.490196 vs 0.49).
+            const al = a == null ? 1 : Math.round(parseFloat(a) * 1000) / 1000;
+            return al < 1
+                ? `rgba(${c(r)}, ${c(g)}, ${c(b)}, ${al})`
+                : `rgb(${c(r)}, ${c(g)}, ${c(b)})`;
+        })
+        .replace(/(\d+\.\d+)px/g, (_, n) => Math.round(parseFloat(n)) + 'px')
+        .replace(/\s+/g, ' ').trim();
 }
 
 /* ---------------------------------------------------------------- capture */

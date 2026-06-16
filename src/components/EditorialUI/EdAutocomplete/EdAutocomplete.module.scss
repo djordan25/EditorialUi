@@ -65,6 +65,21 @@
     background: var(--ed-color-surface-2);
 }
 
+/* Compact size for inline cell editing. The shell is content-box, so the 28px
+   control token + 1px borders measures ~30px, matching the spec cell. The shell's
+   font-size sets the field's 13px type scale (and, via .control's line-height:1, its
+   line box); the visible text is sized to match by .input.inputSm below. */
+.controlSm {
+    height: var(--ed-control-h-sm);
+    font-size: var(--ed-font-size-sm);
+}
+
+/* Compound selector so it beats the base .input font-size — equal single-class
+   specificity would otherwise lose on source order, leaving the text at 14px. */
+.input.inputSm {
+    font-size: var(--ed-font-size-sm);
+}
+
 .input {
     flex: 1;
     min-width: 0;

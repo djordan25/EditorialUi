@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { EdFormControlLabel } from './EdFormControlLabel';
 import { EdTextField } from '../EdTextField';
 import { EdSwitch } from '../EdSwitch';
+import { EdSelect } from '../EdSelect';
 
 const meta: Meta<typeof EdFormControlLabel> = {
     title: 'EditorialUI/Inputs/EdFormControlLabel',
@@ -48,30 +49,24 @@ export const WithTextField: Story = {
     ),
 };
 
-/** Stand-in for EdSelect (Bundle 3). Demonstrates wrapping a non-text-field control. */
+/** Wrapping a real EdSelect — the label comes from EdFormControlLabel, so EdSelect's
+ *  own label is visually hidden (kept for accessibility). */
 export const WithSelect: Story = {
     render: () => (
         <EdFormControlLabel label="Severity">
-            <select
-                style={{
-                    height: 'var(--ed-control-h-md)',
-                    padding: '0 var(--ed-space-3)',
-                    border: '1px solid var(--ed-color-hairline-strong)',
-                    borderRadius: 'var(--ed-radius-sm)',
-                    background: 'var(--ed-color-surface-input)',
-                    fontFamily: 'var(--ed-font-sans)',
-                    fontSize: 'var(--ed-font-size-md)',
-                    color: 'var(--ed-color-text-primary)',
-                }}
-                defaultValue=""
-            >
-                <option value="" disabled>Select severity…</option>
-                <option>Low</option>
-                <option>Medium</option>
-                <option>High</option>
-                <option>MRA</option>
-                <option>MRIA</option>
-            </select>
+            <EdSelect
+                label="Severity"
+                visuallyHidden
+                fullWidth
+                placeholder="Select severity…"
+                options={[
+                    { value: 'low', label: 'Low' },
+                    { value: 'medium', label: 'Medium' },
+                    { value: 'high', label: 'High' },
+                    { value: 'mra', label: 'MRA' },
+                    { value: 'mria', label: 'MRIA' },
+                ]}
+            />
         </EdFormControlLabel>
     ),
 };
