@@ -50,9 +50,11 @@
    close animates) but is `inert` when collapsed, keeping it out of tab + a11y order. */
 .panel {
     display: grid;
-    /* minmax(0, …) forces the collapsed track to 0 — a bare 0fr keeps the inner's
-       min-content (its padding ≈12px), leaving a sliver of content visible when closed. */
+    /* minmax(0, …) collapses the grid TRACK to 0; overflow:hidden then clips the inner,
+       which can't shrink below its own padding (~12px) and would otherwise spill a sliver
+       of content out of the 0-height track when closed. Both are needed. */
     grid-template-rows: minmax(0, 0fr);
+    overflow: hidden;
     transition: grid-template-rows var(--ed-transition-slow);
 }
 
