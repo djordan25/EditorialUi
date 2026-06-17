@@ -28,6 +28,20 @@ describe('EdBreadcrumb', () => {
         expect(current).toHaveAttribute('aria-current', 'page');
     });
 
+    it('renders a lone crumb carrying an href as a link, not a current-page span', () => {
+        render(<EdBreadcrumb crumbs={[{ label: 'Back to Findings', href: '#findings' }]} />);
+        const link = screen.getByRole('link', { name: 'Back to Findings' });
+        expect(link).toHaveAttribute('href', '#findings');
+        expect(link).not.toHaveAttribute('aria-current');
+    });
+
+    it('fires onClick for a lone back-link crumb', async () => {
+        const onClick = vi.fn();
+        render(<EdBreadcrumb crumbs={[{ label: 'Back', onClick }]} />);
+        await userEvent.click(screen.getByText('Back'));
+        expect(onClick).toHaveBeenCalledOnce();
+    });
+
     it('uses an ordered list', () => {
         const { container } = render(<EdBreadcrumb crumbs={crumbs} />);
         expect(container.querySelector('ol')).toBeInTheDocument();

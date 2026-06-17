@@ -109,7 +109,7 @@ export const EdBreadcrumb = forwardRef<HTMLElement, EdBreadcrumbProps>(function 
                                         <MoreHorizontal size={14} strokeWidth={1.8} aria-hidden />
                                     </button>
                                 ) : (
-                                    renderCrumb(entry, isLast)
+                                    renderCrumb(entry, isLast && !entry.href && !entry.onClick)
                                 )}
                             </li>
                             {!isLast && <li className={styles.liSep}>{sep}</li>}
