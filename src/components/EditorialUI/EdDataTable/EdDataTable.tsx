@@ -220,13 +220,15 @@ export function EdDataTableInner<Row>(
             ref={ref}
             className={[styles.wrap, className].filter(Boolean).join(' ')}
         >
-            {showToolbar && (
-                <div className={styles.toolbar}>
-                    <span className={styles.toolbarCount} role="status" aria-live="polite">
-                        {sel.length} of {total} selected
-                    </span>
-                    {bulkActions && <div className={styles.bulkActions}>{bulkActions(sel)}</div>}
-                    {toolbarEnd && <><div className={styles.spacer} />{toolbarEnd}</>}
+            {selectable && (
+                <div className={styles.toolbarWrap} data-state={showToolbar ? 'visible' : 'hidden'}>
+                    <div className={styles.toolbar} inert={!showToolbar}>
+                        <span className={styles.toolbarCount} role="status" aria-live="polite">
+                            {sel.length} of {total} selected
+                        </span>
+                        {bulkActions && <div className={styles.bulkActions}>{bulkActions(sel)}</div>}
+                        {toolbarEnd && <><div className={styles.spacer} />{toolbarEnd}</>}
+                    </div>
                 </div>
             )}
 
