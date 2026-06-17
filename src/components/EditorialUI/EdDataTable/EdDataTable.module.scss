@@ -17,9 +17,11 @@
    exit animation but is `inert` while hidden, keeping it out of tab + a11y order. */
 .toolbarWrap {
     display: grid;
-    /* minmax(0, …) forces the collapsed track to 0 — a bare 0fr keeps the item's
-       min-content (≈17px), leaving an invisible band above the table. */
+    /* minmax(0, …) collapses the grid TRACK to 0; overflow:hidden clips the inner, which
+       can't shrink below its own padding and would otherwise spill out of the 0-height
+       track (opacity:0 already hides it here, but clip it too for correctness). */
     grid-template-rows: minmax(0, 0fr);
+    overflow: hidden;
     opacity: 0;
     transition:
         grid-template-rows var(--ed-transition-base),
