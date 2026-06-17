@@ -86,6 +86,7 @@ export const EdTagSelect = forwardRef<HTMLInputElement, EdTagSelectProps>(functi
     const [query, setQuery] = useState('');
     const [highlight, setHighlight] = useState(0);
     const inputRef = useRef<HTMLInputElement | null>(null);
+    const fieldRef = useRef<HTMLDivElement | null>(null);
 
     const setValues = (next: string[]) => {
         if (values === undefined) setInternal(next);
@@ -163,6 +164,7 @@ export const EdTagSelect = forwardRef<HTMLInputElement, EdTagSelectProps>(functi
             <Popover.Root open={open && !disabled} onOpenChange={setOpen}>
                 <Popover.Anchor asChild>
                     <div
+                        ref={fieldRef}
                         className={[
                             styles.field,
                             error && styles.fieldError,
@@ -226,6 +228,14 @@ export const EdTagSelect = forwardRef<HTMLInputElement, EdTagSelectProps>(functi
                         sideOffset={4}
                         className={styles.menu}
                         onOpenAutoFocus={(e) => e.preventDefault()}
+                        onInteractOutside={(e) => {
+                            // The field is the popover's ANCHOR, not a trigger, so a
+                            // pointer-down or focus on it reads as "outside" and would
+                            // dismiss the just-opened popover (the flash). Keep it open
+                            // while the interaction is within the field.
+                            const t = e.detail.originalEvent.target as Node | null;
+                            if (t && fieldRef.current?.contains(t)) e.preventDefault();
+                        }}
                     >
                         {filtered.length === 0 && !showCreate ? (
                             <div className={styles.empty}>
