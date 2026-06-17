@@ -1685,7 +1685,7 @@ export const CASES = {
                 "label": "single back link (compact)"
             },
             "anchor": {
-                "story": "[aria-current=\"page\"]",
+                "story": "a",
                 "spec": ".ed-breadcrumb__item"
             }
         },

@@ -61,13 +61,15 @@ the portal `VerifyOpen` stories — lives in `component-map.mjs` and the compone
 
 ## Known exemptions (Tier-1)
 
-Five cases stay `✗` on a Tier-1 CSS property. They split into two honest groups: **spec-cell
+Four cases stay `✗` on a Tier-1 CSS property. They split into two honest groups: **spec-cell
 artifacts** (no fix exists without editing the spec) and **tracked component gaps** (a real
 divergence that has a fix, deliberately *not* applied here, recorded so it is not mistaken for
 "already correct"). None is fixed by distorting a passing component or loosening the gate. The
-other 164/169 are real, passing design contracts. An adversarial review (5 reviewers + verify)
-re-classified three of these from the earlier, too-generous "pattern divergence / sub-threshold"
-wording — the corrected reading is below.
+other 165/169 are real, passing design contracts. An adversarial review (5 reviewers + verify)
+re-classified these from earlier, too-generous "pattern divergence / sub-threshold" wording, and
+flagged a fifth — the EdBreadcrumb back-link — as a genuine a11y defect rather than a pattern
+divergence; that one was **fixed upstream** (a lone crumb with an `href` now renders a real `<a>`
+link), so it passes and is no longer exempt.
 
 **Spec-cell artifacts — no clean fix:**
 
@@ -79,6 +81,5 @@ wording — the corrected reading is below.
 
 | Case | Residual prop(s) | Real cause + the available fix |
 |---|---|---|
-| `EdBreadcrumb — back-link variant` | `color 0.2` vs `0.48`; `font-weight 500` vs `400` | **Component gap (a11y).** The spec's "single back link" cell is a clickable `<a class="ed-breadcrumb__item">` (text-muted / weight 400). EdBreadcrumb renders the last/lone crumb as the current page (`aria-current`, text-primary / weight 500) and **drops its `href`**, so a single back-link is unclickable and cannot be represented. The residual is the current-span-vs-link delta; the anchor now measures the real rendered element. **Fix (tracked, separate):** render a lone crumb that carries an `href`/`onClick` as a link, then the story matches the spec `<a>` and the anchor reverts to `a`. |
 | `EdDivider — vertical` | `height 14` vs `20`; `color`/`border-color 0.34` vs `0.2` | The `color`/`border-color` half **is** non-visual: inherited `currentColor` on a 1px element with no border/text; the painted hairline (`background`) matches exactly. The `height` half is a **component height-model divergence**: `.vertical` hard-codes `height: 1em`, which defeats `align-self: stretch`; the spec's `.ed-divider--v` uses `height: auto; min-height: 1em` and stretches to the row (~20px). The story's inline `height: 14` papers over it. **Fix:** `.vertical { height: auto; min-height: 1em }` + drop the story's inline height; the color half stays a genuine non-visual exemption. |
 | `EdDivider — labeled` | `height 11` vs `15` | **Not** sub-threshold — the 4px delta exceeds `DIM_TOLERANCE_PX` (2), so it is a real Tier-1 height fail (the 5.2% figure is the non-gating Tier-2 advisory). Cause: the eyebrow `.labelText { line-height: 1 }` (→11px box) vs the spec label leaving `line-height` to inherit `1.5` (→15px box); the label is also 11px (the `--ed-font-size-2xs` eyebrow token) vs the spec cell's 10px. Visually faithful (uppercase-mono rule); the `line-height: 1` eyebrow is an intentional component choice, so it is documented rather than changed. |
