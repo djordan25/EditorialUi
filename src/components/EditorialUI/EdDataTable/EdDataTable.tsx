@@ -69,12 +69,18 @@ export interface EdDataTableProps<Row> {
     /** Right-aligned toolbar controls (column settings, etc). */
     toolbarEnd?: ReactNode;
 
-    /* ---- Footer / pagination ---- */
+    /* ---- Footer / pagination ----
+       Pagination is CONTROLLED: EdDataTable renders exactly the `rows` you pass and
+       emits onPageChange — it does NOT slice rows itself. Supply each page's rows
+       (slice client-side, or fetch from a server) when `page` changes. Pass `page` +
+       `pageCount` to show the footer; omit them for a single, unpaginated table. */
     /** Total row count across all pages (server-paginated). Defaults to rows.length. */
     totalCount?: number;
-    /** 1-based current page. */
+    /** 1-based current page. The parent owns the data for this page (see above). */
     page?: number;
+    /** Total number of pages. The footer renders `page / pageCount`. */
     pageCount?: number;
+    /** Fired with the next page number when the user clicks prev/next. */
     onPageChange?: (page: number) => void;
 
     /* ---- States ---- */

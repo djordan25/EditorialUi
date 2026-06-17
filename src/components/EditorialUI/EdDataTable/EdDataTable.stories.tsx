@@ -149,18 +149,26 @@ export const Zebra: Story = {
     render: () => <EdDataTable<Finding> columns={columns} rows={DATA} getRowId={(r) => r.id} zebra />,
 };
 
+/* EdDataTable does CONTROLLED pagination: it renders whatever `rows` you pass and
+   emits onPageChange — you supply each page's rows (slice client-side as below, or
+   fetch from a server). The previous version passed the full DATA on every page, so
+   the page number changed but the rows never did. */
 export const Paginated: Story = {
+    name: 'Paginated (controlled)',
     render: () => {
+        const pageSize = 2;
         const [page, setPage] = useState(1);
+        const pageCount = Math.ceil(DATA.length / pageSize);
+        const pageRows = DATA.slice((page - 1) * pageSize, page * pageSize);
         return (
             <EdDataTable<Finding>
                 columns={columns}
-                rows={DATA}
+                rows={pageRows}
                 getRowId={(r) => r.id}
                 selectable
-                totalCount={312}
+                totalCount={DATA.length}
                 page={page}
-                pageCount={78}
+                pageCount={pageCount}
                 onPageChange={setPage}
             />
         );
