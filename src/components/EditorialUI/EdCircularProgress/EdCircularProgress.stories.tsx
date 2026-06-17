@@ -71,6 +71,8 @@ export const InButton: Story = {
                 border: 'none',
                 borderRadius: 'var(--ed-radius-sm)',
                 fontFamily: 'var(--ed-font-sans)',
+                fontSize: 'var(--ed-font-size-md)',
+                lineHeight: 1,
                 fontWeight: 500,
                 cursor: 'progress',
             }}

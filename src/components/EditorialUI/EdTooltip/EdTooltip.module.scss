@@ -9,8 +9,9 @@
     border-radius: var(--ed-radius-sm);
     font-family: var(--ed-font-sans);
     font-size: var(--ed-font-size-xs);
+    font-weight: var(--ed-font-weight-medium); // spec .ed-tooltip
     line-height: var(--ed-line-height-snug);
-    box-shadow: var(--ed-elevation-3);
+    box-shadow: var(--ed-elevation-2); // spec .ed-tooltip uses elevation-2
     user-select: none;
     animation: edTooltipIn var(--ed-transition-fast) ease-out;
 }

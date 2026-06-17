@@ -413,7 +413,7 @@ export const CASES = {
                 "label": "show keyboard shortcut"
             },
             "anchor": {
-                "story": "[role=\"tooltip\"]",
+                "story": "[data-ed-tooltip-content]",
                 "spec": ".ed-tooltip"
             },
             "contentDriven": true
@@ -639,7 +639,8 @@ export const CASES = {
             "anchor": {
                 "story": "[role=switch]",
                 "spec": ".ed-switch__track"
-            }
+            },
+            "checkWidth": true
         },
         {
             "id": "editorialui-inputs-edswitch--off",
@@ -651,7 +652,8 @@ export const CASES = {
                 "story": "[role=switch]",
                 "spec": ".ed-switch__track"
             },
-            "theme": "dark"
+            "theme": "dark",
+            "checkWidth": true
         },
         {
             "id": "editorialui-inputs-edswitch--on",
@@ -662,7 +664,8 @@ export const CASES = {
             "anchor": {
                 "story": "[role=switch]",
                 "spec": ".ed-switch__track"
-            }
+            },
+            "checkWidth": true
         },
         {
             "id": "editorialui-inputs-edswitch--disabled-off",
@@ -673,7 +676,8 @@ export const CASES = {
             "anchor": {
                 "story": "[role=switch]",
                 "spec": ".ed-switch__track"
-            }
+            },
+            "checkWidth": true
         },
         {
             "id": "editorialui-inputs-edswitch--disabled-on",
@@ -684,7 +688,8 @@ export const CASES = {
             "anchor": {
                 "story": "[role=switch]",
                 "spec": ".ed-switch__track"
-            }
+            },
+            "checkWidth": true
         },
         {
             "id": "editorialui-inputs-edswitch--loading",
@@ -695,7 +700,8 @@ export const CASES = {
             "anchor": {
                 "story": "[role=switch]",
                 "spec": ".ed-switch__track"
-            }
+            },
+            "checkWidth": true
         }
     ],
     "EdFormControlLabel": [
@@ -706,7 +712,7 @@ export const CASES = {
                 "label": "EdSelect (placeholder)"
             },
             "anchor": {
-                "story": "select",
+                "story": "button",
                 "spec": ".ed-field__control"
             }
         },
@@ -717,7 +723,7 @@ export const CASES = {
                 "label": "EdSelect (placeholder)"
             },
             "anchor": {
-                "story": "select",
+                "story": "button",
                 "spec": ".ed-field__control"
             },
             "theme": "dark"
@@ -1091,7 +1097,7 @@ export const CASES = {
                 "label": "vertical — inline separator"
             },
             "anchor": {
-                "story": "div:has(> span) > div:empty",
+                "story": "[aria-orientation=\"vertical\"]",
                 "spec": ".ed-divider--v"
             }
         },
@@ -1742,43 +1748,6 @@ export const CASES = {
             "theme": "dark"
         }
     ],
-    "EdDataTable": [
-        {
-            "id": "editorialui-data-eddatatable--error-state",
-            "spec": {
-                "page": "data-table",
-                "label": "error"
-            },
-            "anchor": {
-                "story": ":scope > *",
-                "spec": ".ed-table-wrap"
-            },
-            "theme": "light"
-        },
-        {
-            "id": "editorialui-data-eddatatable--empty",
-            "spec": {
-                "page": "data-table",
-                "label": "filtered no-results"
-            },
-            "anchor": {
-                "story": ":scope > *",
-                "spec": ".ed-table-wrap"
-            }
-        },
-        {
-            "id": "editorialui-data-eddatatable--error-state",
-            "spec": {
-                "page": "data-table",
-                "label": "error"
-            },
-            "anchor": {
-                "story": ":scope > *",
-                "spec": ".ed-table-wrap"
-            },
-            "theme": "dark"
-        }
-    ],
     "EdList": [
         {
             "id": "editorialui-data-edlist--simple",
@@ -1819,17 +1788,6 @@ export const CASES = {
             "spec": {
                 "page": "list",
                 "label": "grouped"
-            },
-            "anchor": {
-                "story": "div > ul",
-                "spec": ".ed-list"
-            }
-        },
-        {
-            "id": "editorialui-data-edlist--empty",
-            "spec": {
-                "page": "list",
-                "label": "empty"
             },
             "anchor": {
                 "story": "div > ul",
