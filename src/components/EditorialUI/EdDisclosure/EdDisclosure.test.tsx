@@ -9,10 +9,12 @@ describe('EdDisclosure', () => {
         expect(screen.getByRole('button', { name: /Advanced metadata/ })).toBeInTheDocument();
     });
 
-    it('is collapsed by default (panel not rendered)', () => {
+    it('is collapsed by default (content kept mounted but inert)', () => {
         render(<EdDisclosure label="X">secret content</EdDisclosure>);
         expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'false');
-        expect(screen.queryByText('secret content')).toBeNull();
+        // Content stays mounted so the collapse can animate, but is inert while closed
+        // (out of tab + a11y order).
+        expect(screen.getByText('secret content')).toHaveAttribute('inert');
     });
 
     it('defaultOpen renders the panel', () => {
@@ -24,10 +26,10 @@ describe('EdDisclosure', () => {
     it('toggles open on click', async () => {
         render(<EdDisclosure label="X">toggle content</EdDisclosure>);
         const trigger = screen.getByRole('button');
-        expect(screen.queryByText('toggle content')).toBeNull();
+        expect(screen.getByText('toggle content')).toHaveAttribute('inert');
         await userEvent.click(trigger);
         expect(trigger).toHaveAttribute('aria-expanded', 'true');
-        expect(screen.getByText('toggle content')).toBeInTheDocument();
+        expect(screen.getByText('toggle content')).not.toHaveAttribute('inert');
     });
 
     it('wires aria-controls to the panel id', async () => {
@@ -50,12 +52,12 @@ describe('EdDisclosure', () => {
         const { rerender } = render(
             <EdDisclosure label="X" open={false} onOpenChange={onOpenChange}>content</EdDisclosure>,
         );
-        expect(screen.queryByText('content')).toBeNull();
+        expect(screen.getByText('content')).toHaveAttribute('inert');
         await userEvent.click(screen.getByRole('button'));
-        // Controlled — stays closed until parent flips the prop.
+        // Controlled — stays closed (inert) until parent flips the prop.
         expect(onOpenChange).toHaveBeenCalledWith(true);
-        expect(screen.queryByText('content')).toBeNull();
+        expect(screen.getByText('content')).toHaveAttribute('inert');
         rerender(<EdDisclosure label="X" open onOpenChange={onOpenChange}>content</EdDisclosure>);
-        expect(screen.getByText('content')).toBeInTheDocument();
+        expect(screen.getByText('content')).not.toHaveAttribute('inert');
     });
 });

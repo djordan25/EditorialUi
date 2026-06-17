@@ -25,6 +25,8 @@
   "types": "./dist/src/index.d.ts",
   "scripts": {
     "build": "vite build && sass src/theme/tokens-v2.scss dist/tokens.css --no-source-map --style=compressed",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm run lint:css && npm run test",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
