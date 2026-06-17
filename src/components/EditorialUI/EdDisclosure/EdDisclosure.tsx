@@ -62,11 +62,11 @@ export const EdDisclosure = forwardRef<HTMLDivElement, EdDisclosureProps>(functi
                 />
                 {label}
             </button>
-            {isOpen && (
-                <div id={panelId} className={styles.panel}>
+            <div id={panelId} className={styles.panel} data-state={isOpen ? 'open' : 'closed'}>
+                <div className={styles.panelInner} inert={!isOpen}>
                     {children}
                 </div>
-            )}
+            </div>
         </div>
     );
 });

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { useState, forwardRef, type ReactNode } from 'react';
 import {
     CheckCheck, Pencil, Copy, Users, Trash2, MoreHorizontal, ChevronDown,
 } from 'lucide-react';
@@ -14,30 +14,46 @@ export default meta;
 
 type Story = StoryObj<typeof EdMenu>;
 
-const Btn = ({ children }: { children: React.ReactNode }) => (
-    <button
-        style={{
-            display: 'inline-flex', alignItems: 'center', gap: 6, height: 32, padding: '0 14px',
-            background: 'var(--ed-color-surface-1)', border: '1px solid var(--ed-color-hairline-strong)',
-            borderRadius: 'var(--ed-radius-sm)', fontFamily: 'var(--ed-font-sans)', fontSize: 13, fontWeight: 500, cursor: 'pointer',
-        }}
-    >
-        {children}
-    </button>
-);
+// forwardRef + prop spread so Radix's asChild Trigger can wire up onClick / ref / aria
+// onto the real <button>. A plain wrapper that ignores props leaves the trigger dead.
+const Btn = forwardRef<HTMLButtonElement, { children: ReactNode }>(function Btn(
+    { children, ...props },
+    ref,
+) {
+    return (
+        <button
+            ref={ref}
+            {...props}
+            style={{
+                display: 'inline-flex', alignItems: 'center', gap: 6, height: 32, padding: '0 14px',
+                background: 'var(--ed-color-surface-1)', border: '1px solid var(--ed-color-hairline-strong)',
+                borderRadius: 'var(--ed-radius-sm)', fontFamily: 'var(--ed-font-sans)', fontSize: 13, fontWeight: 500, cursor: 'pointer',
+            }}
+        >
+            {children}
+        </button>
+    );
+});
 
-const IconBtn = ({ label, children }: { label: string; children: React.ReactNode }) => (
-    <button
-        aria-label={label}
-        style={{
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32,
-            background: 'transparent', border: '1px solid transparent', borderRadius: 'var(--ed-radius-sm)',
-            color: 'var(--ed-color-text-secondary)', cursor: 'pointer',
-        }}
-    >
-        {children}
-    </button>
-);
+const IconBtn = forwardRef<HTMLButtonElement, { label: string; children: ReactNode }>(function IconBtn(
+    { label, children, ...props },
+    ref,
+) {
+    return (
+        <button
+            ref={ref}
+            {...props}
+            aria-label={label}
+            style={{
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32,
+                background: 'transparent', border: '1px solid transparent', borderRadius: 'var(--ed-radius-sm)',
+                color: 'var(--ed-color-text-secondary)', cursor: 'pointer',
+            }}
+        >
+            {children}
+        </button>
+    );
+});
 
 export const Full: Story = {
     args: {
