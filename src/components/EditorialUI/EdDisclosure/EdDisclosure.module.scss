@@ -44,7 +44,23 @@
     transform: rotate(90deg);
 }
 
+/* Animated reveal via the grid-rows trick: the panel transitions
+   grid-template-rows 0fr → 1fr; the inner clips with overflow:hidden + min-height:0
+   so the content's true height drives the open size. Content stays mounted (so the
+   close animates) but is `inert` when collapsed, keeping it out of tab + a11y order. */
 .panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--ed-transition-slow);
+}
+
+.panel[data-state='open'] {
+    grid-template-rows: 1fr;
+}
+
+.panelInner {
+    overflow: hidden;
+    min-height: 0;
     padding: 0 0 var(--ed-space-3) calc(12px + var(--ed-space-2));
     font-size: var(--ed-font-size-sm);
     color: var(--ed-color-text-secondary);
@@ -53,4 +69,5 @@
 
 @media (prefers-reduced-motion: reduce) {
     .chev { transition: none; }
+    .panel { transition: none; }
 }

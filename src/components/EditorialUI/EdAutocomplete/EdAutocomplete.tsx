@@ -148,6 +148,7 @@ export const EdAutocomplete = forwardRef<HTMLInputElement, EdAutocompleteProps>(
         const inputRef = useRef<HTMLInputElement | null>(null);
         useImperativeHandle(ref, () => inputRef.current as HTMLInputElement, []);
         const listboxRef = useRef<HTMLUListElement | null>(null);
+        const controlRef = useRef<HTMLDivElement | null>(null);
 
         const [open, setOpen] = useState(false);
 
@@ -358,6 +359,7 @@ export const EdAutocomplete = forwardRef<HTMLInputElement, EdAutocompleteProps>(
                 <Popover.Root open={open} onOpenChange={setOpen}>
                     <Popover.Anchor asChild>
                         <div
+                            ref={controlRef}
                             className={[
                                 styles.control,
                                 size === 'sm' && styles.controlSm,
@@ -400,6 +402,14 @@ export const EdAutocomplete = forwardRef<HTMLInputElement, EdAutocompleteProps>(
                             onOpenAutoFocus={(e) => {
                                 // Keep focus on the input — never on the menu.
                                 e.preventDefault();
+                            }}
+                            onInteractOutside={(e) => {
+                                // The input is the popover's ANCHOR, not a trigger, so a
+                                // pointer-down or focus on it reads as "outside" and would
+                                // dismiss the just-opened popover (the flash). Keep it open
+                                // while the interaction is within the control.
+                                const t = e.detail.originalEvent.target as Node | null;
+                                if (t && controlRef.current?.contains(t)) e.preventDefault();
                             }}
                         >
                             {visibleOptions.length === 0 && !allowCreateNow ? (
