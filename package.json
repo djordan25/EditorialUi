@@ -1,6 +1,6 @@
 {
   "name": "editorial-ui",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "EditorialUI — a React 19 component library (Ed* components + --ed-* design tokens).",
   "type": "module",
