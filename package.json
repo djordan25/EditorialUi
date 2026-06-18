@@ -1,6 +1,6 @@
 {
   "name": "editorial-ui",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "private": true,
   "description": "EditorialUI — a React 19 component library (Ed* components + --ed-* design tokens).",
   "type": "module",
@@ -27,6 +27,9 @@
     "build": "vite build && sass src/theme/tokens-v2.scss dist/tokens.css --no-source-map --style=compressed",
     "prepare": "npm run build",
     "prepublishOnly": "npm run typecheck && npm run lint && npm run lint:css && npm run test",
+    "release:patch": "node scripts/release.mjs patch",
+    "release:minor": "node scripts/release.mjs minor",
+    "release:major": "node scripts/release.mjs major",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
