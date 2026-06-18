@@ -13,10 +13,6 @@ export default defineConfig({
     dts({
       include: ['src'],
       exclude: ['**/*.test.ts', '**/*.test.tsx', '**/*.stories.tsx'],
-      // Emit declarations rooted at src/ so dist/index.d.ts + dist/components/…
-      // line up with the JS layout (which strips the src/ prefix).
-      entryRoot: 'src',
-      insertTypesEntry: true,
     }),
   ],
   build: {
