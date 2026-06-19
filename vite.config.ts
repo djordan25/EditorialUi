@@ -26,7 +26,18 @@ export default defineConfig({
         preserveModules: true,
         preserveModulesRoot: 'src',
         entryFileNames: '[name].js',
-        assetFileNames: 'assets/[name][extname]',
+        // Strip the ".module" infix from emitted CSS-module files (EdCard.module.css -> EdCard.css). The class
+        // names inside are already final/hashed, so a CONSUMER must load them as PLAIN global CSS. Left as
+        // ".module.css", a consumer's own Vite re-runs CSS Modules on them — re-hashing the selectors so they no
+        // longer match the class names the components apply (the styles silently don't take). libInjectCss injects
+        // the per-chunk import using whatever name we emit here, so renaming makes those imports resolve to plain CSS.
+        assetFileNames: (assetInfo) => {
+          const name = assetInfo.names?.[0] ?? assetInfo.name ?? 'asset';
+          if (name.endsWith('.css')) {
+            return `assets/${name.replace(/\.module\.css$/, '.css')}`;
+          }
+          return 'assets/[name][extname]';
+        },
       },
     },
     sourcemap: true,
