@@ -21,6 +21,7 @@ export * from './EdFormControlLabel';
 export * from './EdSelect';
 export * from './EdComboBox';
 export * from './EdAutocomplete';
+export * from './EdInlineSelect';
 
 // Display
 export * from './EdChip';
