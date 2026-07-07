@@ -43,4 +43,49 @@ describe('EdTag', () => {
         await userEvent.click(screen.getByRole('button'));
         expect(onRemove).toHaveBeenCalledOnce();
     });
+
+    it('fills the chip with an arbitrary color', () => {
+        const { container } = render(<EdTag color="#6D28D9">Wholesale</EdTag>);
+        const root = container.firstElementChild as HTMLElement;
+        expect(root.style.background).not.toBe('');
+        expect(root).not.toHaveClass('toneNeutral');
+    });
+
+    it('derives dark text on a light custom color and light text on a dark one', () => {
+        const light = render(<EdTag color="#ffffff">x</EdTag>);
+        expect((light.container.firstElementChild as HTMLElement).style.color).toContain('text-primary');
+        const dark = render(<EdTag color="#000000">y</EdTag>);
+        expect((dark.container.firstElementChild as HTMLElement).style.color).toContain('text-on-solid');
+    });
+
+    it('honors an explicit textColor over the derived one', () => {
+        const { container } = render(<EdTag color="#334155" textColor="#abcdef">x</EdTag>);
+        const root = container.firstElementChild as HTMLElement;
+        expect(root.style.color).not.toContain('var(');
+        expect(root.style.color).not.toBe('');
+    });
+
+    it('renders a color dot in dot mode (chip not filled)', () => {
+        const { container } = render(<EdTag dot color="#16A34A">active</EdTag>);
+        const root = container.firstElementChild as HTMLElement;
+        expect(root.querySelector('.dot')).not.toBeNull();
+        expect(root).toHaveClass('toneNeutral'); // dot mode keeps the tone surface
+        expect(root.style.background).toBe(''); // not filled
+        expect(screen.getByText('active')).toBeInTheDocument();
+    });
+
+    it('supports a text-less swatch (dot, no children) named by aria-label', () => {
+        const { container } = render(<EdTag dot color="#DC2626" aria-label="Retail" />);
+        const root = container.firstElementChild as HTMLElement;
+        expect(root).toHaveAttribute('aria-label', 'Retail');
+        expect(root.querySelector('.dot')).not.toBeNull();
+        expect(root.querySelector('.label')).toBeNull();
+    });
+
+    it('applies the size scale', () => {
+        const { container: sm } = render(<EdTag size="sm">x</EdTag>);
+        expect(sm.firstElementChild).toHaveClass('sm');
+        const { container: lg } = render(<EdTag size="lg">y</EdTag>);
+        expect(lg.firstElementChild).toHaveClass('lg');
+    });
 });

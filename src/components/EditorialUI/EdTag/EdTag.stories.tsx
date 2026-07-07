@@ -59,6 +59,42 @@ export const WithIcon: Story = {
     },
 };
 
+export const CustomColors: Story = {
+    render: () => (
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <EdTag color="#6D28D9">Wholesale</EdTag>
+            <EdTag color="#0EA5E9">Markets</EdTag>
+            <EdTag color="#F59E0B">Retail</EdTag>
+            <EdTag color="#FDE68A">Light</EdTag>
+            <EdTag color="#111827">Dark</EdTag>
+            <EdTag color="#DC2626" onRemove={() => {}}>Removable</EdTag>
+        </div>
+    ),
+};
+
+export const Dots: Story = {
+    render: () => (
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+            <EdTag dot color="#16A34A">active</EdTag>
+            <EdTag dot color="#F59E0B">pending</EdTag>
+            <EdTag dot color="#DC2626">blocked</EdTag>
+            {/* Text-less swatches (named for AT) */}
+            <EdTag dot color="#6D28D9" aria-label="Wholesale" />
+            <EdTag dot color="#0EA5E9" aria-label="Markets" />
+        </div>
+    ),
+};
+
+export const Sizes: Story = {
+    render: () => (
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            <EdTag size="sm" tone="brand">sm</EdTag>
+            <EdTag size="md" tone="brand">md</EdTag>
+            <EdTag size="lg" tone="brand">lg</EdTag>
+        </div>
+    ),
+};
+
 export const InMetadata: Story = {
     name: 'In entity metadata',
     render: () => (

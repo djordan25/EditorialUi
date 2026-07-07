@@ -16,11 +16,40 @@
     user-select: none;
 }
 
+/* ---- Size scale (md = the .root defaults) ---- */
+.sm {
+    height: 18px;
+    padding: 0 6px;
+    font-size: var(--ed-font-size-2xs);
+}
+
+.lg {
+    height: 26px;
+    padding: 0 10px;
+    font-size: var(--ed-font-size-sm);
+}
+
+/* Text-less swatch — tighter horizontal padding. */
+.dotOnly {
+    padding: 0 6px;
+}
+
 .icon {
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;
     margin-left: -2px;
+}
+
+/* ---- Color dot / swatch ---- */
+.dot {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: var(--ed-radius-pill);
+    margin-left: -1px;
+    /* Default to the chip's tone accent; an arbitrary `color` overrides inline. */
+    background: currentColor;
 }
 
 .label {
