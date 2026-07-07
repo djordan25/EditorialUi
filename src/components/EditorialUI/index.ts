@@ -17,6 +17,7 @@ export * from './EdCheckboxInput';
 export * from './EdRadioGroup';
 export * from './EdSwitch';
 export * from './EdFormControlLabel';
+export * from './EdControlLabel';
 
 // Selection
 export * from './EdSelect';
