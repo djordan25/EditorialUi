@@ -1,5 +1,6 @@
 import {
     forwardRef,
+    type CSSProperties,
     type ReactNode,
 } from 'react';
 import * as RadixDialog from '@radix-ui/react-dialog';
@@ -7,6 +8,7 @@ import { X } from 'lucide-react';
 import styles from './EdDialog.module.scss';
 
 export type EdDialogSize = 'sm' | 'md' | 'lg' | 'xl';
+export type EdDialogLayout = 'default' | 'composed';
 
 export interface EdDialogProps {
     /** Controlled open state. */
@@ -34,12 +36,37 @@ export interface EdDialogProps {
     hideClose?: boolean;
     /** Disable overlay-click + Esc to close — use for unsaved-form guards. */
     preventOutsideClose?: boolean;
+    /**
+     * Fine-grained close control. When set, overrides `preventOutsideClose` for
+     * that vector — e.g. `dismissOnOutsideClick={false}` with `dismissOnEscape`
+     * left unset gives "Escape closes, click-away doesn't". Leave both unset to
+     * fall back to `preventOutsideClose`.
+     */
+    dismissOnOutsideClick?: boolean;
+    dismissOnEscape?: boolean;
+    /**
+     * Render `title` into a visually-hidden node instead of the visible header.
+     * The dialog keeps its accessible name (and a Radix Title, so no dev warning)
+     * while you supply your own visible header/title bar in the body.
+     */
+    titleVisuallyHidden?: boolean;
+    /**
+     * 'default' wraps `children` in the scrolling body and renders the `footer`
+     * prop as a pinned footer. 'composed' renders children raw so you can compose
+     * <EdDialogBody> / <EdDialogActions> as direct children (with a custom header
+     * or title bar between them).
+     */
+    layout?: EdDialogLayout;
     /** Accessible description id wiring — pass a short summary for screen readers. */
     description?: ReactNode;
     /** className on the dialog panel. */
     className?: string;
     /** Forwarded to the dialog element — e.g. aria-busy during a guarded operation. */
     'aria-busy'?: boolean;
+    /** Accessible-name passthrough for a content-led dialog with no visible title. */
+    'aria-label'?: string;
+    /** Point the accessible name at your own heading node (advanced). */
+    'aria-labelledby'?: string;
 }
 
 const sizeClass: Record<EdDialogSize, string> = {
@@ -78,12 +105,40 @@ export const EdDialog = forwardRef<HTMLDivElement, EdDialogProps>(function EdDia
         danger = false,
         hideClose = false,
         preventOutsideClose = false,
+        dismissOnOutsideClick,
+        dismissOnEscape,
+        titleVisuallyHidden = false,
+        layout = 'default',
         description,
         className,
         'aria-busy': ariaBusy,
+        'aria-label': ariaLabel,
+        'aria-labelledby': ariaLabelledby,
     },
     ref,
 ) {
+    // Per-vector close control: an explicit dismissOn* wins for its vector;
+    // otherwise both fall back to the combined preventOutsideClose flag.
+    const blockOutsideClose =
+        dismissOnOutsideClick !== undefined ? !dismissOnOutsideClick : preventOutsideClose;
+    const blockEscapeClose =
+        dismissOnEscape !== undefined ? !dismissOnEscape : preventOutsideClose;
+
+    const showVisibleTitle = Boolean(title) && !titleVisuallyHidden;
+    const showHeader =
+        showVisibleTitle || (Boolean(subtitle) && !titleVisuallyHidden) || !hideClose;
+    // Keep an accessible name (and a Radix Title, so no dev warning) when the
+    // visible title is suppressed — unless the caller points aria-labelledby at
+    // their own node.
+    const srTitleText = title ?? ariaLabel;
+    const renderSrTitle = !showVisibleTitle && ariaLabelledby == null && srTitleText != null;
+
+    // Only override Radix's aria-* when explicitly provided — passing `undefined`
+    // through would blow away Radix's own aria-labelledby (the title wiring).
+    const ariaOverrides: { 'aria-label'?: string; 'aria-labelledby'?: string } = {};
+    if (ariaLabel != null) ariaOverrides['aria-label'] = ariaLabel;
+    if (ariaLabelledby != null) ariaOverrides['aria-labelledby'] = ariaLabelledby;
+
     return (
         <RadixDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
             {trigger && <RadixDialog.Trigger asChild>{trigger}</RadixDialog.Trigger>}
@@ -100,23 +155,28 @@ export const EdDialog = forwardRef<HTMLDivElement, EdDialogProps>(function EdDia
                         .filter(Boolean)
                         .join(' ')}
                     aria-busy={ariaBusy}
+                    {...ariaOverrides}
+                    onPointerDownOutside={(e) => {
+                        if (blockOutsideClose) e.preventDefault();
+                    }}
                     onInteractOutside={(e) => {
-                        if (preventOutsideClose) e.preventDefault();
+                        if (blockOutsideClose) e.preventDefault();
                     }}
                     onEscapeKeyDown={(e) => {
-                        if (preventOutsideClose) e.preventDefault();
+                        if (blockEscapeClose) e.preventDefault();
                     }}
-                    aria-describedby={description ? undefined : undefined}
                 >
-                    {(title || !hideClose) && (
+                    {showHeader && (
                         <div className={styles.header}>
                             <div className={styles.headerBody}>
-                                {title && (
+                                {showVisibleTitle && (
                                     <RadixDialog.Title className={styles.title}>
                                         {title}
                                     </RadixDialog.Title>
                                 )}
-                                {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+                                {subtitle && !titleVisuallyHidden && (
+                                    <p className={styles.subtitle}>{subtitle}</p>
+                                )}
                             </div>
                             {!hideClose && (
                                 <RadixDialog.Close asChild>
@@ -134,9 +194,13 @@ export const EdDialog = forwardRef<HTMLDivElement, EdDialogProps>(function EdDia
                         </RadixDialog.Description>
                     )}
 
-                    <div className={styles.body}>{children}</div>
+                    {layout === 'composed' ? (
+                        children
+                    ) : (
+                        <div className={styles.body}>{children}</div>
+                    )}
 
-                    {footer && (
+                    {layout === 'default' && footer && (
                         <div
                             className={[styles.footer, footerMeta && styles.footerWithMeta]
                                 .filter(Boolean)
@@ -146,11 +210,61 @@ export const EdDialog = forwardRef<HTMLDivElement, EdDialogProps>(function EdDia
                             <div className={styles.footerActions}>{footer}</div>
                         </div>
                     )}
+
+                    {/* Rendered last so it never displaces the `.body:first-child`
+                        top-padding rule when there's no visible header. */}
+                    {renderSrTitle && (
+                        <RadixDialog.Title className={styles.srOnly}>
+                            {srTitleText}
+                        </RadixDialog.Title>
+                    )}
                 </RadixDialog.Content>
             </RadixDialog.Portal>
         </RadixDialog.Root>
     );
 });
+
+/* ------------------------------------------------------------------ */
+/* Compound slots — for layout="composed" (custom header / title bar). */
+/* ------------------------------------------------------------------ */
+
+export interface EdDialogBodyProps {
+    children: ReactNode;
+    className?: string;
+    style?: CSSProperties;
+}
+
+/** The scrolling body region. Place inside an <EdDialog layout="composed">. */
+export function EdDialogBody({ children, className, style }: EdDialogBodyProps) {
+    return (
+        <div className={[styles.body, className].filter(Boolean).join(' ')} style={style}>
+            {children}
+        </div>
+    );
+}
+
+export interface EdDialogActionsProps {
+    children: ReactNode;
+    /** Left-aligned footer meta (shortcut hint, autosave status). */
+    meta?: ReactNode;
+    className?: string;
+    style?: CSSProperties;
+}
+
+/** The pinned footer region. Place inside an <EdDialog layout="composed">. */
+export function EdDialogActions({ children, meta, className, style }: EdDialogActionsProps) {
+    return (
+        <div
+            className={[styles.footer, meta && styles.footerWithMeta, className]
+                .filter(Boolean)
+                .join(' ')}
+            style={style}
+        >
+            {meta && <span className={styles.footerMeta}>{meta}</span>}
+            <div className={styles.footerActions}>{children}</div>
+        </div>
+    );
+}
 
 /* ------------------------------------------------------------------ */
 /* EdConfirmation — preset for the destructive / confirm case.        */

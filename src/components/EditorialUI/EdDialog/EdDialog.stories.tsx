@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { EdDialog, EdConfirmation, type EdDialogSize } from './EdDialog';
+import { EdDialog, EdConfirmation, EdDialogBody, EdDialogActions, type EdDialogSize } from './EdDialog';
 
 const meta: Meta<typeof EdDialog> = {
     title: 'EditorialUI/Containers/EdDialog',
@@ -185,6 +185,94 @@ export const Confirmation: Story = {
                     All findings, evidence, and audit log entries in this period will be permanently
                     removed. This cannot be undone.
                 </EdConfirmation>
+            </>
+        );
+    },
+};
+
+export const GuardedEscapeOnly: Story = {
+    render: () => {
+        const [open, setOpen] = useState(false);
+        return (
+            <>
+                <Btn onClick={() => setOpen(true)}>Open (Esc closes, click-away doesn't)</Btn>
+                <EdDialog
+                    open={open}
+                    onOpenChange={setOpen}
+                    title="Edit note"
+                    subtitle="Escape closes · overlay-click is guarded"
+                    dismissOnOutsideClick={false}
+                    footer={
+                        <>
+                            <Btn variant="ghost" onClick={() => setOpen(false)}>Cancel</Btn>
+                            <Btn onClick={() => setOpen(false)}>Save</Btn>
+                        </>
+                    }
+                >
+                    <p style={{ margin: 0 }}>
+                        A stray click on the overlay won't discard your edits, but Escape still
+                        closes — the two close vectors are controlled independently.
+                    </p>
+                </EdDialog>
+            </>
+        );
+    },
+};
+
+export const ComposedSlots: Story = {
+    render: () => {
+        const [open, setOpen] = useState(false);
+        return (
+            <>
+                <Btn onClick={() => setOpen(true)}>Open composed dialog</Btn>
+                <EdDialog
+                    open={open}
+                    onOpenChange={setOpen}
+                    title="Validate project model"
+                    titleVisuallyHidden
+                    layout="composed"
+                    size="lg"
+                >
+                    {/* Custom title bar between the (hidden) accessible title and the body */}
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 10,
+                            padding: '16px 20px 12px',
+                        }}
+                    >
+                        <span
+                            style={{
+                                width: 28,
+                                height: 28,
+                                borderRadius: '50%',
+                                background: 'var(--ed-color-brand)',
+                                color: '#fff',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: 13,
+                                fontWeight: 600,
+                            }}
+                        >
+                            PD
+                        </span>
+                        <span style={{ fontFamily: 'var(--ed-font-sans)', fontSize: 15, fontWeight: 600 }}>
+                            Validate project model
+                        </span>
+                    </div>
+                    <EdDialogBody>
+                        <p style={{ marginTop: 0 }}>
+                            The body and footer are composed from <code>EdDialogBody</code> and{' '}
+                            <code>EdDialogActions</code>, so a custom title bar can sit above them.
+                        </p>
+                    </EdDialogBody>
+                    <EdDialogActions meta="3 checks · 0 errors">
+                        <Btn variant="ghost" onClick={() => setOpen(false)}>Close</Btn>
+                        <Btn onClick={() => setOpen(false)}>Run validation</Btn>
+                    </EdDialogActions>
+                </EdDialog>
             </>
         );
     },

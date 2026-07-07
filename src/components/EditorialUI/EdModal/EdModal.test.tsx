@@ -78,4 +78,35 @@ describe('EdModal', () => {
         await userEvent.keyboard('{Escape}');
         expect(onOpenChange).not.toHaveBeenCalled();
     });
+
+    it('forwards dismissOnEscape={false} to block Escape while non-busy', async () => {
+        const onOpenChange = vi.fn();
+        render(
+            <EdModal open title="X" onOpenChange={onOpenChange} dismissOnEscape={false} footer={<button>OK</button>}>
+                body
+            </EdModal>,
+        );
+        await userEvent.keyboard('{Escape}');
+        expect(onOpenChange).not.toHaveBeenCalled();
+    });
+
+    it('forwards dismissOnOutsideClick={false} but keeps Escape working (decoupled)', async () => {
+        const onOpenChange = vi.fn();
+        render(
+            <EdModal open title="X" onOpenChange={onOpenChange} dismissOnOutsideClick={false} footer={<button>OK</button>}>
+                body
+            </EdModal>,
+        );
+        await userEvent.keyboard('{Escape}');
+        expect(onOpenChange).toHaveBeenCalledWith(false);
+    });
+
+    it('titleVisuallyHidden keeps the modal accessible name', () => {
+        render(
+            <EdModal open title="Importing data" titleVisuallyHidden footer={<button>Cancel</button>}>
+                body
+            </EdModal>,
+        );
+        expect(screen.getByRole('dialog', { name: 'Importing data' })).toBeInTheDocument();
+    });
 });
