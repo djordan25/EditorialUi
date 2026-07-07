@@ -1,0 +1,23 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ed-space-2);
+    cursor: pointer;
+    user-select: none;
+    color: var(--ed-color-text-primary);
+    line-height: var(--ed-line-height-snug);
+}
+
+.label {
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-md);
+    font-weight: var(--ed-font-weight-medium);
+    color: inherit;
+}
+
+.disabled {
+    cursor: not-allowed;
+    color: var(--ed-color-text-disabled);
+}
