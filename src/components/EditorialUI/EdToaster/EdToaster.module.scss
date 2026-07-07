@@ -1,0 +1,100 @@
+@use '../../../theme/tokens-v2';
+
+.viewport {
+    position: fixed;
+    z-index: var(--ed-z-toast);
+    display: flex;
+    gap: var(--ed-space-2);
+    padding: var(--ed-space-4);
+    width: min(420px, 100vw);
+    max-width: 100%;
+    box-sizing: border-box;
+    /* Let clicks pass through the gaps; the toasts themselves re-enable pointer events. */
+    pointer-events: none;
+
+    > * {
+        pointer-events: auto;
+    }
+}
+
+/* ---- Anchors. Top stacks grow downward with the newest on top (column-reverse);
+   bottom stacks grow upward with the newest on the bottom (column). ---- */
+.topCenter {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.topRight {
+    top: 0;
+    right: 0;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+}
+
+.topLeft {
+    top: 0;
+    left: 0;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+}
+
+.bottomCenter {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    align-items: center;
+}
+
+.bottomRight {
+    bottom: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.bottomLeft {
+    bottom: 0;
+    left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* ---- Each toast ---- */
+.item {
+    width: 100%;
+    animation: edToastIn var(--ed-transition-base) ease-out;
+}
+
+.leaving {
+    animation: edToastOut 160ms ease-in forwards;
+    pointer-events: none;
+}
+
+@keyframes edToastIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes edToastOut {
+    to {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .item,
+    .leaving {
+        animation: none;
+    }
+}

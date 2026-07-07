@@ -35,6 +35,7 @@ export * from './EdProgressMeter';
 // Feedback
 export * from './EdDialog';
 export * from './EdNotification';
+export * from './EdToaster';
 export * from './EdTooltip';
 export * from './EdEmptyState';
 
