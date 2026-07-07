@@ -21,7 +21,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: [/^react($|\/)/, /^react-dom($|\/)/, 'lucide-react', /^@radix-ui\//],
+      external: [/^react($|\/)/, /^react-dom($|\/)/, 'lucide-react', /^@radix-ui\//, /^@tanstack\//],
       output: {
         preserveModules: true,
         preserveModulesRoot: 'src',

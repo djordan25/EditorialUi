@@ -318,7 +318,18 @@ export function EdDataTableInner<Row>(
                                     ]
                                         .filter(Boolean)
                                         .join(' ')}
+                                    tabIndex={onRowClick ? 0 : undefined}
                                     onClick={onRowClick ? () => onRowClick(row) : undefined}
+                                    onKeyDown={
+                                        onRowClick
+                                            ? (e) => {
+                                                  if (e.key === 'Enter' || e.key === ' ') {
+                                                      e.preventDefault();
+                                                      onRowClick(row);
+                                                  }
+                                              }
+                                            : undefined
+                                    }
                                 >
                                     {selectable && (
                                         <td className={styles.selectCell} onClick={(e) => e.stopPropagation()}>
