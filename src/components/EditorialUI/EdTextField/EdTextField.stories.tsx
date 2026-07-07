@@ -124,6 +124,29 @@ export const WithSuffix: Story = {
     },
 };
 
+export const Multiline: Story = {
+    args: {
+        label: 'Reviewer notes',
+        multiline: true,
+        minRows: 3,
+        maxRows: 8,
+        placeholder: 'Summarize the validation outcome…',
+        hint: 'Grows with content up to 8 rows, then scrolls.',
+        fullWidth: true,
+    },
+};
+
+export const MultilineFilled: Story = {
+    args: {
+        label: 'Methodology',
+        multiline: true,
+        minRows: 4,
+        defaultValue:
+            'The PD model is calibrated on a through-the-cycle basis using the 2019–2025 wholesale default series.\n\nSegmentation follows the regulatory asset-class taxonomy; overrides are logged in the audit trail.',
+        fullWidth: true,
+    },
+};
+
 export const WithClear: Story = {
     render: () => {
         const [value, setValue] = useState('Wholesale');
