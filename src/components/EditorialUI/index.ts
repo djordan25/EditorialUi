@@ -48,6 +48,7 @@ export * from './EdDisclosure';
 
 // Navigation
 export * from './EdTabs';
+export * from './EdTabList';
 export * from './EdMenu';
 export * from './EdContextMenu';
 export * from './EdBreadcrumb';
