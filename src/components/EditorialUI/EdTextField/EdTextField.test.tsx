@@ -92,4 +92,33 @@ describe('EdTextField', () => {
         expect(screen.getByTestId('pfx')).toBeInTheDocument();
         expect(screen.getByTestId('sfx')).toBeInTheDocument();
     });
+
+    it('renders a textarea when multiline', () => {
+        render(<EdTextField label="Notes" multiline />);
+        const field = screen.getByLabelText('Notes');
+        expect(field.tagName).toBe('TEXTAREA');
+    });
+
+    it('applies minRows to the textarea', () => {
+        render(<EdTextField label="Notes" multiline minRows={5} />);
+        expect(screen.getByLabelText('Notes')).toHaveAttribute('rows', '5');
+    });
+
+    it('forwards ref to the textarea when multiline', () => {
+        const ref = { current: null as HTMLTextAreaElement | null };
+        render(<EdTextField label="Notes" multiline ref={ref} />);
+        expect(ref.current).toBeInstanceOf(HTMLTextAreaElement);
+    });
+
+    it('multiline accepts input and keeps the shared label/error wiring', async () => {
+        const onChange = vi.fn();
+        render(<EdTextField label="Notes" multiline onChange={onChange} error="Required." />);
+        const field = screen.getByLabelText('Notes');
+        expect(field).toHaveAttribute('aria-invalid', 'true');
+        const describedBy = field.getAttribute('aria-describedby');
+        expect(document.getElementById(describedBy!)).toHaveTextContent('Required.');
+        await userEvent.type(field, 'hi');
+        expect(onChange).toHaveBeenCalled();
+        expect(field).toHaveValue('hi');
+    });
 });
