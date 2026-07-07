@@ -26,6 +26,20 @@ export interface EdModalProps {
     size?: EdModalSize;
     danger?: boolean;
     preventOutsideClose?: boolean;
+    /**
+     * Fine-grained close control — overrides `preventOutsideClose` per vector
+     * (e.g. "Escape closes, click-away doesn't"). While `busy`, both are forced
+     * off regardless, so a stray click can't cancel work in progress.
+     */
+    dismissOnOutsideClick?: boolean;
+    dismissOnEscape?: boolean;
+    /**
+     * Render `title` into a visually-hidden node — supply your own visible title
+     * bar in the body while keeping the modal's accessible name.
+     */
+    titleVisuallyHidden?: boolean;
+    /** Accessible-name passthrough for a content-led modal with no visible title. */
+    'aria-label'?: string;
 
     /**
      * Busy state — sets aria-busy, dims + disables the body, and renders an
@@ -71,6 +85,10 @@ export const EdModal = forwardRef<HTMLDivElement, EdModalProps>(function EdModal
         size = 'md',
         danger = false,
         preventOutsideClose = false,
+        dismissOnOutsideClick,
+        dismissOnEscape,
+        titleVisuallyHidden = false,
+        'aria-label': ariaLabel,
         busy = false,
         busyContent,
         busyStatus,
@@ -85,10 +103,15 @@ export const EdModal = forwardRef<HTMLDivElement, EdModalProps>(function EdModal
             trigger={trigger}
             title={title}
             subtitle={subtitle}
+            titleVisuallyHidden={titleVisuallyHidden}
+            aria-label={ariaLabel}
             size={size}
             danger={danger}
-            // While busy, treat as a guarded form — don't let a stray click cancel work.
-            preventOutsideClose={preventOutsideClose || busy}
+            preventOutsideClose={preventOutsideClose}
+            // While busy, treat as a guarded form — don't let a stray click or Esc
+            // cancel work; otherwise pass the caller's per-vector close controls through.
+            dismissOnOutsideClick={busy ? false : dismissOnOutsideClick}
+            dismissOnEscape={busy ? false : dismissOnEscape}
             hideClose={busy}
             footer={footer}
             footerMeta={footerMeta}

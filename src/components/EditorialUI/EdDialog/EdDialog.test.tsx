@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { EdDialog, EdConfirmation } from './EdDialog';
+import { EdDialog, EdConfirmation, EdDialogBody, EdDialogActions } from './EdDialog';
 
 describe('EdDialog', () => {
     it('does not render content when closed', () => {
@@ -71,6 +71,66 @@ describe('EdDialog', () => {
             </EdDialog>,
         );
         expect(screen.getByText('A short summary for AT.')).toBeInTheDocument();
+    });
+
+    it('dismissOnEscape={false} blocks Escape', async () => {
+        const onOpenChange = vi.fn();
+        render(
+            <EdDialog open title="X" onOpenChange={onOpenChange} dismissOnEscape={false}>
+                body
+            </EdDialog>,
+        );
+        await userEvent.keyboard('{Escape}');
+        expect(onOpenChange).not.toHaveBeenCalled();
+    });
+
+    it('dismissOnOutsideClick={false} still lets Escape close (decoupled from click-away)', async () => {
+        const onOpenChange = vi.fn();
+        render(
+            <EdDialog open title="X" onOpenChange={onOpenChange} dismissOnOutsideClick={false}>
+                body
+            </EdDialog>,
+        );
+        await userEvent.keyboard('{Escape}');
+        expect(onOpenChange).toHaveBeenCalledWith(false);
+    });
+
+    it('titleVisuallyHidden keeps the accessible name but hides the title visually', () => {
+        render(
+            <EdDialog open title="Session expiring" titleVisuallyHidden>
+                body
+            </EdDialog>,
+        );
+        expect(screen.getByRole('dialog', { name: 'Session expiring' })).toBeInTheDocument();
+        const titleEl = screen.getByText('Session expiring');
+        expect(titleEl).toHaveClass('srOnly');
+        expect(titleEl).not.toHaveClass('title');
+    });
+
+    it('names a content-led dialog via aria-label when there is no title', () => {
+        render(
+            <EdDialog open aria-label="Idle timeout warning">
+                <p>You will be signed out soon.</p>
+            </EdDialog>,
+        );
+        expect(screen.getByRole('dialog', { name: 'Idle timeout warning' })).toBeInTheDocument();
+    });
+
+    it('composed layout renders EdDialogBody / EdDialogActions with a custom header', () => {
+        render(
+            <EdDialog open title="Validate model" titleVisuallyHidden layout="composed">
+                <div>Custom title bar</div>
+                <EdDialogBody>Validation results go here.</EdDialogBody>
+                <EdDialogActions meta="3 checks">
+                    <button>Run</button>
+                </EdDialogActions>
+            </EdDialog>,
+        );
+        expect(screen.getByRole('dialog', { name: 'Validate model' })).toBeInTheDocument();
+        expect(screen.getByText('Custom title bar')).toBeInTheDocument();
+        expect(screen.getByText('Validation results go here.')).toBeInTheDocument();
+        expect(screen.getByText('3 checks')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Run' })).toBeInTheDocument();
     });
 });
 

@@ -1,2 +1,9 @@
-export { EdDialog, EdConfirmation } from './EdDialog';
-export type { EdDialogProps, EdDialogSize, EdConfirmationProps } from './EdDialog';
+export { EdDialog, EdConfirmation, EdDialogBody, EdDialogActions } from './EdDialog';
+export type {
+    EdDialogProps,
+    EdDialogSize,
+    EdDialogLayout,
+    EdConfirmationProps,
+    EdDialogBodyProps,
+    EdDialogActionsProps,
+} from './EdDialog';
