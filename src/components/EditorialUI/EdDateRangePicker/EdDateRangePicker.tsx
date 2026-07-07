@@ -62,7 +62,15 @@ export interface EdDateRangePickerProps {
     defaultValue?: EdDateRange;
     onChange?: (range: EdDateRange) => void;
 
-    /** Preset shortcuts shown at the left. Defaults to the recommended set. */
+    /**
+     * `range` (default) — two-click start→end range.
+     * `day` — single click commits a same-day `[d, d]` range and closes (a day stepper).
+     */
+    mode?: 'range' | 'day';
+    /**
+     * Preset shortcuts shown at the left. Defaults to the recommended set in `range`
+     * mode and to none in `day` mode. Pass `[]` for an explicit no-preset picker.
+     */
     presets?: EdDateRangePreset[];
     placeholder?: string;
     /** Constrain selectable dates. */
@@ -94,8 +102,9 @@ export const EdDateRangePicker = forwardRef<HTMLButtonElement, EdDateRangePicker
             value,
             defaultValue = { start: null, end: null },
             onChange,
+            mode = 'range',
             presets,
-            placeholder = 'Select date range…',
+            placeholder,
             min,
             max,
             hint,
@@ -106,7 +115,12 @@ export const EdDateRangePicker = forwardRef<HTMLButtonElement, EdDateRangePicker
         },
         ref,
     ) {
-        const resolvedPresets = useMemo(() => presets ?? defaultPresets(), [presets]);
+        const resolvedPresets = useMemo(
+            () => presets ?? (mode === 'day' ? [] : defaultPresets()),
+            [presets, mode],
+        );
+        const resolvedPlaceholder =
+            placeholder ?? (mode === 'day' ? 'Select date…' : 'Select date range…');
 
         const [internal, setInternal] = useState<EdDateRange>(defaultValue);
         const range = value !== undefined ? value : internal;
@@ -134,7 +148,9 @@ export const EdDateRangePicker = forwardRef<HTMLButtonElement, EdDateRangePicker
         const triggerText = matchedPreset
             ? matchedPreset.label
             : range.start && range.end
-            ? `${range.start} → ${range.end}`
+            ? range.start === range.end
+                ? range.start
+                : `${range.start} → ${range.end}`
             : range.start
             ? `${range.start} → …`
             : null;
@@ -142,6 +158,13 @@ export const EdDateRangePicker = forwardRef<HTMLButtonElement, EdDateRangePicker
         const handleDayClick = (iso: EdISODate) => {
             if (min && iso < min) return;
             if (max && iso > max) return;
+            if (mode === 'day') {
+                // Single click commits a same-day range and closes (day stepper).
+                setRange({ start: iso, end: iso });
+                setPendingStart(null);
+                setOpen(false);
+                return;
+            }
             if (!pendingStart) {
                 setPendingStart(iso);
                 setRange({ start: iso, end: null });
@@ -178,28 +201,30 @@ export const EdDateRangePicker = forwardRef<HTMLButtonElement, EdDateRangePicker
                         >
                             <CalendarIcon size={14} strokeWidth={1.8} className={styles.calIcon} aria-hidden />
                             <span className={[styles.value, !triggerText && styles.placeholder].filter(Boolean).join(' ')}>
-                                {triggerText ?? placeholder}
+                                {triggerText ?? resolvedPlaceholder}
                             </span>
                             <ChevronDown size={14} strokeWidth={1.8} className={styles.chev} aria-hidden />
                         </button>
                     </Popover.Trigger>
                     <Popover.Portal>
                         <Popover.Content align="start" sideOffset={4} className={styles.panel}>
-                            <div className={styles.presets}>
-                                {resolvedPresets.map((preset) => (
-                                    <button
-                                        key={preset.label}
-                                        type="button"
-                                        aria-pressed={matchedPreset?.label === preset.label}
-                                        className={[styles.presetItem, matchedPreset?.label === preset.label && styles.presetActive]
-                                            .filter(Boolean)
-                                            .join(' ')}
-                                        onClick={() => applyPreset(preset)}
-                                    >
-                                        {preset.label}
-                                    </button>
-                                ))}
-                            </div>
+                            {resolvedPresets.length > 0 && (
+                                <div className={styles.presets}>
+                                    {resolvedPresets.map((preset) => (
+                                        <button
+                                            key={preset.label}
+                                            type="button"
+                                            aria-pressed={matchedPreset?.label === preset.label}
+                                            className={[styles.presetItem, matchedPreset?.label === preset.label && styles.presetActive]
+                                                .filter(Boolean)
+                                                .join(' ')}
+                                            onClick={() => applyPreset(preset)}
+                                        >
+                                            {preset.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                             <div className={styles.calendars}>
                                 <CalendarMonth
                                     month={viewMonth}
