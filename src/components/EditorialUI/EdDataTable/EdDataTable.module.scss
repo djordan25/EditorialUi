@@ -155,6 +155,11 @@
     cursor: pointer;
 }
 
+.clickable tbody tr:focus-visible {
+    outline: 2px solid var(--ed-color-focus-ring);
+    outline-offset: -2px;
+}
+
 tbody tr {
     transition: background var(--ed-transition-fast);
 }

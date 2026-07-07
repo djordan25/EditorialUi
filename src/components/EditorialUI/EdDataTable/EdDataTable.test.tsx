@@ -115,6 +115,21 @@ describe('EdDataTable', () => {
         expect(onRowClick).not.toHaveBeenCalled();
     });
 
+    it('clickable rows are focusable and Enter/Space fire onRowClick', async () => {
+        const onRowClick = vi.fn();
+        render(<EdDataTable<Row> {...base} onRowClick={onRowClick} />);
+        const firstRow = screen.getByText('Charlie').closest('tr')!;
+        expect(firstRow).toHaveAttribute('tabindex', '0');
+        firstRow.focus();
+        await userEvent.keyboard('{Enter}');
+        expect(onRowClick).toHaveBeenCalledWith(rows[0]);
+    });
+
+    it('rows are not focusable without onRowClick', () => {
+        render(<EdDataTable<Row> {...base} />);
+        expect(screen.getByText('Charlie').closest('tr')!).not.toHaveAttribute('tabindex');
+    });
+
     it('renders the empty state when there are no rows', () => {
         render(<EdDataTable<Row> {...base} rows={[]} empty={<span>Nothing here</span>} />);
         expect(screen.getByText('Nothing here')).toBeInTheDocument();

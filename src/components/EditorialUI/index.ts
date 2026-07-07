@@ -51,6 +51,7 @@ export * from './EdBreadcrumb';
 
 // Data
 export * from './EdDataTable';
+export * from './EdDataGrid';
 export * from './EdList';
 export * from './EdNativeTable';
 
