@@ -13,6 +13,7 @@ export * from './EdIconButton';
 export * from './EdTextField';
 export * from './EdPasswordInput';
 export * from './EdCheckbox';
+export * from './EdCheckboxInput';
 export * from './EdRadioGroup';
 export * from './EdSwitch';
 export * from './EdFormControlLabel';

@@ -1,0 +1,30 @@
+@use '../../../theme/tokens-v2';
+
+.checkbox {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    flex-shrink: 0;
+    accent-color: var(--ed-color-brand);
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 2px solid var(--ed-color-focus-ring);
+        outline-offset: 2px;
+        border-radius: var(--ed-radius-sm);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    &[aria-readonly='true'] {
+        cursor: default;
+    }
+}
+
+.sm {
+    width: 14px;
+    height: 14px;
+}
