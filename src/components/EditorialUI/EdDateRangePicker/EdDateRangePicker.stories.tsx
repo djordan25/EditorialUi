@@ -48,6 +48,42 @@ export const PresetMatched: Story = {
     },
 };
 
+export const DayStepper: Story = {
+    name: 'Day mode (single-day stepper)',
+    render: () => {
+        const [range, setRange] = useState<EdDateRange>({ start: '2026-03-15', end: '2026-03-15' });
+        return (
+            <div style={{ width: 240 }}>
+                <EdDateRangePicker
+                    label="As of date"
+                    mode="day"
+                    value={range}
+                    onChange={setRange}
+                    hint="One click selects a single day and re-fetches."
+                    fullWidth
+                />
+            </div>
+        );
+    },
+};
+
+export const NoPresets: Story = {
+    render: () => {
+        const [range, setRange] = useState<EdDateRange>({ start: null, end: null });
+        return (
+            <div style={{ width: 280 }}>
+                <EdDateRangePicker
+                    label="Created between"
+                    value={range}
+                    onChange={setRange}
+                    presets={[]}
+                    fullWidth
+                />
+            </div>
+        );
+    },
+};
+
 export const Constrained: Story = {
     name: 'MinMax (exam window)',
     render: () => {

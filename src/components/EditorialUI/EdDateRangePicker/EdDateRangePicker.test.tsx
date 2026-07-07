@@ -88,4 +88,36 @@ describe('EdDateRangePicker', () => {
         expect(screen.getByRole('button')).toHaveAttribute('aria-invalid', 'true');
         expect(screen.getByRole('alert')).toHaveTextContent('Required.');
     });
+
+    it('day mode commits a same-day range on a single click and fires onChange once', async () => {
+        const onChange = vi.fn();
+        render(<EdDateRangePicker mode="day" value={{ start: null, end: null }} onChange={onChange} />);
+        await userEvent.click(screen.getByRole('button', { name: 'Select date…' }));
+        const grids = await screen.findAllByRole('grid');
+        await userEvent.click(within(grids[0]).getAllByText('15')[0]);
+        expect(onChange).toHaveBeenCalledTimes(1);
+        const arg = onChange.mock.calls[0][0] as EdDateRange;
+        expect(arg.start).toBe(arg.end);
+        expect(arg.start).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    });
+
+    it('day mode shows no presets rail by default', async () => {
+        render(<EdDateRangePicker mode="day" value={{ start: null, end: null }} />);
+        await userEvent.click(screen.getByRole('button', { name: 'Select date…' }));
+        await screen.findAllByRole('grid');
+        expect(screen.queryByRole('button', { name: 'Today' })).toBeNull();
+    });
+
+    it('day mode trigger shows a single date, no → separator', () => {
+        render(<EdDateRangePicker mode="day" value={{ start: '2026-03-15', end: '2026-03-15' }} />);
+        expect(screen.getByText('2026-03-15')).toBeInTheDocument();
+        expect(screen.queryByText(/→/)).toBeNull();
+    });
+
+    it('renders no presets rail when presets is explicitly empty (range mode)', async () => {
+        render(<EdDateRangePicker value={{ start: null, end: null }} presets={[]} />);
+        await userEvent.click(screen.getByRole('button', { name: 'Select date range…' }));
+        await screen.findAllByRole('grid');
+        expect(screen.queryByRole('button', { name: 'Today' })).toBeNull();
+    });
 });
