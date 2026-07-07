@@ -44,6 +44,7 @@ export * from './EdCard';
 export * from './EdModal';
 export * from './EdDrawer';
 export * from './EdAccordion';
+export * from './EdAccordionSection';
 export * from './EdDisclosure';
 
 // Navigation
