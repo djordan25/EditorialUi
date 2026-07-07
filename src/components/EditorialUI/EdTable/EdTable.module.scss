@@ -1,0 +1,62 @@
+@use '../../../theme/tokens-v2';
+
+.container {
+    width: 100%;
+    overflow: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-sm);
+    color: var(--ed-color-text-primary);
+}
+
+.cell {
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--ed-color-hairline);
+    line-height: var(--ed-line-height-snug);
+}
+
+.default .cell {
+    height: 40px;
+    padding: var(--ed-space-2) var(--ed-space-3);
+}
+.compact .cell {
+    height: 32px;
+    padding: var(--ed-space-1) var(--ed-space-3);
+}
+
+.headCell {
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    font-weight: var(--ed-font-weight-medium);
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-muted);
+    white-space: nowrap;
+}
+
+.alignRight {
+    text-align: right;
+}
+.alignCenter {
+    text-align: center;
+}
+
+/* ---- Sticky header ---- */
+.stickyHeader thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--ed-color-surface-1);
+}
+
+/* ---- Foot ---- */
+.foot .cell {
+    border-bottom: none;
+    border-top: 1px solid var(--ed-color-hairline);
+    color: var(--ed-color-text-secondary);
+}
