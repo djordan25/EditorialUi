@@ -60,6 +60,7 @@ export * from './EdDataTable';
 export * from './EdDataGrid';
 export * from './EdList';
 export * from './EdNativeTable';
+export * from './EdTable';
 
 // Composites
 export * from './EdDateRangePicker';
