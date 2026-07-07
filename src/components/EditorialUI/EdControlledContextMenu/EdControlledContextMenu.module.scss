@@ -1,0 +1,38 @@
+@use '../../../theme/tokens-v2';
+
+/* Non-interactive key/value stats block above the actions. */
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--ed-space-2) var(--ed-space-3);
+    margin-bottom: var(--ed-space-1);
+    border-bottom: 1px solid var(--ed-color-hairline);
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--ed-space-4);
+    font-size: var(--ed-font-size-xs);
+    line-height: var(--ed-line-height-snug);
+}
+
+.infoLabel {
+    flex-shrink: 0;
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-muted);
+}
+
+.infoValue {
+    min-width: 0;
+    text-align: right;
+    color: var(--ed-color-text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

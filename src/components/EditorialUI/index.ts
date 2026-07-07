@@ -53,6 +53,7 @@ export * from './EdTabs';
 export * from './EdTabList';
 export * from './EdMenu';
 export * from './EdContextMenu';
+export * from './EdControlledContextMenu';
 export * from './EdBreadcrumb';
 
 // Data
