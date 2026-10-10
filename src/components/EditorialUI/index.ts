@@ -12,6 +12,7 @@ export * from './EdIconButton';
 // Forms
 export * from './EdTextField';
 export * from './EdPasswordInput';
+export * from './EdCodeInput';
 export * from './EdCheckbox';
 export * from './EdCheckboxInput';
 export * from './EdRadioGroup';

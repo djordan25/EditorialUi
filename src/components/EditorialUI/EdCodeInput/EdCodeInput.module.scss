@@ -1,0 +1,131 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+/* ---- Label (same treatment as EdTextField) ---- */
+.label {
+    font-family: var(--ed-font-mono);
+    font-size: var(--ed-font-size-2xs);
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-secondary);
+    line-height: 1;
+    user-select: none;
+}
+
+.visuallyHidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ---- Boxes: presentation only; the real input is laid over them ---- */
+.boxes {
+    position: relative;
+    display: inline-flex;
+    gap: var(--ed-space-2);
+}
+
+.md {
+    --ed-code-box-w: 40px;
+    --ed-code-box-h: var(--ed-control-h-lg);
+    --ed-code-font-size: var(--ed-font-size-xl);
+}
+
+.lg {
+    --ed-code-box-w: 48px;
+    --ed-code-box-h: var(--ed-control-h-xl);
+    --ed-code-font-size: var(--ed-font-size-2xl);
+}
+
+.box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--ed-code-box-w);
+    height: var(--ed-code-box-h);
+    background: var(--ed-color-surface-input);
+    border: 1px solid var(--ed-color-hairline-strong);
+    border-radius: var(--ed-radius-sm);
+    color: var(--ed-color-text-primary);
+    font-family: var(--ed-font-mono);
+    font-size: var(--ed-code-font-size);
+    font-weight: var(--ed-font-weight-medium);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    transition:
+        border-color var(--ed-transition-base),
+        box-shadow var(--ed-transition-base);
+
+    &[data-filled] {
+        border-color: var(--ed-color-hairline-bold);
+    }
+
+    &[data-active] {
+        border-color: var(--ed-color-border-focus);
+        box-shadow: 0 0 0 3px var(--ed-color-brand-bg);
+    }
+}
+
+.boxesError .box {
+    border-color: var(--ed-color-status-danger);
+
+    &[data-active] {
+        box-shadow: 0 0 0 3px var(--ed-color-status-danger-bg);
+    }
+}
+
+.boxesDisabled .box {
+    background: var(--ed-color-surface-2);
+    color: var(--ed-color-text-disabled);
+}
+
+/* ---- The real input: covers the boxes, draws nothing itself ---- */
+.input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: transparent;
+    caret-color: transparent;
+    /* 16px keeps iOS from zooming the page when the field takes focus. */
+    font-size: 16px;
+    cursor: text;
+
+    &::selection {
+        background: transparent;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+}
+
+/* ---- Hint / error (same treatment as EdTextField) ---- */
+.hint {
+    margin: 0;
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-xs);
+    line-height: var(--ed-line-height-snug);
+    color: var(--ed-color-text-muted);
+}
+
+.hintError {
+    color: var(--ed-color-status-danger);
+}
