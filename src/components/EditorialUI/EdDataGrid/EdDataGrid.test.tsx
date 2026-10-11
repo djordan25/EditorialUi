@@ -91,6 +91,27 @@ describe('EdDataGrid', () => {
         expect(onSortingChange).toHaveBeenCalled();
     });
 
+    it('sorts on its own when the caller passes no sort state', async () => {
+        render(<EdDataGrid {...base} data={[data[1], data[0]]} />);
+        const names = () => screen.getAllByText(/^(Alice|Bob)$/).map((el) => el.textContent);
+        expect(names()).toEqual(['Bob', 'Alice']);
+
+        await userEvent.click(within(screen.getByRole('columnheader', { name: 'Name' })).getByRole('button'));
+
+        expect(names()).toEqual(['Alice', 'Bob']);
+        expect(screen.getByRole('columnheader', { name: 'Name' })).toHaveAttribute('aria-sort', 'ascending');
+    });
+
+    it('selects rows on its own when the caller passes no selection state', async () => {
+        render(<EdDataGrid {...base} enableRowSelection selectAllLabel="Select all" />);
+        const [, rowA] = screen.getAllByRole('checkbox');
+
+        await userEvent.click(rowA);
+
+        expect(rowA).toBeChecked();
+        expect(screen.getByText('Alice').closest('tr')).toHaveAttribute('aria-selected', 'true');
+    });
+
     it('renders a select-all + per-row checkboxes and reports selection', async () => {
         const onRowSelectionChange = vi.fn();
         render(

@@ -170,8 +170,11 @@ export function EdDataGrid<T extends RowData>({
             ...(rowSelection !== undefined ? { rowSelection } : {}),
         },
         enableRowSelection,
-        onSortingChange,
-        onRowSelectionChange,
+        // Handlers likewise go in only when given: an explicit `undefined` would
+        // replace TanStack's own state updater, so uncontrolled sort and
+        // selection would never change.
+        ...(onSortingChange ? { onSortingChange } : {}),
+        ...(onRowSelectionChange ? { onRowSelectionChange } : {}),
         getRowId,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
