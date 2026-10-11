@@ -160,11 +160,12 @@
     outline-offset: -2px;
 }
 
-tbody tr {
+/* :where() keeps these rows scoped to this table without raising specificity. */
+:where(.table) tbody tr {
     transition: background var(--ed-transition-fast);
 }
 
-tbody tr:hover {
+:where(.table) tbody tr:hover {
     background: var(--ed-color-row-hover);
 }
 
