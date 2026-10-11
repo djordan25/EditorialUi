@@ -25,6 +25,8 @@ export interface EdModalProps {
 
     size?: EdModalSize;
     danger?: boolean;
+    /** Hide the header close (×) — e.g. when the footer already has a Close button. */
+    hideClose?: boolean;
     preventOutsideClose?: boolean;
     /**
      * Fine-grained close control — overrides `preventOutsideClose` per vector
@@ -51,6 +53,8 @@ export interface EdModalProps {
     busyContent?: ReactNode;
     /** Live-region message announced when busy stage changes. */
     busyStatus?: string;
+    /** className on the modal panel — e.g. a width the four sizes don't cover. */
+    className?: string;
 }
 
 /**
@@ -84,6 +88,7 @@ export const EdModal = forwardRef<HTMLDivElement, EdModalProps>(function EdModal
         footerMeta,
         size = 'md',
         danger = false,
+        hideClose = false,
         preventOutsideClose = false,
         dismissOnOutsideClick,
         dismissOnEscape,
@@ -92,6 +97,7 @@ export const EdModal = forwardRef<HTMLDivElement, EdModalProps>(function EdModal
         busy = false,
         busyContent,
         busyStatus,
+        className,
     },
     ref,
 ) {
@@ -112,10 +118,10 @@ export const EdModal = forwardRef<HTMLDivElement, EdModalProps>(function EdModal
             // cancel work; otherwise pass the caller's per-vector close controls through.
             dismissOnOutsideClick={busy ? false : dismissOnOutsideClick}
             dismissOnEscape={busy ? false : dismissOnEscape}
-            hideClose={busy}
+            hideClose={busy || hideClose}
             footer={footer}
             footerMeta={footerMeta}
-            className={busy ? styles.busyDialog : undefined}
+            className={[busy && styles.busyDialog, className].filter(Boolean).join(' ') || undefined}
             aria-busy={busy || undefined}
         >
             <div className={busy ? styles.bodyBusy : undefined} aria-hidden={busy || undefined}>

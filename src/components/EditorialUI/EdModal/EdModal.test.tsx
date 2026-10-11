@@ -109,4 +109,29 @@ describe('EdModal', () => {
         );
         expect(screen.getByRole('dialog', { name: 'Importing data' })).toBeInTheDocument();
     });
+
+    it('hideClose removes the header close button', () => {
+        render(
+            <EdModal open title="Done" hideClose footer={<button>Close</button>}>
+                body
+            </EdModal>,
+        );
+        expect(screen.getAllByRole('button', { name: 'Close' })).toHaveLength(1);
+    });
+
+    it('puts className on the panel, alongside the busy styling', () => {
+        const { rerender } = render(
+            <EdModal open title="Wide" className="wide">
+                body
+            </EdModal>,
+        );
+        expect(screen.getByRole('dialog')).toHaveClass('wide');
+
+        rerender(
+            <EdModal open title="Wide" className="wide" busy>
+                body
+            </EdModal>,
+        );
+        expect(screen.getByRole('dialog')).toHaveClass('wide', 'busyDialog');
+    });
 });
