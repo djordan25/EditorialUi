@@ -43,6 +43,17 @@ export interface EdDataGridProps<T extends RowData> {
      * sans-serif caps, for ledger surfaces set in the sans face).
      */
     headerFont?: 'mono' | 'sans';
+    /**
+     * How sortable headers show their state: `icons` (default — a chevron on every
+     * sortable column) or `arrow` (a mono ↑/↓ on the sorted column only, the
+     * ledger style; the sorted header also darkens).
+     */
+    sortIndicator?: 'icons' | 'arrow';
+    /**
+     * Id of the column that takes whatever width the others leave (it gets no
+     * fixed width). Without it every column is sized from `size`.
+     */
+    growColumnId?: string;
     /** Estimated row height (drives the virtualizer + the fixed row height). Default 40. */
     estimateRowHeight?: number;
     /** Rows rendered beyond the viewport on each side. Default 8. */
@@ -51,6 +62,8 @@ export interface EdDataGridProps<T extends RowData> {
     /* ---- Interaction ---- */
     /** Row click — its presence makes rows focusable + keyboard-activatable (Enter/Space). */
     onRowClick?: (row: T) => void;
+    /** Row double click, e.g. to open a detail view when a single click only selects. */
+    onRowDoubleClick?: (row: T) => void;
     /** Extra class(es) appended verbatim to the matching row `<tr>` / card `<li>`. */
     rowClassName?: (row: T) => string | undefined;
 
@@ -111,8 +124,11 @@ export function EdDataGrid<T extends RowData>({
     selectAllLabel = 'Select all rows',
     estimateRowHeight = 40,
     headerFont = 'mono',
+    sortIndicator = 'icons',
+    growColumnId,
     overscan = 8,
     onRowClick,
+    onRowDoubleClick,
     rowClassName,
     renderCard,
     cardLayout = false,
@@ -278,8 +294,10 @@ export function EdDataGrid<T extends RowData>({
                                     <th
                                         key={header.id}
                                         scope="col"
-                                        className={styles.th}
-                                        style={{ width: header.getSize() }}
+                                        className={[styles.th, sortIndicator === 'arrow' && sorted && styles.thSorted]
+                                            .filter(Boolean)
+                                            .join(' ')}
+                                        style={header.column.id === growColumnId ? undefined : { width: header.getSize() }}
                                         aria-sort={canSort ? ariaSort : undefined}
                                     >
                                         {header.isPlaceholder ? null : canSort ? (
@@ -289,15 +307,21 @@ export function EdDataGrid<T extends RowData>({
                                                 onClick={header.column.getToggleSortingHandler()}
                                             >
                                                 {flexRender(header.column.columnDef.header, header.getContext())}
-                                                <span className={styles.sortIcon} aria-hidden>
-                                                    {sorted === 'asc' ? (
-                                                        <ChevronUp size={12} strokeWidth={2.5} />
-                                                    ) : sorted === 'desc' ? (
-                                                        <ChevronDown size={12} strokeWidth={2.5} />
-                                                    ) : (
-                                                        <ChevronsUpDown size={12} strokeWidth={2} />
-                                                    )}
-                                                </span>
+                                                {sortIndicator === 'arrow' ? (
+                                                    <span className={styles.sortArrow} aria-hidden>
+                                                        {sorted === 'asc' ? '↑' : sorted === 'desc' ? '↓' : ''}
+                                                    </span>
+                                                ) : (
+                                                    <span className={styles.sortIcon} aria-hidden>
+                                                        {sorted === 'asc' ? (
+                                                            <ChevronUp size={12} strokeWidth={2.5} />
+                                                        ) : sorted === 'desc' ? (
+                                                            <ChevronDown size={12} strokeWidth={2.5} />
+                                                        ) : (
+                                                            <ChevronsUpDown size={12} strokeWidth={2} />
+                                                        )}
+                                                    </span>
+                                                )}
                                             </button>
                                         ) : (
                                             <span className={styles.headerLabel}>
@@ -334,13 +358,14 @@ export function EdDataGrid<T extends RowData>({
                                 style={{ height: estimateRowHeight }}
                                 tabIndex={clickable ? 0 : -1}
                                 onClick={clickable ? () => onRowClick!(row.original) : undefined}
+                                onDoubleClick={onRowDoubleClick ? () => onRowDoubleClick(row.original) : undefined}
                                 onKeyDown={clickable ? (e) => activateRow(e, row) : undefined}
                             >
                                 {row.getVisibleCells().map((cell) => (
                                     <td
                                         key={cell.id}
                                         className={styles.td}
-                                        style={{ width: cell.column.getSize() }}
+                                        style={cell.column.id === growColumnId ? undefined : { width: cell.column.getSize() }}
                                     >
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </td>

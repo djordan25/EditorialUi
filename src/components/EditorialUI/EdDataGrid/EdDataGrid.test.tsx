@@ -237,3 +237,38 @@ describe('EdDataGrid — sans header', () => {
         expect(screen.getByRole('grid')).toHaveClass('headerSans');
     });
 });
+
+describe('EdDataGrid — ledger options', () => {
+    it('shows an arrow on the sorted column only when sortIndicator is "arrow"', async () => {
+        const sortable: ColumnDef<Row, unknown>[] = [
+            { accessorKey: 'name', header: 'Name', size: 200 },
+            { accessorKey: 'n', header: 'Count', size: 80 },
+        ];
+        render(<EdDataGrid {...base} columns={sortable} sortIndicator="arrow" />);
+        const name = screen.getByRole('columnheader', { name: 'Name' });
+        const count = screen.getByRole('columnheader', { name: 'Count' });
+        expect(name.textContent).toBe('Name');
+        await userEvent.click(within(name).getByRole('button'));
+        expect(name.textContent).toBe('Name↑');
+        expect(name).toHaveClass('thSorted');
+        expect(count.textContent).toBe('Count');
+        expect(count).not.toHaveClass('thSorted');
+        expect(name.querySelector('svg')).toBeNull();
+    });
+
+    it('leaves the grow column without a fixed width', () => {
+        render(<EdDataGrid {...base} growColumnId="name" />);
+        const name = screen.getByRole('columnheader', { name: 'Name' });
+        const count = screen.getByRole('columnheader', { name: 'Count' });
+        expect(name.style.width).toBe('');
+        expect(count.style.width).toBe('80px');
+        expect(screen.getByText('Alice').closest('td')!.style.width).toBe('');
+    });
+
+    it('fires onRowDoubleClick with the row', async () => {
+        const onRowDoubleClick = vi.fn();
+        render(<EdDataGrid {...base} onRowDoubleClick={onRowDoubleClick} />);
+        await userEvent.dblClick(screen.getByText('Bob'));
+        expect(onRowDoubleClick).toHaveBeenCalledWith(data[1]);
+    });
+});
