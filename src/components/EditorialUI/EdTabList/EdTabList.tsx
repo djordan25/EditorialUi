@@ -19,7 +19,7 @@ import styles from './EdTabList.module.scss';
 
 export type EdTabValue = string | number;
 export type EdTabListOrientation = 'horizontal' | 'vertical';
-export type EdTabListVariant = 'underline' | 'segmented';
+export type EdTabListVariant = 'underline' | 'segmented' | 'joined';
 
 /** Deterministic id for a tab button — pair with `edTabPanelId` on the external panel. */
 export const edTabId = (value: EdTabValue, base = 'ed'): string => `${base}-tab-${String(value)}`;
@@ -42,7 +42,11 @@ export interface EdTabListProps
     onValueChange: (value: EdTabValue, event: SyntheticEvent) => void;
     /** Layout + keyboard axis. Default `horizontal`. */
     orientation?: EdTabListOrientation;
-    /** `underline` (page-level, default) or `segmented` (inline toolbars). */
+    /**
+     * `underline` (page-level, default), `segmented` (inline toolbars), or `joined`:
+     * touching buttons with hairline dividers and a solid ink selection — the view
+     * switcher of dense ledger surfaces.
+     */
     variant?: EdTabListVariant;
     /**
      * Namespace for the generated tab/panel ids (default `ed`). If you render more than one
@@ -177,7 +181,7 @@ export const EdTabList = forwardRef<HTMLDivElement, EdTabListProps>(function EdT
                 aria-orientation={orientation}
                 className={[
                     styles.list,
-                    variant === 'segmented' ? styles.segmented : styles.underline,
+                    variant === 'segmented' ? styles.segmented : variant === 'joined' ? styles.joined : styles.underline,
                     orientation === 'vertical' && styles.vertical,
                     className,
                 ]

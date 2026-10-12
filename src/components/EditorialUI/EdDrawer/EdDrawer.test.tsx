@@ -65,3 +65,16 @@ describe('EdDrawer', () => {
         expect(EdSidePanel).toBe(EdDrawer);
     });
 });
+
+describe('EdDrawer — width and contentProps', () => {
+    it('takes an exact width and passes attributes onto the drawer element', () => {
+        render(
+            <EdDrawer open title="Inspect" width={520} contentProps={{ 'data-ed-density': 'compact' }}>
+                body
+            </EdDrawer>,
+        );
+        const drawer = screen.getByRole('dialog', { name: 'Inspect' });
+        expect(drawer.style.width).toBe('520px');
+        expect(drawer).toHaveAttribute('data-ed-density', 'compact');
+    });
+});

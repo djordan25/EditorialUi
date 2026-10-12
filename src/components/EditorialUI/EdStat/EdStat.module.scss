@@ -1,0 +1,42 @@
+@use '../../../theme/tokens-v2';
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(var(--ed-stat-columns, 3), minmax(0, 1fr));
+    gap: 1px;
+    background: var(--ed-color-hairline);
+    border: 1px solid var(--ed-color-hairline);
+}
+
+.stat {
+    min-width: 0;
+    padding: 10px 12px;
+    background: var(--ed-color-surface-1);
+}
+
+.label {
+    font-family: var(--ed-font-sans);
+    font-size: 10px;
+    font-weight: var(--ed-font-weight-medium);
+    line-height: 1.2;
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-muted);
+}
+
+.value {
+    margin-top: 4px;
+    font-family: var(--ed-font-mono);
+    font-size: 16px;
+    font-weight: var(--ed-font-weight-medium);
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.neutral { color: var(--ed-color-text-primary); }
+.success { color: var(--ed-color-status-success); }
+.warning { color: var(--ed-color-status-warning); }
+.danger  { color: var(--ed-color-status-danger); }

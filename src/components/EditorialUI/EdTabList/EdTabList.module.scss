@@ -161,3 +161,40 @@
     white-space: nowrap;
     border: 0;
 }
+
+/* ---- Joined: touching buttons, hairline dividers, solid ink selection ---- */
+.joined {
+    gap: 0;
+    border: 1px solid var(--ed-color-hairline-strong);
+    border-radius: var(--ed-radius-sm);
+    overflow: hidden;
+    width: fit-content;
+}
+
+.joined .trigger {
+    height: 26px;
+    padding: 0 10px;
+    font-size: var(--ed-font-size-2xs);
+    line-height: normal;
+    background: var(--ed-color-surface-1);
+    color: var(--ed-color-text-secondary);
+
+    & + .trigger {
+        border-left: 1px solid var(--ed-color-hairline-strong);
+    }
+
+    &:hover:not(:disabled):not([data-state='active']) {
+        background: var(--ed-color-surface-2);
+        color: var(--ed-color-text-primary);
+    }
+
+    &[data-state='active'] {
+        background: var(--ed-color-text-primary);
+        color: var(--ed-color-text-inverse);
+    }
+
+    &:focus-visible {
+        outline-offset: -3px;
+        border-radius: 0;
+    }
+}

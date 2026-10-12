@@ -2,7 +2,7 @@ import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import styles from './EdButton.module.scss';
 
-export type EdButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'link';
+export type EdButtonVariant = 'primary' | 'secondary' | 'ink' | 'ghost' | 'danger' | 'link';
 export type EdButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface EdButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -23,6 +23,7 @@ export interface EdButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const variantClass: Record<EdButtonVariant, string> = {
     primary: styles.primary,
     secondary: styles.secondary,
+    ink: styles.ink,
     ghost: styles.ghost,
     danger: styles.danger,
     link: styles.link,

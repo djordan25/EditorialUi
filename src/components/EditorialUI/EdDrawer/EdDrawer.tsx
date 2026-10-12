@@ -26,6 +26,17 @@ export interface EdDrawerProps {
     footer?: ReactNode;
 
     size?: EdDrawerSize;
+    /**
+     * Exact width (px number or any CSS length); overrides the `size` scale. For
+     * layouts with a fixed drawer measure, e.g. a 520px inspector.
+     */
+    width?: number | string;
+    /**
+     * Extra attributes for the drawer element itself. The drawer renders in a
+     * portal, outside the page tree, so attributes the page sets on its own
+     * wrapper (`data-theme`, `data-ed-density`) do not reach it; pass them here.
+     */
+    contentProps?: HTMLAttributes<HTMLDivElement> & Record<`data-${string}`, string | undefined>;
     /** Edge to dock to. Default "right". */
     side?: EdDrawerSide;
     /**
@@ -72,6 +83,8 @@ export const EdDrawer = forwardRef<HTMLDivElement, EdDrawerProps>(function EdDra
         children,
         footer,
         size = 'md',
+        width,
+        contentProps,
         side = 'right',
         modal = false,
         preventClose = false,
@@ -87,6 +100,8 @@ export const EdDrawer = forwardRef<HTMLDivElement, EdDrawerProps>(function EdDra
                 {modal && <RadixDialog.Overlay className={styles.overlay} />}
                 <RadixDialog.Content
                     ref={ref}
+                    {...contentProps}
+                    style={width !== undefined ? { ...contentProps?.style, width, maxWidth: '100vw' } : contentProps?.style}
                     className={[
                         styles.drawer,
                         sizeClass[size],

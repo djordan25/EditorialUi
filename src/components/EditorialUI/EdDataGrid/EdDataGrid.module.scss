@@ -225,3 +225,9 @@
     .skeleton { animation: none; }
     :where(.table) tbody tr { transition: none; }
 }
+
+/* ---- Sans header (ledger surfaces) ---- */
+.headerSans .th {
+    font-family: var(--ed-font-sans);
+    letter-spacing: 0.12em;
+}

@@ -1,0 +1,16 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--ed-radius-pill);
+    vertical-align: middle;
+}
+
+.success { background: var(--ed-color-status-success); }
+.warning { background: var(--ed-color-status-warning); }
+.danger  { background: var(--ed-color-status-danger); }
+.info    { background: var(--ed-color-status-info); }
+.neutral { background: var(--ed-color-text-faint); }

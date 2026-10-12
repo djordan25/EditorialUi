@@ -89,3 +89,11 @@ describe('EdTag', () => {
         expect(lg.firstElementChild).toHaveClass('lg');
     });
 });
+
+describe('EdTag — mono', () => {
+    it('renders the mono ledger style with its dot', () => {
+        const { container } = render(<EdTag mono dot color="#4C6FE0">market-risk</EdTag>);
+        expect(container.firstChild).toHaveClass('mono');
+        expect(screen.getByText('market-risk')).toBeInTheDocument();
+    });
+});

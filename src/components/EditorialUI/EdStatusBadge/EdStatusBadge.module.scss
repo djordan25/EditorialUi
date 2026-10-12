@@ -61,3 +61,38 @@
 .styleOutline.toneWarning { color: var(--ed-color-status-warning); border-color: var(--ed-color-status-warning); }
 .styleOutline.toneDanger  { color: var(--ed-color-status-danger);  border-color: var(--ed-color-status-danger); }
 .styleOutline.toneBrand   { color: var(--ed-color-brand);          border-color: var(--ed-color-brand); }
+
+/* ---- Style: tinted (sentence-case sans; ledger surfaces) ---- */
+.styleTinted {
+    height: 20px;
+    font-family: var(--ed-font-sans);
+    letter-spacing: 0;
+    text-transform: none;
+    border: 1px solid var(--ed-color-hairline);
+    background: var(--ed-color-surface-1);
+    color: var(--ed-color-text-secondary);
+}
+.styleTinted .dot { background: var(--ed-color-text-faint); }
+.styleTinted.toneNeutral { color: var(--ed-color-text-muted); }
+.styleTinted.toneInfo,
+.styleTinted.toneBrand {
+    color: var(--ed-color-brand);
+    background: var(--ed-color-brand-bg);
+    border-color: color-mix(in oklch, var(--ed-color-brand) 30%, var(--ed-color-hairline));
+}
+.styleTinted.toneSuccess {
+    color: var(--ed-color-status-success);
+    background: var(--ed-color-status-success-bg);
+    border-color: color-mix(in oklch, var(--ed-color-status-success) 30%, var(--ed-color-hairline));
+}
+.styleTinted.toneWarning {
+    color: var(--ed-color-status-warning);
+    background: var(--ed-color-status-warning-bg);
+    border-color: color-mix(in oklch, var(--ed-color-status-warning) 30%, var(--ed-color-hairline));
+}
+.styleTinted.toneDanger {
+    color: var(--ed-color-status-danger);
+    background: var(--ed-color-status-danger-bg);
+    border-color: color-mix(in oklch, var(--ed-color-status-danger) 30%, var(--ed-color-hairline));
+}
+.styleTinted:not(.toneNeutral) .dot { background: currentColor; }

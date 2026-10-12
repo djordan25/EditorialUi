@@ -124,3 +124,21 @@
     background: currentColor;
     color: var(--ed-color-surface-1);
 }
+
+/* ---- Mono: ledger identifiers and category codes ---- */
+.mono {
+    height: 18px;
+    padding: 0 6px;
+    gap: 4px;
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    color: var(--ed-color-text-secondary);
+    background: var(--ed-color-surface-1);
+
+    .dot {
+        width: 4px;
+        height: 4px;
+        margin-left: 0;
+    }
+}

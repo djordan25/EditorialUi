@@ -29,6 +29,11 @@ export interface EdTagProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'onRem
      * (or the tone's accent). With no children this is a compact text-less swatch.
      */
     dot?: boolean;
+    /**
+     * Monospaced, 10px label with a 4px dot — the ledger style for identifiers and
+     * category codes in dense tables and inspectors.
+     */
+    mono?: boolean;
     /** Optional leading icon. */
     leadingIcon?: ReactNode;
     /**
@@ -66,6 +71,7 @@ export const EdTag = forwardRef<HTMLSpanElement, EdTagProps>(function EdTag(
         color,
         textColor,
         dot = false,
+        mono = false,
         leadingIcon,
         onRemove,
         removeLabel,
@@ -100,6 +106,7 @@ export const EdTag = forwardRef<HTMLSpanElement, EdTagProps>(function EdTag(
                 sizeCls,
                 !filled && toneClass[tone],
                 dot && !hasLabel && styles.dotOnly,
+                mono && styles.mono,
                 className,
             ]
                 .filter(Boolean)

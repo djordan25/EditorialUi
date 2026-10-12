@@ -1,0 +1,40 @@
+@use '../../../theme/tokens-v2';
+
+.root {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: var(--ed-radius-sm);
+    border: 1px solid var(--ed-color-hairline-strong);
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    font-weight: var(--ed-font-weight-semibold);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    user-select: none;
+}
+
+.t1 {
+    background: var(--ed-color-text-primary);
+    border-color: var(--ed-color-text-primary);
+    color: var(--ed-color-text-inverse);
+}
+
+.t2 {
+    background: var(--ed-color-surface-1);
+    color: var(--ed-color-text-primary);
+}
+
+.t3 {
+    background: var(--ed-color-surface-0);
+    color: var(--ed-color-text-muted);
+}
+
+.none {
+    background: transparent;
+    border-color: var(--ed-color-hairline);
+    color: var(--ed-color-text-faint);
+}

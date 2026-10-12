@@ -5,7 +5,7 @@ import {
 } from 'react';
 import styles from './EdStatusBadge.module.scss';
 
-export type EdStatusBadgeStyle = 'soft' | 'solid' | 'outline';
+export type EdStatusBadgeStyle = 'soft' | 'solid' | 'outline' | 'tinted';
 export type EdStatusBadgeTone =
     | 'neutral'
     | 'info'
@@ -17,7 +17,11 @@ export type EdStatusBadgeTone =
 export interface EdStatusBadgeProps extends HTMLAttributes<HTMLSpanElement> {
     /** Label. Single mono-uppercase token; use `·` for separators. */
     children: ReactNode;
-    /** soft (default — cells) / solid (high emphasis — escalations) / outline (read-only). */
+    /**
+     * soft (default — cells) / solid (high emphasis — escalations) / outline (read-only)
+     * / tinted (sentence-case sans label on a tint with a toned border — the status
+     * pill of dense ledger surfaces).
+     */
     badgeStyle?: EdStatusBadgeStyle;
     /** Tone. Pair color with label — never a bare colored dot. */
     tone?: EdStatusBadgeTone;
@@ -34,6 +38,7 @@ const styleClass: Record<EdStatusBadgeStyle, string> = {
     soft: styles.styleSoft,
     solid: styles.styleSolid,
     outline: styles.styleOutline,
+    tinted: styles.styleTinted,
 };
 
 const toneClass: Record<EdStatusBadgeTone, string> = {

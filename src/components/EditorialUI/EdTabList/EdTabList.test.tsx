@@ -177,3 +177,19 @@ describe('EdTabList', () => {
         expect(screen.getByRole('tab', { name: /Findings, 23/ })).toBeInTheDocument();
     });
 });
+
+describe('EdTabList — joined variant', () => {
+    it('renders the joined strip and still selects', async () => {
+        const user = userEvent.setup();
+        const onValueChange = vi.fn();
+        render(
+            <EdTabList variant="joined" value="table" onValueChange={onValueChange} aria-label="View">
+                <EdTab value="table" label="Table" />
+                <EdTab value="map" label="Map" />
+            </EdTabList>,
+        );
+        expect(screen.getByRole('tablist', { name: 'View' })).toHaveClass('joined');
+        await user.click(screen.getByRole('tab', { name: 'Map' }));
+        expect(onValueChange).toHaveBeenCalledWith('map', expect.anything());
+    });
+});

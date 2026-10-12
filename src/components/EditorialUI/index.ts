@@ -33,6 +33,11 @@ export * from './EdStatusBadge';
 export * from './EdDivider';
 export * from './EdCircularProgress';
 export * from './EdProgressMeter';
+export * from './EdAvatar';
+export * from './EdTierBadge';
+export * from './EdStatusDot';
+export * from './EdSparkline';
+export * from './EdStat';
 
 // Feedback
 export * from './EdDialog';
@@ -56,6 +61,7 @@ export * from './EdMenu';
 export * from './EdContextMenu';
 export * from './EdControlledContextMenu';
 export * from './EdBreadcrumb';
+export * from './EdAppBar';
 
 // Data
 export * from './EdDataTable';
@@ -67,5 +73,6 @@ export * from './EdTable';
 // Composites
 export * from './EdDateRangePicker';
 export * from './EdFilterChipRow';
+export * from './EdFacetGroup';
 export * from './EdTagContainer';
 export * from './EdTagSelect';

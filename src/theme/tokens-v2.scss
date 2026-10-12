@@ -243,6 +243,25 @@
     --ed-control-h-md: 36px;
     --ed-control-h-lg: 44px;
     --ed-control-h-xl: 56px;
+
+    /* ---- Control text + padding (density-aware: see [data-ed-density]) ---- */
+    --ed-control-font-sm: var(--ed-font-size-sm);
+    --ed-control-font-md: var(--ed-font-size-md);
+    --ed-control-pad-sm:  var(--ed-space-3);
+    --ed-control-pad-md:  var(--ed-space-4);
+}
+
+/* Compact density, for dense ledger surfaces (a table with a filter rail, an
+   inspector). Opt in on a container: <div data-ed-density="compact">. Controls
+   inside drop a step: md is 28px with 12px text, sm 22px with 11px, lg 36px. */
+[data-ed-density='compact'] {
+    --ed-control-h-sm: 22px;
+    --ed-control-h-md: 28px;
+    --ed-control-h-lg: 36px;
+    --ed-control-font-sm: 11px;
+    --ed-control-font-md: 12px;
+    --ed-control-pad-sm:  8px;
+    --ed-control-pad-md:  10px;
 }
 
 @media (prefers-reduced-motion: reduce) {
