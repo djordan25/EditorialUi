@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { EdDrawer, EdDrawerSection, EdSidePanel } from './EdDrawer';
@@ -76,5 +76,17 @@ describe('EdDrawer — width and contentProps', () => {
         const drawer = screen.getByRole('dialog', { name: 'Inspect' });
         expect(drawer.style.width).toBe('520px');
         expect(drawer).toHaveAttribute('data-ed-density', 'compact');
+    });
+});
+
+describe('EdDrawer — header meta', () => {
+    it('renders meta in the header without adding it to the accessible name', () => {
+        render(
+            <EdDrawer open title="CCAR generator" meta={<span>Tier II</span>}>
+                body
+            </EdDrawer>,
+        );
+        const dialog = screen.getByRole('dialog', { name: 'CCAR generator' });
+        expect(within(dialog).getByText('Tier II')).toBeInTheDocument();
     });
 });
