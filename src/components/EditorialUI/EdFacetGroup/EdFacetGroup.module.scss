@@ -1,0 +1,104 @@
+@use '../../../theme/tokens-v2';
+
+.group {
+    margin-bottom: 18px;
+}
+
+.header {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 0 8px;
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 2px solid var(--ed-color-focus-ring);
+        outline-offset: 2px;
+        border-radius: var(--ed-radius-sm);
+    }
+}
+
+.label {
+    font-family: var(--ed-font-sans);
+    font-size: 10px;
+    font-weight: var(--ed-font-weight-medium);
+    line-height: 1.2;
+    letter-spacing: var(--ed-tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--ed-color-text-muted);
+}
+
+.toggle {
+    font-size: 10px;
+    color: var(--ed-color-text-faint);
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 4px;
+    border-radius: var(--ed-radius-sm);
+    cursor: pointer;
+    user-select: none;
+    transition: background var(--ed-transition-fast);
+
+    &:hover:not(.disabled) {
+        background: var(--ed-color-surface-2);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--ed-color-focus-ring);
+        outline-offset: -2px;
+    }
+}
+
+.checked,
+.checked:hover:not(.disabled) {
+    background: var(--ed-color-brand-bg);
+}
+
+.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: var(--ed-radius-sm);
+    border: 1px solid var(--ed-color-hairline-strong);
+    background: var(--ed-color-surface-1);
+    color: var(--ed-color-brand-contrast);
+}
+
+.checked .box {
+    background: var(--ed-color-brand);
+    border-color: var(--ed-color-brand);
+}
+
+.rowLabel {
+    flex: 1;
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--ed-font-sans);
+    font-size: var(--ed-font-size-xs);
+    line-height: 1.4;
+    color: var(--ed-color-text-primary);
+}
+
+.count {
+    font-family: var(--ed-font-mono);
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ed-color-text-muted);
+}

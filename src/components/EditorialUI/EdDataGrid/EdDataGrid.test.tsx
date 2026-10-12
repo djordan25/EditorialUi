@@ -228,3 +228,12 @@ describe('EdDataGrid', () => {
         });
     });
 });
+
+describe('EdDataGrid — sans header', () => {
+    it('sets the header in the sans face when asked', () => {
+        const { rerender } = render(<EdDataGrid {...base} />);
+        expect(screen.getByRole('grid')).not.toHaveClass('headerSans');
+        rerender(<EdDataGrid {...base} headerFont="sans" />);
+        expect(screen.getByRole('grid')).toHaveClass('headerSans');
+    });
+});

@@ -64,3 +64,10 @@ describe('EdButton', () => {
         expect(link).toHaveAttribute('href', '/foo');
     });
 });
+
+describe('EdButton — ink variant', () => {
+    it('renders the ink style', () => {
+        render(<EdButton variant="ink">New model</EdButton>);
+        expect(screen.getByRole('button', { name: 'New model' })).toHaveClass('ink');
+    });
+});

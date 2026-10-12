@@ -56,7 +56,7 @@
     border-radius: var(--ed-radius-sm);
     color: var(--ed-color-text-primary);
     font-family: var(--ed-font-sans);
-    font-size: var(--ed-font-size-md);
+    font-size: var(--ed-control-font-md);
     line-height: normal;
     cursor: pointer;
     text-align: left;
@@ -97,7 +97,7 @@
     }
 }
 
-.sm { height: var(--ed-control-h-sm); padding: 0 var(--ed-space-2); font-size: var(--ed-font-size-sm); gap: 6px; }
+.sm { height: var(--ed-control-h-sm); padding: 0 var(--ed-space-2); font-size: var(--ed-control-font-sm); gap: 6px; }
 .md { height: var(--ed-control-h-md); }
 .lg { height: var(--ed-control-h-lg); padding: 0 var(--ed-space-4); font-size: var(--ed-font-size-lg); }
 

@@ -139,7 +139,7 @@
     padding: 0;
     color: var(--ed-color-text-primary);
     font-family: var(--ed-font-sans);
-    font-size: var(--ed-font-size-md);
+    font-size: var(--ed-control-font-md);
     line-height: 1;
 
     &::placeholder {
@@ -154,7 +154,7 @@
 }
 
 .sm .input {
-    font-size: var(--ed-font-size-sm);
+    font-size: var(--ed-control-font-sm);
 }
 
 .lg .input {

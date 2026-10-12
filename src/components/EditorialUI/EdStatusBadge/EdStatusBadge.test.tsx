@@ -41,3 +41,12 @@ describe('EdStatusBadge', () => {
         expect(badge).toHaveAttribute('title', 'Open finding');
     });
 });
+
+describe('EdStatusBadge — tinted', () => {
+    it('renders the tinted sentence-case style', () => {
+        render(<EdStatusBadge badgeStyle="tinted" tone="success" dot>In production</EdStatusBadge>);
+        const badge = screen.getByText('In production').closest('span[class*="styleTinted"]');
+        expect(badge).not.toBeNull();
+        expect(badge).toHaveClass('toneSuccess');
+    });
+});

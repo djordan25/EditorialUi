@@ -38,6 +38,11 @@ export interface EdDataGridProps<T extends RowData> {
     selectAllLabel?: string;
 
     /* ---- Virtualization ---- */
+    /**
+     * Header label face: `mono` (default — the data-console look) or `sans` (10px
+     * sans-serif caps, for ledger surfaces set in the sans face).
+     */
+    headerFont?: 'mono' | 'sans';
     /** Estimated row height (drives the virtualizer + the fixed row height). Default 40. */
     estimateRowHeight?: number;
     /** Rows rendered beyond the viewport on each side. Default 8. */
@@ -105,6 +110,7 @@ export function EdDataGrid<T extends RowData>({
     selectRowLabel = 'Select row',
     selectAllLabel = 'Select all rows',
     estimateRowHeight = 40,
+    headerFont = 'mono',
     overscan = 8,
     onRowClick,
     rowClassName,
@@ -259,7 +265,7 @@ export function EdDataGrid<T extends RowData>({
     return (
         <div ref={parentRef} className={rootClass} role="region" aria-label={ariaLabel}>
             {isLoading && <div className={styles.refetchBar} role="status" aria-label="Refreshing" />}
-            <table className={styles.table} role="grid">
+            <table className={[styles.table, headerFont === 'sans' && styles.headerSans].filter(Boolean).join(' ')} role="grid">
                 <thead className={styles.thead}>
                     {table.getHeaderGroups().map((hg) => (
                         <tr key={hg.id}>
