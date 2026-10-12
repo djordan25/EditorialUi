@@ -20,6 +20,11 @@ export interface EdDrawerProps {
     crumb?: ReactNode;
     /** Drawer title — wired to aria-labelledby. */
     title?: ReactNode;
+    /**
+     * A line under the title, still in the header — badges or pills that
+     * classify the entity (tier, status, owner). Not part of the accessible name.
+     */
+    meta?: ReactNode;
     /** Body content. Use EdDrawerSection to divide into labelled groups. */
     children: ReactNode;
     /** Footer actions — right-aligned. Optional for read-only drawers. */
@@ -80,6 +85,7 @@ export const EdDrawer = forwardRef<HTMLDivElement, EdDrawerProps>(function EdDra
         trigger,
         crumb,
         title,
+        meta,
         children,
         footer,
         size = 'md',
@@ -124,6 +130,7 @@ export const EdDrawer = forwardRef<HTMLDivElement, EdDrawerProps>(function EdDra
                             {title && (
                                 <RadixDialog.Title className={styles.title}>{title}</RadixDialog.Title>
                             )}
+                            {meta && <div className={styles.meta}>{meta}</div>}
                         </div>
                         <RadixDialog.Close asChild>
                             <button type="button" className={styles.close} aria-label="Close drawer">

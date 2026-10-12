@@ -54,6 +54,14 @@
 
 .headerBody { min-width: 0; }
 
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ed-space-2);
+    margin-top: var(--ed-space-2);
+}
+
 .crumb {
     display: block;
     font-family: var(--ed-font-mono);
