@@ -35,7 +35,8 @@
     font-size: 10px;
     font-weight: var(--ed-font-weight-medium);
     letter-spacing: 0;
-    color: var(--ed-color-text-faint);
+    /* Muted, not faint: faint is ~3.5:1 on the bar and fails WCAG AA for text. */
+    color: var(--ed-color-text-muted);
 }
 
 .nav {
