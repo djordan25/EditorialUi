@@ -132,3 +132,13 @@ describe('EdCodeInput', () => {
         expect(ref.current).toHaveAttribute('name', 'totp');
     });
 });
+
+describe('EdCodeInput caller description', () => {
+    it('keeps the error linked when the caller links its own description', () => {
+        render(<EdCodeInput label="Code" error="Wrong code." aria-describedby="why" />);
+        const ids = screen.getByLabelText('Code').getAttribute('aria-describedby')?.split(' ');
+        expect(ids).toHaveLength(2);
+        expect(document.getElementById(ids![0])).toHaveTextContent('Wrong code.');
+        expect(ids![1]).toBe('why');
+    });
+});

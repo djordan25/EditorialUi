@@ -77,6 +77,7 @@ export const EdCodeInput = forwardRef<HTMLInputElement, EdCodeInputProps>(functi
         onFocus,
         onBlur,
         onPaste,
+        'aria-describedby': describedByProp,
         ...rest
     },
     ref,
@@ -84,6 +85,8 @@ export const EdCodeInput = forwardRef<HTMLInputElement, EdCodeInputProps>(functi
     const autoId = useId();
     const inputId = id ?? `ed-code-${autoId}`;
     const messageId = error || hint ? `${inputId}-msg` : undefined;
+    // The caller's own description joins the hint/error rather than replacing it.
+    const describedBy = [messageId, describedByProp].filter(Boolean).join(' ') || undefined;
 
     const isControlled = value !== undefined;
     const [inner, setInner] = useState(() => sanitise(defaultValue ?? '', length));
@@ -173,7 +176,7 @@ export const EdCodeInput = forwardRef<HTMLInputElement, EdCodeInputProps>(functi
                     onBlur={handleBlur}
                     disabled={disabled}
                     aria-invalid={error ? true : undefined}
-                    aria-describedby={messageId}
+                    aria-describedby={describedBy}
                     className={[styles.input, className].filter(Boolean).join(' ')}
                     {...rest}
                 />
