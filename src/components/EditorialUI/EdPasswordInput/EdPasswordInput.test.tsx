@@ -76,3 +76,16 @@ describe('EdPasswordInput', () => {
         expect(screen.getByLabelText('Password')).toHaveAttribute('aria-invalid', 'true');
     });
 });
+
+describe('EdPasswordInput caller description', () => {
+    it('announces both the error and the caller’s password rules', () => {
+        render(
+            <>
+                <EdPasswordInput label="New password" error="Too short." aria-describedby="rules" />
+                <ul id="rules"><li>12 characters</li></ul>
+            </>,
+        );
+        const ids = (screen.getByLabelText('New password').getAttribute('aria-describedby') ?? '').split(' ');
+        expect(ids.map((id) => document.getElementById(id)?.textContent)).toEqual(['Too short.', '12 characters']);
+    });
+});

@@ -122,3 +122,29 @@ describe('EdTextField', () => {
         expect(field).toHaveValue('hi');
     });
 });
+
+describe('EdTextField caller description', () => {
+    const ids = (el: HTMLElement) => (el.getAttribute('aria-describedby') ?? '').split(' ').filter(Boolean);
+
+    it('keeps the error linked when the caller links its own description', () => {
+        render(
+            <>
+                <EdTextField label="New password" error="Too short." aria-describedby="rules" />
+                <ul id="rules"><li>12 characters</li></ul>
+            </>,
+        );
+        const input = screen.getByLabelText('New password');
+        const linked = ids(input).map((id) => document.getElementById(id)?.textContent);
+        expect(linked).toEqual(['Too short.', '12 characters']);
+    });
+
+    it('links only the caller description when there is no hint or error', () => {
+        render(<EdTextField label="Notes" multiline aria-describedby="help" />);
+        expect(ids(screen.getByLabelText('Notes'))).toEqual(['help']);
+    });
+
+    it('links nothing when there is nothing to link', () => {
+        render(<EdTextField label="Name" />);
+        expect(screen.getByLabelText('Name')).not.toHaveAttribute('aria-describedby');
+    });
+});

@@ -84,6 +84,7 @@ export const EdTextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Ed
             disabled,
             readOnly,
             type,
+            'aria-describedby': describedByProp,
             ...rest
         },
         ref,
@@ -91,6 +92,9 @@ export const EdTextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Ed
         const autoId = useId();
         const inputId = id ?? `ed-tf-${autoId}`;
         const messageId = error || hint ? `${inputId}-msg` : undefined;
+        // The caller's own description (e.g. a password-rules list) joins the field's
+        // hint/error rather than replacing it, so an error is never left unannounced.
+        const describedBy = [messageId, describedByProp].filter(Boolean).join(' ') || undefined;
 
         const innerRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
         useImperativeHandle(ref, () => innerRef.current as HTMLInputElement | HTMLTextAreaElement, []);
@@ -181,7 +185,7 @@ export const EdTextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Ed
                             readOnly={readOnly}
                             aria-invalid={error ? true : undefined}
                             aria-required={required || undefined}
-                            aria-describedby={messageId}
+                            aria-describedby={describedBy}
                             {...(rest as unknown as TextareaHTMLAttributes<HTMLTextAreaElement>)}
                         />
                     ) : (
@@ -196,7 +200,7 @@ export const EdTextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Ed
                             readOnly={readOnly}
                             aria-invalid={error ? true : undefined}
                             aria-required={required || undefined}
-                            aria-describedby={messageId}
+                            aria-describedby={describedBy}
                             {...rest}
                         />
                     )}
